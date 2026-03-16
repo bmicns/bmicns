@@ -21,7 +21,7 @@
   if (navEl) {
     load('nav.html', navEl, function () {
       // active 메뉴 표시
-      var links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+      var links = document.querySelectorAll('.nav-links a');
       links.forEach(function (a) {
         var href = a.getAttribute('href').replace('.html', '');
         var current = page.replace('.html', '');
@@ -34,7 +34,13 @@
       var toggle = document.querySelector('.nav-toggle');
       if (toggle) {
         toggle.addEventListener('click', function () {
-          document.querySelector('.nav-links').classList.toggle('open');
+          var navLower = document.querySelector('.nav-lower');
+          var navLinks = document.querySelector('.nav-links');
+          if (navLower) {
+            var isHidden = navLower.style.display === 'block';
+            navLower.style.display = isHidden ? '' : 'block';
+            navLinks.classList.toggle('open');
+          }
         });
       }
     });
