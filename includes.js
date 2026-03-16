@@ -1,0 +1,46 @@
+// 공통 영역(nav, footer) 로드 및 active 메뉴 처리
+(function () {
+  var navEl = document.getElementById('nav-placeholder');
+  var footerEl = document.getElementById('footer-placeholder');
+
+  function load(url, target, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        target.outerHTML = xhr.responseText;
+        if (callback) callback();
+      }
+    };
+    xhr.send();
+  }
+
+  // 현재 페이지 파일명 (.html 유무 모두 대응)
+  var page = location.pathname.split('/').pop() || 'index.html';
+
+  if (navEl) {
+    load('nav.html', navEl, function () {
+      // active 메뉴 표시
+      var links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+      links.forEach(function (a) {
+        var href = a.getAttribute('href').replace('.html', '');
+        var current = page.replace('.html', '');
+        if (href === current) {
+          a.style.color = 'var(--color-text-primary)';
+          a.style.fontWeight = '700';
+        }
+      });
+      // 모바일 햄버거 메뉴 토글
+      var toggle = document.querySelector('.nav-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          document.querySelector('.nav-links').classList.toggle('open');
+        });
+      }
+    });
+  }
+
+  if (footerEl) {
+    load('footer.html', footerEl);
+  }
+})();

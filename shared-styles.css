@@ -60,18 +60,19 @@ body {
 .nav-logo span { color: var(--color-accent); }
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
-  font-size: 12px; font-weight: 400; color: var(--color-text-secondary);
+  font-size: 15px; font-weight: 600; color: var(--color-text-secondary);
   text-decoration: none; transition: color 0.3s;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
+  font-family: var(--font-sans);
 }
 .nav-links a:hover { color: var(--color-text-primary); }
 .nav-cta {
   background: var(--color-accent) !important;
   color: var(--color-white) !important;
-  padding: 6px 16px !important;
+  padding: 7px 18px !important;
   border-radius: 980px !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
   transition: background 0.3s !important;
 }
 .nav-cta:hover { background: var(--color-link-hover) !important; }

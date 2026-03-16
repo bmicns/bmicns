@@ -8,20 +8,7 @@
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="01-home.html" class="nav-logo">BMI <span>C&S</span></a>
-    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="메뉴">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-    <div class="nav-links">
-      <a href="02-about.html">회사소개</a>
-      <a href="03-solutions.html">솔루션</a>
-      <a href="04-portfolio.html">주요실적</a>
-      <a href="05-contact.html" class="nav-cta" style="background:var(--accent) !important">문의하기</a>
-    </div>
-  </div>
-</nav>
+<div id="nav-placeholder"></div>
 
 <!-- Page Hero -->
 <section class="hero" style="min-height:45vh">
@@ -149,25 +136,8 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <a href="01-home.html" class="nav-logo" style="color:white; font-size:18px; display:block; margin-bottom:16px">BMI <span style="color:var(--accent)">C&S</span></a>
-      <p style="line-height:2">대표이사 김동의 | 사업자등록번호 263-87-03481<br>통신판매신고번호 2025-경기광명-0189<br>서울특별시 강남구 영동대로85길 34, 901호</p>
-    </div>
-    <div><h4>솔루션</h4><a href="03-solutions.html" style="display:block">전체 솔루션 보기</a></div>
-    <div><h4>회사</h4><a href="02-about.html" style="display:block">회사소개</a><a href="04-portfolio.html" style="display:block">주요실적</a></div>
-    <div><h4>고객센터</h4><p style="font-size:20px; font-weight:700; color:white">010-8490-9271</p><p>bmicns@gmail.com</p></div>
-  </div>
-  <div class="footer-bottom">Copyright &copy; 2025 BMI C&S Co., Ltd. All rights reserved.</div>
-</footer>
+<div id="footer-placeholder"></div>
 
-<script>
-document.querySelector('.nav-toggle')?.addEventListener('click', function() {
-  const links = document.querySelector('.nav-links');
-  links.classList.toggle('open');
-});
-</script>
+<script src="includes.js"></script>
 </body>
 </html>
