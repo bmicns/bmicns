@@ -76,6 +76,33 @@ body {
 }
 .nav-cta:hover { background: var(--color-link-hover) !important; }
 
+/* Mobile menu toggle */
+.nav-toggle {
+  display: none;
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px; align-items: center; justify-content: center;
+}
+.nav-toggle svg { stroke: var(--color-text-primary); }
+.nav-links.open {
+  display: flex !important;
+  position: fixed; top: 48px; left: 0; right: 0;
+  flex-direction: column; align-items: stretch;
+  background: rgba(251,251,253,0.98);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 16px 24px 24px; gap: 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
+  z-index: 9998;
+}
+.nav-links.open a {
+  padding: 12px 0; font-size: 15px;
+  border-bottom: 0.5px solid var(--color-border-light);
+}
+.nav-links.open .nav-cta {
+  margin-top: 8px; text-align: center;
+  padding: 12px 16px !important;
+}
+
 /* ═══════════════════════════════════════════
    HERO — Full-screen, dark background, huge type
    ═══════════════════════════════════════════ */
@@ -531,28 +558,78 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — Tablet (≤ 834px)
    ═══════════════════════════════════════════ */
 @media (max-width: 834px) {
   .hero h1 { font-size: 40px; }
   .hero p { font-size: 19px; }
   .section-title { font-size: 36px; }
+  .section-desc { font-size: 17px; }
   .stat-number { font-size: 40px; }
-  .card-grid-2, .card-grid-3, .card-grid-4 { grid-template-columns: 1fr; }
-  .solution-detail { grid-template-columns: 1fr; }
+  .card-grid-2, .card-grid-3 { grid-template-columns: 1fr 1fr; }
+  .card-grid-4 { grid-template-columns: 1fr 1fr; }
+  .solution-detail { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; }
   .solution-detail.reverse { direction: ltr; }
+  .solution-detail h3 { font-size: 24px; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .stats-row { flex-wrap: wrap; }
   .stat-item { min-width: 50%; }
   .nav-links { display: none; }
+  .nav-toggle { display: flex; }
   .hero-buttons { flex-direction: column; align-items: center; }
-  .value-grid { grid-template-columns: 1fr; }
+  .value-grid { grid-template-columns: 1fr 1fr; }
+  .section { padding: 80px 0; }
+
+  /* Inline grid overrides for tablet */
+  [style*="grid-template-columns: 1fr 1fr"][style*="gap:80px"] {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Modal responsive */
+  .modal { padding: 32px 24px 24px; }
+  .modal .form-row { grid-template-columns: 1fr; }
 }
 
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 480px)
+   ═══════════════════════════════════════════ */
 @media (max-width: 480px) {
-  .hero h1 { font-size: 32px; }
-  .section { padding: 64px 0; }
-  .section-title { font-size: 28px; }
-  .footer-inner { grid-template-columns: 1fr; }
+  .hero { min-height: 80vh; }
+  .hero h1 { font-size: 28px; }
+  .hero p { font-size: 16px; }
+  .hero-badge { font-size: 12px; padding: 5px 12px; }
+  .btn-primary, .btn-secondary { font-size: 15px; padding: 10px 22px; }
+  .section { padding: 56px 0; }
+  .section-title { font-size: 26px; }
+  .section-desc { font-size: 15px; }
+  .section-header { margin-bottom: 36px; }
+  .card-grid-2, .card-grid-3, .card-grid-4 { grid-template-columns: 1fr; }
+  .card { padding: 28px 24px; }
+  .stat-number { font-size: 32px; }
+  .stat-label { font-size: 11px; }
+  .stat-item { min-width: 50%; padding: 12px 0; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .value-grid { grid-template-columns: 1fr; }
+  .solution-detail { gap: 24px; padding: 36px 0; }
+  .solution-detail h3 { font-size: 22px; }
+  .solution-visual { height: 220px; }
+  .tag { font-size: 12px; padding: 5px 12px; }
+  .contact-info-card { padding: 20px; }
+  .glass-card { padding: 24px; }
+  .client-logos { gap: 20px; }
+  .client-logo { font-size: 13px; }
+
+  /* Modal mobile */
+  .modal { margin: 8px; padding: 28px 20px 20px; }
+  .modal h2 { font-size: 20px; }
+
+  /* All inline grids → single column on mobile */
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
 }
