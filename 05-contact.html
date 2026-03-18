@@ -38,30 +38,30 @@
           아래 양식을 작성해 주시면 담당자가 확인 후 연락드리겠습니다.
         </p>
 
-        <form class="contact-form">
+        <form class="contact-form" id="contactForm" onsubmit="submitInquiry(event)">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
             <div class="form-group">
               <label>이름 *</label>
-              <input type="text" placeholder="홍길동">
+              <input type="text" id="inqName" placeholder="홍길동" required>
             </div>
             <div class="form-group">
               <label>회사/기관명</label>
-              <input type="text" placeholder="OO기업">
+              <input type="text" id="inqCompany" placeholder="OO기업">
             </div>
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
             <div class="form-group">
               <label>이메일 *</label>
-              <input type="email" placeholder="example@company.com">
+              <input type="email" id="inqEmail" placeholder="example@company.com" required>
             </div>
             <div class="form-group">
               <label>연락처 *</label>
-              <input type="tel" placeholder="010-0000-0000">
+              <input type="tel" id="inqPhone" placeholder="010-0000-0000" required>
             </div>
           </div>
           <div class="form-group">
             <label>관심 솔루션</label>
-            <select>
+            <select id="inqSolution">
               <option>솔루션을 선택해 주세요</option>
               <option>네트워크 인프라 구축</option>
               <option>5G 특화망 (이음)</option>
@@ -78,7 +78,7 @@
           </div>
           <div class="form-group">
             <label>예상 예산</label>
-            <select>
+            <select id="inqBudget">
               <option>예산 범위를 선택해 주세요</option>
               <option>1,000만원 미만</option>
               <option>1,000만원 ~ 5,000만원</option>
@@ -90,10 +90,21 @@
           </div>
           <div class="form-group">
             <label>문의 내용 *</label>
-            <textarea placeholder="프로젝트에 대해 자유롭게 작성해 주세요.&#10;&#10;• 현재 상황 및 해결하고자 하는 문제&#10;• 원하시는 솔루션 또는 서비스&#10;• 희망 일정 등"></textarea>
+            <textarea id="inqContent" placeholder="프로젝트에 대해 자유롭게 작성해 주세요.&#10;&#10;• 현재 상황 및 해결하고자 하는 문제&#10;• 원하시는 솔루션 또는 서비스&#10;• 희망 일정 등" required></textarea>
           </div>
-          <button type="submit" class="form-submit">상담 신청하기</button>
+          <button type="submit" class="form-submit" id="submitBtn">상담 신청하기</button>
         </form>
+
+        <!-- 성공 메시지 -->
+        <div id="successMsg" style="display:none; text-align:center; padding:60px 20px">
+          <div style="font-size:48px; margin-bottom:16px">✅</div>
+          <h3 style="font-size:22px; font-weight:700; margin-bottom:8px">문의가 접수되었습니다</h3>
+          <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.6">
+            담당자가 확인 후 빠르게 연락드리겠습니다.<br>
+            감사합니다.
+          </p>
+          <button onclick="resetForm()" style="margin-top:24px; padding:12px 28px; border:none; border-radius:980px; background:var(--color-accent); color:white; font-size:15px; font-family:inherit; cursor:pointer">추가 문의하기</button>
+        </div>
       </div>
 
       <!-- Right: Contact Info -->
@@ -139,5 +150,32 @@
 <div id="footer-placeholder"></div>
 
 <script src="includes.js"></script>
+<script>
+function submitInquiry(e) {
+  e.preventDefault();
+  var solution = document.getElementById('inqSolution').value;
+  var budget = document.getElementById('inqBudget').value;
+  var inquiry = {
+    name: document.getElementById('inqName').value.trim(),
+    company: document.getElementById('inqCompany').value.trim(),
+    email: document.getElementById('inqEmail').value.trim(),
+    phone: document.getElementById('inqPhone').value.trim(),
+    solution: solution === '솔루션을 선택해 주세요' ? '' : solution,
+    budget: budget === '예산 범위를 선택해 주세요' ? '' : budget,
+    content: document.getElementById('inqContent').value.trim(),
+    date: new Date().toISOString()
+  };
+  var inquiries = JSON.parse(localStorage.getItem('bmicns_inquiries') || '[]');
+  inquiries.push(inquiry);
+  localStorage.setItem('bmicns_inquiries', JSON.stringify(inquiries));
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+function resetForm() {
+  document.getElementById('contactForm').reset();
+  document.getElementById('contactForm').style.display = 'flex';
+  document.getElementById('successMsg').style.display = 'none';
+}
+</script>
 </body>
 </html>

@@ -1,3 +1,17 @@
+// 접속자 통계 (localStorage 기반)
+(function () {
+  // admin 페이지는 카운트 제외
+  if (location.pathname.indexOf('admin') !== -1) return;
+  var today = new Date().toISOString().split('T')[0];
+  var visited = sessionStorage.getItem('bmicns_visited_' + today);
+  if (!visited) {
+    var visits = JSON.parse(localStorage.getItem('bmicns_visits') || '{}');
+    visits[today] = (visits[today] || 0) + 1;
+    localStorage.setItem('bmicns_visits', JSON.stringify(visits));
+    sessionStorage.setItem('bmicns_visited_' + today, '1');
+  }
+})();
+
 // 공통 영역(nav, footer) 로드 및 active 메뉴 처리
 (function () {
   var navEl = document.getElementById('nav-placeholder');

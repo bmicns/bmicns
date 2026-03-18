@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 - BMI C&S</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ═══════════════════════════════════════════
+       ADMIN — Login & Dashboard
+       ═══════════════════════════════════════════ */
+    .admin-wrap {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-fill);
+      padding: 24px;
+    }
+
+    /* Login */
+    .login-box {
+      background: var(--color-white);
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%; max-width: 400px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .login-box img { height: 32px; margin-bottom: 28px; }
+    .login-box h2 {
+      font-size: 22px; font-weight: 700; margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .login-box .login-desc {
+      font-size: 14px; color: var(--color-text-secondary); margin-bottom: 28px;
+    }
+    .login-box .form-group { text-align: left; margin-bottom: 16px; }
+    .login-box .form-group label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--color-text-primary); margin-bottom: 6px;
+    }
+    .login-box .form-group input {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--color-border);
+      border-radius: 12px; font-size: 14px; font-family: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .login-box .form-group input:focus {
+      outline: none; border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(41,151,255,0.15);
+    }
+    .login-error {
+      display: none; padding: 10px 14px; border-radius: 10px;
+      background: #fff2f2; color: #ff3b30; font-size: 13px;
+      margin-bottom: 16px; text-align: left;
+    }
+    .login-btn {
+      width: 100%; padding: 13px; border: none; border-radius: 12px;
+      background: var(--color-accent); color: var(--color-white);
+      font-size: 16px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background 0.3s;
+      margin-top: 8px;
+    }
+    .login-btn:hover { background: var(--color-link-hover); }
+
+    /* Dashboard */
+    .dashboard { display: none; min-height: 100vh; background: var(--color-fill); }
+    .dash-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .dash-header-left { display: flex; align-items: center; gap: 16px; }
+    .dash-header img { height: 28px; }
+    .dash-header .dash-badge {
+      padding: 4px 10px; border-radius: 980px;
+      background: rgba(41,151,255,0.1); color: var(--color-accent);
+      font-size: 11px; font-weight: 600;
+    }
+    .dash-logout {
+      padding: 8px 18px; border-radius: 980px;
+      border: 1px solid var(--color-border); background: var(--color-white);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: inherit; transition: all 0.2s;
+    }
+    .dash-logout:hover { background: var(--color-fill); }
+
+    .dash-body { max-width: 1080px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Stats cards */
+    .dash-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-bottom: 32px;
+    }
+    .dash-stat-card {
+      background: var(--color-white); border-radius: 16px; padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .dash-stat-card .stat-label {
+      font-size: 12px; font-weight: 600; color: var(--color-text-muted);
+      margin-bottom: 8px; letter-spacing: 0.02em;
+    }
+    .dash-stat-card .stat-value {
+      font-size: 32px; font-weight: 700; color: var(--color-text-primary);
+      letter-spacing: -0.03em;
+    }
+    .dash-stat-card .stat-sub {
+      font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;
+    }
+    .stat-value .accent { color: var(--color-accent); }
+
+    /* Tabs */
+    .dash-tabs {
+      display: flex; gap: 4px; margin-bottom: 24px;
+      background: var(--color-white); border-radius: 12px;
+      padding: 4px; width: fit-content;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .dash-tab {
+      padding: 10px 20px; border-radius: 10px; border: none;
+      background: transparent; font-size: 14px; font-weight: 500;
+      font-family: inherit; cursor: pointer; color: var(--color-text-secondary);
+      transition: all 0.2s;
+    }
+    .dash-tab.active {
+      background: var(--color-accent); color: var(--color-white); font-weight: 600;
+    }
+
+    /* Inquiry table */
+    .dash-table-wrap {
+      background: var(--color-white); border-radius: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+    .dash-table-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--color-border-light);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dash-table-header h3 { font-size: 17px; font-weight: 700; }
+    .dash-table-header .count {
+      font-size: 13px; color: var(--color-text-muted);
+    }
+    table.dash-table {
+      width: 100%; border-collapse: collapse;
+    }
+    .dash-table th {
+      padding: 12px 20px; font-size: 11px; font-weight: 600;
+      color: var(--color-text-muted); text-align: left;
+      background: var(--color-fill); letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .dash-table td {
+      padding: 14px 20px; font-size: 14px; border-bottom: 1px solid var(--color-border-light);
+      color: var(--color-text-primary); vertical-align: top;
+    }
+    .dash-table tr:last-child td { border-bottom: none; }
+    .dash-table tr:hover td { background: rgba(41,151,255,0.02); }
+    .td-name { font-weight: 600; }
+    .td-solution {
+      display: inline-block; padding: 3px 10px; border-radius: 980px;
+      font-size: 11px; font-weight: 500;
+      background: var(--color-fill); color: var(--color-text-secondary);
+    }
+    .td-content {
+      max-width: 300px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+      color: var(--color-text-secondary); font-size: 13px;
+    }
+    .td-date { font-size: 12px; color: var(--color-text-muted); white-space: nowrap; }
+
+    /* Visitor chart area */
+    .visitor-section { display: none; }
+    .visitor-chart-area {
+      background: var(--color-white); border-radius: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      padding: 24px; margin-bottom: 24px;
+    }
+    .visitor-chart-area h3 {
+      font-size: 17px; font-weight: 700; margin-bottom: 20px;
+    }
+    .chart-bars {
+      display: flex; align-items: flex-end; gap: 8px;
+      height: 200px; padding: 0 4px;
+    }
+    .chart-bar-wrap {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; height: 100%; justify-content: flex-end;
+    }
+    .chart-bar {
+      width: 100%; max-width: 48px; border-radius: 8px 8px 0 0;
+      background: var(--color-accent); opacity: 0.8;
+      transition: opacity 0.2s; min-height: 4px;
+    }
+    .chart-bar:hover { opacity: 1; }
+    .chart-bar-label {
+      font-size: 11px; color: var(--color-text-muted);
+      margin-top: 8px; font-weight: 500;
+    }
+    .chart-bar-value {
+      font-size: 11px; font-weight: 600; color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    /* Visitor table */
+    .visitor-log-table {
+      background: var(--color-white); border-radius: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04); overflow: hidden;
+    }
+
+    /* Detail modal */
+    .detail-modal {
+      display: none; position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .detail-modal.active { display: flex; }
+    .detail-box {
+      background: var(--color-white); border-radius: 20px;
+      width: 100%; max-width: 560px; padding: 36px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .detail-box h3 {
+      font-size: 20px; font-weight: 700; margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .detail-row {
+      display: grid; grid-template-columns: 100px 1fr; gap: 8px;
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-light);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label {
+      font-size: 13px; font-weight: 600; color: var(--color-text-muted);
+    }
+    .detail-value {
+      font-size: 14px; color: var(--color-text-primary); line-height: 1.5;
+    }
+    .detail-close {
+      margin-top: 20px; width: 100%; padding: 12px;
+      border: none; border-radius: 12px; background: var(--color-fill);
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: background 0.2s;
+    }
+    .detail-close:hover { background: var(--color-border-light); }
+
+    /* Empty state */
+    .empty-state {
+      padding: 60px 24px; text-align: center;
+    }
+    .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; color: var(--color-text-muted); }
+
+    /* Responsive */
+    @media (max-width: 834px) {
+      .dash-stats { grid-template-columns: repeat(2, 1fr); }
+      .dash-table th:nth-child(4), .dash-table td:nth-child(4),
+      .dash-table th:nth-child(5), .dash-table td:nth-child(5) { display: none; }
+    }
+    @media (max-width: 480px) {
+      .dash-stats { grid-template-columns: 1fr; }
+      .login-box { padding: 36px 24px; }
+      .detail-box { padding: 28px 20px; }
+      .detail-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LOGIN SCREEN
+     ═══════════════════════════════════════════ -->
+<div class="admin-wrap" id="loginScreen">
+  <div class="login-box">
+    <img src="logo2.png" alt="BMI C&S">
+    <h2>관리자 로그인</h2>
+    <p class="login-desc">관리자 계정으로 로그인해 주세요.</p>
+    <div class="login-error" id="loginError">아이디 또는 비밀번호가 올바르지 않습니다.</div>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>아이디</label>
+        <input type="text" id="loginId" placeholder="admin" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>비밀번호</label>
+        <input type="password" id="loginPw" placeholder="비밀번호 입력" autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn">로그인</button>
+    </form>
+    <p style="margin-top:24px; font-size:12px; color:var(--color-text-muted)">
+      <a href="01-home.html" style="color:var(--color-accent); text-decoration:none">← 홈으로 돌아가기</a>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     DASHBOARD
+     ═══════════════════════════════════════════ -->
+<div class="dashboard" id="dashboard">
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="dash-header-left">
+      <img src="logo2.png" alt="BMI C&S">
+      <span class="dash-badge">Admin</span>
+    </div>
+    <button class="dash-logout" onclick="handleLogout()">로그아웃</button>
+  </div>
+
+  <div class="dash-body">
+    <!-- Stats -->
+    <div class="dash-stats">
+      <div class="dash-stat-card">
+        <div class="stat-label">오늘 방문자</div>
+        <div class="stat-value" id="statToday">0</div>
+        <div class="stat-sub" id="statTodaySub">-</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="stat-label">이번 주 방문자</div>
+        <div class="stat-value" id="statWeek">0</div>
+        <div class="stat-sub" id="statWeekSub">-</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="stat-label">총 방문자</div>
+        <div class="stat-value" id="statTotal"><span class="accent">0</span></div>
+        <div class="stat-sub">전체 누적</div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="stat-label">총 문의</div>
+        <div class="stat-value" id="statInquiry"><span class="accent">0</span></div>
+        <div class="stat-sub" id="statInquirySub">-</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="dash-tabs">
+      <button class="dash-tab active" onclick="switchTab('inquiry')">문의 내역</button>
+      <button class="dash-tab" onclick="switchTab('visitor')">접속자 통계</button>
+    </div>
+
+    <!-- Inquiry Tab -->
+    <div id="inquirySection">
+      <div class="dash-table-wrap">
+        <div class="dash-table-header">
+          <h3>문의 내역</h3>
+          <span class="count" id="inquiryCount">0건</span>
+        </div>
+        <div id="inquiryTableBody">
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>아직 접수된 문의가 없습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visitor Tab -->
+    <div class="visitor-section" id="visitorSection">
+      <div class="visitor-chart-area">
+        <h3>최근 7일 방문자 추이</h3>
+        <div class="chart-bars" id="visitorChart"></div>
+      </div>
+      <div class="visitor-log-table">
+        <div class="dash-table-header">
+          <h3>일별 방문 기록</h3>
+        </div>
+        <div id="visitorTableBody">
+          <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <p>방문 기록이 없습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="detail-modal" id="detailModal">
+  <div class="detail-box" id="detailContent"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   AUTH
+   ═══════════════════════════════════════════ */
+var ADMIN_ID = 'admin';
+var ADMIN_PW = '638500';
+
+function handleLogin(e) {
+  e.preventDefault();
+  var id = document.getElementById('loginId').value.trim();
+  var pw = document.getElementById('loginPw').value.trim();
+  if (id === ADMIN_ID && pw === ADMIN_PW) {
+    sessionStorage.setItem('bmicns_admin', 'true');
+    showDashboard();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginPw').value = '';
+  }
+}
+
+function handleLogout() {
+  sessionStorage.removeItem('bmicns_admin');
+  location.reload();
+}
+
+function showDashboard() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadStats();
+  loadInquiries();
+  loadVisitorChart();
+}
+
+// Auto-login if session exists
+if (sessionStorage.getItem('bmicns_admin') === 'true') {
+  showDashboard();
+}
+
+/* ═══════════════════════════════════════════
+   TABS
+   ═══════════════════════════════════════════ */
+function switchTab(tab) {
+  var tabs = document.querySelectorAll('.dash-tab');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  if (tab === 'inquiry') {
+    tabs[0].classList.add('active');
+    document.getElementById('inquirySection').style.display = 'block';
+    document.getElementById('visitorSection').style.display = 'none';
+  } else {
+    tabs[1].classList.add('active');
+    document.getElementById('inquirySection').style.display = 'none';
+    document.getElementById('visitorSection').style.display = 'block';
+    document.getElementById('visitorSection').classList.remove('visitor-section');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   STATS
+   ═══════════════════════════════════════════ */
+function loadStats() {
+  var visits = JSON.parse(localStorage.getItem('bmicns_visits') || '{}');
+  var inquiries = JSON.parse(localStorage.getItem('bmicns_inquiries') || '[]');
+
+  var today = new Date().toISOString().split('T')[0];
+  var todayCount = visits[today] || 0;
+
+  // Yesterday
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var yesterdayStr = yesterday.toISOString().split('T')[0];
+  var yesterdayCount = visits[yesterdayStr] || 0;
+
+  // This week
+  var weekTotal = 0;
+  var lastWeekTotal = 0;
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(); d.setDate(d.getDate() - i);
+    weekTotal += visits[d.toISOString().split('T')[0]] || 0;
+  }
+  for (var j = 7; j < 14; j++) {
+    var d2 = new Date(); d2.setDate(d2.getDate() - j);
+    lastWeekTotal += visits[d2.toISOString().split('T')[0]] || 0;
+  }
+
+  // Total
+  var total = 0;
+  for (var key in visits) { total += visits[key]; }
+
+  // Today sub text
+  var todayDiff = todayCount - yesterdayCount;
+  var todaySubText = todayDiff > 0 ? '어제 대비 +' + todayDiff :
+                     todayDiff < 0 ? '어제 대비 ' + todayDiff : '어제와 동일';
+
+  // Week sub text
+  var weekDiff = weekTotal - lastWeekTotal;
+  var weekSubText = weekDiff > 0 ? '지난주 대비 +' + weekDiff :
+                    weekDiff < 0 ? '지난주 대비 ' + weekDiff : '지난주와 동일';
+
+  document.getElementById('statToday').textContent = todayCount;
+  document.getElementById('statTodaySub').textContent = todaySubText;
+  document.getElementById('statWeek').textContent = weekTotal;
+  document.getElementById('statWeekSub').textContent = weekSubText;
+  document.getElementById('statTotal').innerHTML = '<span class="accent">' + total + '</span>';
+  document.getElementById('statInquiry').innerHTML = '<span class="accent">' + inquiries.length + '</span>';
+
+  // Inquiry sub
+  var todayInquiries = inquiries.filter(function(inq) {
+    return inq.date && inq.date.startsWith(today);
+  }).length;
+  document.getElementById('statInquirySub').textContent = '오늘 ' + todayInquiries + '건 접수';
+}
+
+/* ═══════════════════════════════════════════
+   INQUIRIES TABLE
+   ═══════════════════════════════════════════ */
+function loadInquiries() {
+  var inquiries = JSON.parse(localStorage.getItem('bmicns_inquiries') || '[]');
+  var container = document.getElementById('inquiryTableBody');
+  document.getElementById('inquiryCount').textContent = inquiries.length + '건';
+
+  if (inquiries.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>아직 접수된 문의가 없습니다.</p></div>';
+    return;
+  }
+
+  // Sort by date desc
+  inquiries.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+
+  var html = '<table class="dash-table"><thead><tr>';
+  html += '<th>이름</th><th>회사</th><th>연락처</th><th>솔루션</th><th>문의내용</th><th>접수일</th>';
+  html += '</tr></thead><tbody>';
+
+  inquiries.forEach(function(inq, idx) {
+    html += '<tr style="cursor:pointer" onclick="showDetail(' + idx + ')">';
+    html += '<td class="td-name">' + esc(inq.name || '-') + '</td>';
+    html += '<td>' + esc(inq.company || '-') + '</td>';
+    html += '<td>' + esc(inq.phone || '-') + '</td>';
+    html += '<td><span class="td-solution">' + esc(inq.solution || '-') + '</span></td>';
+    html += '<td class="td-content">' + esc(inq.content || '-') + '</td>';
+    html += '<td class="td-date">' + formatDate(inq.date) + '</td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function showDetail(idx) {
+  var inquiries = JSON.parse(localStorage.getItem('bmicns_inquiries') || '[]');
+  inquiries.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+  var inq = inquiries[idx];
+  if (!inq) return;
+
+  var html = '<h3>문의 상세</h3>';
+  html += '<div class="detail-row"><span class="detail-label">이름</span><span class="detail-value">' + esc(inq.name) + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">회사/기관</span><span class="detail-value">' + esc(inq.company || '-') + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">이메일</span><span class="detail-value">' + esc(inq.email) + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">연락처</span><span class="detail-value">' + esc(inq.phone) + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">관심 솔루션</span><span class="detail-value">' + esc(inq.solution || '-') + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">예상 예산</span><span class="detail-value">' + esc(inq.budget || '-') + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">문의 내용</span><span class="detail-value" style="white-space:pre-wrap">' + esc(inq.content) + '</span></div>';
+  html += '<div class="detail-row"><span class="detail-label">접수일시</span><span class="detail-value">' + formatDate(inq.date) + '</span></div>';
+  html += '<button class="detail-close" onclick="closeDetail()">닫기</button>';
+
+  document.getElementById('detailContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('active');
+}
+
+function closeDetail() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDetail();
+});
+
+/* ═══════════════════════════════════════════
+   VISITOR CHART
+   ═══════════════════════════════════════════ */
+function loadVisitorChart() {
+  var visits = JSON.parse(localStorage.getItem('bmicns_visits') || '{}');
+  var days = [];
+  var maxVal = 1;
+
+  for (var i = 6; i >= 0; i--) {
+    var d = new Date(); d.setDate(d.getDate() - i);
+    var dateStr = d.toISOString().split('T')[0];
+    var count = visits[dateStr] || 0;
+    if (count > maxVal) maxVal = count;
+    days.push({
+      date: dateStr,
+      label: (d.getMonth() + 1) + '/' + d.getDate(),
+      dayName: ['일','월','화','수','목','금','토'][d.getDay()],
+      count: count
+    });
+  }
+
+  var chartHtml = '';
+  days.forEach(function(day) {
+    var height = Math.max(4, (day.count / maxVal) * 160);
+    chartHtml += '<div class="chart-bar-wrap">';
+    chartHtml += '<span class="chart-bar-value">' + day.count + '</span>';
+    chartHtml += '<div class="chart-bar" style="height:' + height + 'px"></div>';
+    chartHtml += '<span class="chart-bar-label">' + day.label + '<br><span style="font-size:10px;color:var(--color-text-muted)">' + day.dayName + '</span></span>';
+    chartHtml += '</div>';
+  });
+
+  document.getElementById('visitorChart').innerHTML = chartHtml;
+
+  // Visitor daily table
+  var allDates = Object.keys(visits).sort().reverse();
+  var tableContainer = document.getElementById('visitorTableBody');
+
+  if (allDates.length === 0) {
+    tableContainer.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><p>방문 기록이 없습니다.</p></div>';
+    return;
+  }
+
+  var tableHtml = '<table class="dash-table"><thead><tr>';
+  tableHtml += '<th>날짜</th><th>요일</th><th>방문수</th>';
+  tableHtml += '</tr></thead><tbody>';
+
+  allDates.slice(0, 30).forEach(function(dateStr) {
+    var d = new Date(dateStr);
+    var dayName = ['일','월','화','수','목','금','토'][d.getDay()];
+    tableHtml += '<tr>';
+    tableHtml += '<td>' + dateStr + '</td>';
+    tableHtml += '<td>' + dayName + '</td>';
+    tableHtml += '<td style="font-weight:600">' + visits[dateStr] + '</td>';
+    tableHtml += '</tr>';
+  });
+
+  tableHtml += '</tbody></table>';
+  tableContainer.innerHTML = tableHtml;
+}
+
+/* ═══════════════════════════════════════════
+   UTILS
+   ═══════════════════════════════════════════ */
+function esc(str) {
+  if (!str) return '';
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+function formatDate(str) {
+  if (!str) return '-';
+  var d = new Date(str);
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0') + ' ' +
+    String(d.getHours()).padStart(2, '0') + ':' +
+    String(d.getMinutes()).padStart(2, '0');
+}
+</script>
+
+</body>
+</html>
