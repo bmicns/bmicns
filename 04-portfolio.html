@@ -5,13 +5,271 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>주요실적 - BMI C&S</title>
   <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ─── Portfolio Timeline ─── */
+    .portfolio-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+    .portfolio-stat {
+      text-align: center;
+      padding: 28px 16px;
+      position: relative;
+    }
+    .portfolio-stat + .portfolio-stat::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 30%; height: 40%;
+      width: 0.5px;
+      background: rgba(255,255,255,0.1);
+    }
+    .portfolio-stat .num {
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .portfolio-stat .num .accent { color: var(--color-green); }
+    .portfolio-stat .label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ─── Year Filter ─── */
+    .year-filter {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .year-btn {
+      padding: 8px 20px;
+      border-radius: 980px;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: -0.01em;
+    }
+    .year-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+    .year-btn.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+
+    /* ─── Timeline ─── */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0; bottom: 0;
+      width: 1.5px;
+      background: linear-gradient(to bottom, var(--color-accent), var(--color-border-light));
+    }
+
+    .timeline-year {
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .timeline-year-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .timeline-year-dot {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(41,151,255,0.25);
+    }
+    .timeline-year-text {
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-items {
+      padding-left: 80px;
+      padding-bottom: 32px;
+    }
+
+    .timeline-card {
+      background: var(--color-white);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 12px;
+      border: 0.5px solid var(--color-border-light);
+      transition: all 0.3s cubic-bezier(.25,.1,.25,1);
+      position: relative;
+    }
+    .timeline-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      border-color: var(--color-accent);
+    }
+    .timeline-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .timeline-client {
+      font-size: clamp(15px, 1.6vw, 17px);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+    }
+    .timeline-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 980px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .badge-public {
+      background: #e8f4fd;
+      color: #0071e3;
+    }
+    .badge-private {
+      background: #f0faf0;
+      color: #1d8a3e;
+    }
+    .badge-b2c {
+      background: #fef3e8;
+      color: #c25e00;
+    }
+    .badge-ongoing {
+      background: #fff3e0;
+      color: #e65100;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .timeline-project {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+    .timeline-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--color-border-light);
+    }
+    .timeline-detail-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      color: var(--color-text-muted);
+    }
+    .timeline-detail p {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── Client Section ─── */
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .client-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 0.5px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      transition: all 0.3s;
+    }
+    .client-chip:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    .client-chip svg {
+      width: 16px; height: 16px;
+      opacity: 0.5;
+    }
+
+    /* ─── CTA Bottom ─── */
+    .cta-bottom {
+      text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, var(--color-fill) 0%, var(--color-white) 100%);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 834px) {
+      .portfolio-stats { grid-template-columns: repeat(2, 1fr); }
+      .timeline::before { left: 20px; }
+      .timeline-year-dot { width: 40px; height: 40px; font-size: 13px; }
+      .timeline-items { padding-left: 60px; }
+    }
+    @media (max-width: 480px) {
+      .portfolio-stats { grid-template-columns: repeat(2, 1fr); gap: 0; }
+      .portfolio-stat { padding: 20px 12px; }
+      .timeline::before { left: 16px; }
+      .timeline-year-dot { width: 32px; height: 32px; font-size: 11px; }
+      .timeline-items { padding-left: 48px; }
+      .timeline-card { padding: 20px; }
+      .timeline-card-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .client-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 </head>
 <body>
 
 <div id="nav-placeholder"></div>
 
 <!-- Page Hero -->
-<section class="hero" style="min-height:50vh">
+<section class="hero" style="min-height:60vh">
   <div class="hero-content">
     <div class="hero-badge">Portfolio</div>
     <h1>
@@ -22,28 +280,317 @@
       공공기관부터 대기업, 지자체까지<br>
       다양한 프로젝트를 성공적으로 수행했습니다.
     </p>
+
+    <!-- Stats -->
+    <div class="portfolio-stats">
+      <div class="portfolio-stat">
+        <div class="num">12<span class="accent">+</span></div>
+        <div class="label">수행 프로젝트</div>
+      </div>
+      <div class="portfolio-stat">
+        <div class="num">4<span class="accent">년</span></div>
+        <div class="label">사업 연속 수행</div>
+      </div>
+      <div class="portfolio-stat">
+        <div class="num">8<span class="accent">+</span></div>
+        <div class="label">협력 기관</div>
+      </div>
+      <div class="portfolio-stat">
+        <div class="num">3<span class="accent">건</span></div>
+        <div class="label">진행중 사업</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- 준비중 -->
-<section class="section" style="min-height:50vh; display:flex; align-items:center; justify-content:center">
-  <div class="section-inner" style="text-align:center">
-    <div style="font-size:64px; margin-bottom:24px; opacity:0.3">
-      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#86868b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-      </svg>
+<!-- Timeline Section -->
+<section class="section">
+  <div class="section-inner" style="max-width:1000px">
+    <div class="section-header">
+      <div class="section-label">Track Record</div>
+      <div class="section-title">프로젝트 실적</div>
+      <div class="section-desc">2023년부터 현재까지 수행한 주요 프로젝트입니다.</div>
     </div>
-    <div class="section-title" style="font-size:32px; margin-bottom:12px">페이지 준비중입니다</div>
-    <p class="section-desc">
-      주요 실적 페이지는 현재 준비중입니다.<br>
-      빠른 시일 내에 업데이트하겠습니다.
-    </p>
-    <a href="05-contact.html" class="btn-primary" style="margin-top:32px; display:inline-block">문의하기</a>
+
+    <!-- Year Filter -->
+    <div class="year-filter">
+      <button class="year-btn active" onclick="filterYear('all')">전체</button>
+      <button class="year-btn" onclick="filterYear('2026')">2026</button>
+      <button class="year-btn" onclick="filterYear('2025')">2025</button>
+      <button class="year-btn" onclick="filterYear('2024')">2024</button>
+      <button class="year-btn" onclick="filterYear('2023')">2023</button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+
+      <!-- 2026 -->
+      <div class="timeline-year" data-year="2026">
+        <div class="timeline-year-label">
+          <div class="timeline-year-dot">26</div>
+          <div class="timeline-year-text">2026</div>
+        </div>
+        <div class="timeline-items">
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">B2C 고객</span>
+              <span class="timeline-badge badge-b2c">B2C</span>
+              <span class="timeline-badge badge-ongoing">진행중</span>
+            </div>
+            <div class="timeline-project">고객 요구 AI 개발</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>사업 협력 및 개발 진행 (전세사기 방지, 자산관리, 안전관리)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">일반 대학</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">대학 정보보안 강화를 위한 망분리 ISP 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>사업 컨설팅 및 제안 참여</p>
+            </div>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">통신사 협력</span>
+              <span class="timeline-badge badge-private">민간</span>
+            </div>
+            <div class="timeline-project">국가망보안체계(N2SF) 사업 협력</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>솔루션 제안 및 컨설팅 참여 (w/ 통신사)</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2025~2026 -->
+      <div class="timeline-year" data-year="2025">
+        <div class="timeline-year-label">
+          <div class="timeline-year-dot">25</div>
+          <div class="timeline-year-text">2025</div>
+        </div>
+        <div class="timeline-items">
+
+          <div class="timeline-card" data-year="2025">
+            <div class="timeline-card-header">
+              <span class="timeline-client">IT 기업</span>
+              <span class="timeline-badge badge-private">민간</span>
+              <span class="timeline-badge badge-ongoing">진행중</span>
+            </div>
+            <div class="timeline-project">홈페이지 구축 / 유지보수 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>기획 및 홈페이지 구축 / 유지보수 (2025~2026)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card" data-year="2025">
+            <div class="timeline-card-header">
+              <span class="timeline-client">방산기업</span>
+              <span class="timeline-badge badge-private">민간</span>
+              <span class="timeline-badge badge-ongoing">진행중</span>
+            </div>
+            <div class="timeline-project">스마트 팩토리 적용을 위한 특화망 5G 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>제안 컨설팅 및 POC 진행 (2025~2026)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card" data-year="2025">
+            <div class="timeline-card-header">
+              <span class="timeline-client">행정안전부 / 국가정보자원관리원</span>
+              <span class="timeline-badge badge-public">공공</span>
+              <span class="timeline-badge badge-ongoing">진행중</span>
+            </div>
+            <div class="timeline-project">국가정보자원관리원 국가정보통신망 백본전송망 구축·운영사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>제안 컨설팅 및 추가 제안 · 사업 수행 중 (2025~2026)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card" data-year="2025">
+            <div class="timeline-card-header">
+              <span class="timeline-client">중소벤처기업부</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">중소기업 기술유출방지시스템 구축사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <p>사업 컨설팅 · 사업 수행 및 구축 완료 (화장품 협력 회사)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card" data-year="2025">
+            <div class="timeline-card-header">
+              <span class="timeline-client">주택도시보증공사</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">정보통신회선 이원화 사업자 선정 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>추가 제안 참여</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2024 -->
+      <div class="timeline-year" data-year="2024">
+        <div class="timeline-year-label">
+          <div class="timeline-year-dot">24</div>
+          <div class="timeline-year-text">2024</div>
+        </div>
+        <div class="timeline-items">
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">원주시 · 정선군</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">원정밸리 자원산업기반 디지털 전환 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>컨설팅 제안 참여 · 컨소시엄 제안컨설팅 (w/ KPMG, 에릭슨, CJ, 두산)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">NIPA (정보통신산업진흥원)</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">28GHz 특화망 5G 산업융합 확산 과제</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <p>제안 · 수주 및 수행 (w/ 한라대, TTA)</p>
+            </div>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">국토부</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">국토부 강소형 스마트시티</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>제안 참여 (w/ 원주시, KPMG)</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="timeline-year" data-year="2023">
+        <div class="timeline-year-label">
+          <div class="timeline-year-dot">23</div>
+          <div class="timeline-year-text">2023</div>
+        </div>
+        <div class="timeline-items">
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">NIA (한국지능정보사회진흥원)</span>
+              <span class="timeline-badge badge-public">공공</span>
+            </div>
+            <div class="timeline-project">특화망 5G 융합서비스 테스트베드 실증과제 사업</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>제안 (w/ SKNS, AI업체)</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Client Partners Section -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Partners</div>
+      <div class="section-title">협력 기관 · 기업</div>
+      <div class="section-desc">다양한 공공기관과 기업들과의 신뢰를 쌓아가고 있습니다.</div>
+    </div>
+
+    <div class="client-grid">
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        행정안전부
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        국토부
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        중소벤처기업부
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        NIPA
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        NIA
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        주택도시보증공사
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        KPMG
+      </div>
+      <div class="client-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        에릭슨
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-bottom">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-title" style="margin-bottom:12px">프로젝트를 함께 하고 싶으신가요?</div>
+    <div class="section-desc" style="margin-bottom:32px">BMI C&S와 함께 성공적인 프로젝트를 시작하세요.</div>
+    <a href="05-contact.html" class="btn-primary" style="display:inline-block">프로젝트 문의하기</a>
   </div>
 </section>
 
 <div id="footer-placeholder"></div>
 
 <script src="includes.js"></script>
+<script>
+function filterYear(year) {
+  document.querySelectorAll('.year-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === (year === 'all' ? '전체' : year));
+  });
+  document.querySelectorAll('.timeline-year').forEach(section => {
+    if (year === 'all') {
+      section.style.display = '';
+    } else {
+      section.style.display = section.dataset.year === year ? '' : 'none';
+    }
+  });
+}
+</script>
 </body>
 </html>
