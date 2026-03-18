@@ -6,41 +6,6 @@
   <title>주요실적 - BMI C&S</title>
   <link rel="stylesheet" href="shared-styles.css">
   <style>
-    /* ─── Portfolio Timeline ─── */
-    .portfolio-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      max-width: 800px;
-      margin: 0 auto 20px;
-    }
-    .portfolio-stat {
-      text-align: center;
-      padding: 28px 16px;
-      position: relative;
-    }
-    .portfolio-stat + .portfolio-stat::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 30%; height: 40%;
-      width: 0.5px;
-      background: rgba(255,255,255,0.1);
-    }
-    .portfolio-stat .num {
-      font-size: clamp(32px, 4.5vw, 48px);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
-    .portfolio-stat .num .accent { color: var(--color-green); }
-    .portfolio-stat .label {
-      font-size: 13px;
-      color: var(--color-text-muted);
-      margin-top: 6px;
-      font-weight: 500;
-    }
-
     /* ─── Year Filter ─── */
     .year-filter {
       display: flex;
@@ -247,14 +212,11 @@
 
     /* ─── Responsive ─── */
     @media (max-width: 834px) {
-      .portfolio-stats { grid-template-columns: repeat(2, 1fr); }
       .timeline::before { left: 20px; }
       .timeline-year-dot { width: 40px; height: 40px; font-size: 13px; }
       .timeline-items { padding-left: 60px; }
     }
     @media (max-width: 480px) {
-      .portfolio-stats { grid-template-columns: repeat(2, 1fr); gap: 0; }
-      .portfolio-stat { padding: 20px 12px; }
       .timeline::before { left: 16px; }
       .timeline-year-dot { width: 32px; height: 32px; font-size: 11px; }
       .timeline-items { padding-left: 48px; }
@@ -281,25 +243,6 @@
       다양한 프로젝트를 성공적으로 수행했습니다.
     </p>
 
-    <!-- Stats -->
-    <div class="portfolio-stats">
-      <div class="portfolio-stat">
-        <div class="num">12<span class="accent">+</span></div>
-        <div class="label">수행 프로젝트</div>
-      </div>
-      <div class="portfolio-stat">
-        <div class="num">4<span class="accent">년</span></div>
-        <div class="label">사업 연속 수행</div>
-      </div>
-      <div class="portfolio-stat">
-        <div class="num">8<span class="accent">+</span></div>
-        <div class="label">협력 기관</div>
-      </div>
-      <div class="portfolio-stat">
-        <div class="num">3<span class="accent">건</span></div>
-        <div class="label">진행중 사업</div>
-      </div>
-    </div>
   </div>
 </section>
 
