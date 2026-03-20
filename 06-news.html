@@ -82,6 +82,10 @@
       font-size: 15px; line-height: 1.8; color: var(--color-text-primary);
       white-space: pre-wrap;
     }
+    .news-modal-content .news-body-img {
+      display: block; max-width: 100%; border-radius: 12px;
+      margin: 16px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
     .news-modal-close {
       margin-top: 28px; width: 100%; padding: 13px;
       border: none; border-radius: 12px; background: var(--color-fill);
@@ -178,10 +182,22 @@ function showNewsDetail(idx) {
   var news = newsList[idx];
   if (!news) return;
 
+  var bodyContent = esc(news.content || news.summary || '');
+  // Replace [이미지N] tags with actual images
+  if (news.bodyImages && news.bodyImages.length > 0) {
+    news.bodyImages.forEach(function(img) {
+      var escaped = esc(img.tag);
+      bodyContent = bodyContent.split(escaped).join('</span><img class="news-body-img" src="' + img.data + '" alt=""><span>');
+    });
+  }
+
   var html = '<span class="news-modal-category">' + esc(news.category || '회사소식') + '</span>';
   html += '<div class="news-modal-title">' + esc(news.title) + '</div>';
   html += '<div class="news-modal-date">' + formatDate(news.date) + '</div>';
-  html += '<div class="news-modal-content">' + esc(news.content || news.summary || '') + '</div>';
+  if (news.thumbnail) {
+    html += '<img style="width:100%; border-radius:12px; margin-bottom:20px; max-height:400px; object-fit:cover" src="' + esc(news.thumbnail) + '" alt="">';
+  }
+  html += '<div class="news-modal-content"><span>' + bodyContent + '</span></div>';
   html += '<button class="news-modal-close" onclick="closeNewsModal()">닫기</button>';
 
   document.getElementById('newsModalContent').innerHTML = html;
