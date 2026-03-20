@@ -89,7 +89,7 @@
 
     /* Stats cards */
     .dash-stats {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
       margin-bottom: 32px;
     }
     .dash-stat-card {
@@ -250,7 +250,63 @@
     .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
     .empty-state p { font-size: 14px; color: var(--color-text-muted); }
 
+    /* News management */
+    .news-section { display: none; }
+    .news-form-wrap {
+      background: var(--color-white); border-radius: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      padding: 28px; margin-bottom: 24px;
+    }
+    .news-form-wrap h3 { font-size: 17px; font-weight: 700; margin-bottom: 20px; }
+    .news-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .news-form-grid .full { grid-column: 1 / -1; }
+    .news-field label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--color-text-primary); margin-bottom: 6px;
+    }
+    .news-field input, .news-field select, .news-field textarea {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--color-border);
+      border-radius: 10px; font-size: 14px; font-family: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .news-field input:focus, .news-field select:focus, .news-field textarea:focus {
+      outline: none; border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(41,151,255,0.15);
+    }
+    .news-field textarea { resize: vertical; min-height: 120px; }
+    .news-form-btns {
+      display: flex; gap: 10px; margin-top: 20px;
+    }
+    .news-btn-submit {
+      padding: 11px 28px; border: none; border-radius: 10px;
+      background: var(--color-accent); color: var(--color-white);
+      font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: background 0.2s;
+    }
+    .news-btn-submit:hover { background: var(--color-link-hover); }
+    .news-btn-cancel {
+      padding: 11px 28px; border: 1px solid var(--color-border); border-radius: 10px;
+      background: var(--color-white); font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: inherit; transition: all 0.2s;
+    }
+    .news-btn-cancel:hover { background: var(--color-fill); }
+    .news-item-actions { display: flex; gap: 6px; }
+    .news-item-actions button {
+      padding: 5px 12px; border-radius: 8px; border: none;
+      font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit;
+      transition: background 0.2s;
+    }
+    .news-btn-edit { background: rgba(41,151,255,0.1); color: var(--color-accent); }
+    .news-btn-edit:hover { background: rgba(41,151,255,0.2); }
+    .news-btn-delete { background: rgba(255,59,48,0.1); color: #ff3b30; }
+    .news-btn-delete:hover { background: rgba(255,59,48,0.2); }
+
     /* Responsive */
+    @media (max-width: 1080px) {
+      .dash-stats { grid-template-columns: repeat(3, 1fr); }
+    }
     @media (max-width: 834px) {
       .dash-stats { grid-template-columns: repeat(2, 1fr); }
       .dash-table th:nth-child(4), .dash-table td:nth-child(4),
@@ -328,12 +384,18 @@
         <div class="stat-value" id="statInquiry"><span class="accent">0</span></div>
         <div class="stat-sub" id="statInquirySub">-</div>
       </div>
+      <div class="dash-stat-card">
+        <div class="stat-label">등록 소식</div>
+        <div class="stat-value" id="statNews"><span class="accent">0</span></div>
+        <div class="stat-sub" id="statNewsSub">-</div>
+      </div>
     </div>
 
     <!-- Tabs -->
     <div class="dash-tabs">
       <button class="dash-tab active" onclick="switchTab('inquiry')">문의 내역</button>
       <button class="dash-tab" onclick="switchTab('visitor')">접속자 통계</button>
+      <button class="dash-tab" onclick="switchTab('news')">소식 관리</button>
     </div>
 
     <!-- Inquiry Tab -->
@@ -347,6 +409,59 @@
           <div class="empty-state">
             <div class="empty-icon">📭</div>
             <p>아직 접수된 문의가 없습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Tab -->
+    <div class="news-section" id="newsSection">
+      <div class="news-form-wrap" id="newsFormWrap">
+        <h3 id="newsFormTitle">새 소식 등록</h3>
+        <input type="hidden" id="newsEditId" value="">
+        <div class="news-form-grid">
+          <div class="news-field">
+            <label>카테고리</label>
+            <select id="newsCategory">
+              <option value="회사소식">회사소식</option>
+              <option value="수주">수주</option>
+              <option value="파트너십">파트너십</option>
+              <option value="공지">공지</option>
+              <option value="기술">기술</option>
+            </select>
+          </div>
+          <div class="news-field">
+            <label>썸네일 URL (선택)</label>
+            <input type="text" id="newsThumbnail" placeholder="https://...">
+          </div>
+          <div class="news-field full">
+            <label>제목</label>
+            <input type="text" id="newsTitle" placeholder="소식 제목을 입력하세요">
+          </div>
+          <div class="news-field full">
+            <label>요약 (목록에 표시)</label>
+            <input type="text" id="newsSummary" placeholder="한 줄 요약">
+          </div>
+          <div class="news-field full">
+            <label>본문</label>
+            <textarea id="newsContent" placeholder="상세 내용을 입력하세요"></textarea>
+          </div>
+        </div>
+        <div class="news-form-btns">
+          <button class="news-btn-submit" onclick="saveNews()">등록</button>
+          <button class="news-btn-cancel" onclick="resetNewsForm()" style="display:none" id="newsCancelBtn">취소</button>
+        </div>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="dash-table-header">
+          <h3>등록된 소식</h3>
+          <span class="count" id="newsCount">0건</span>
+        </div>
+        <div id="newsTableBody">
+          <div class="empty-state">
+            <div class="empty-icon">📰</div>
+            <p>등록된 소식이 없습니다.</p>
           </div>
         </div>
       </div>
@@ -422,15 +537,20 @@ if (sessionStorage.getItem('bmicns_admin') === 'true') {
 function switchTab(tab) {
   var tabs = document.querySelectorAll('.dash-tab');
   tabs.forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('inquirySection').style.display = 'none';
+  document.getElementById('visitorSection').style.display = 'none';
+  document.getElementById('newsSection').style.display = 'none';
   if (tab === 'inquiry') {
     tabs[0].classList.add('active');
     document.getElementById('inquirySection').style.display = 'block';
-    document.getElementById('visitorSection').style.display = 'none';
-  } else {
+  } else if (tab === 'visitor') {
     tabs[1].classList.add('active');
-    document.getElementById('inquirySection').style.display = 'none';
     document.getElementById('visitorSection').style.display = 'block';
     document.getElementById('visitorSection').classList.remove('visitor-section');
+  } else if (tab === 'news') {
+    tabs[2].classList.add('active');
+    document.getElementById('newsSection').style.display = 'block';
+    loadNewsList();
   }
 }
 
@@ -488,6 +608,14 @@ function loadStats() {
     return inq.date && inq.date.startsWith(today);
   }).length;
   document.getElementById('statInquirySub').textContent = '오늘 ' + todayInquiries + '건 접수';
+
+  // News stats
+  var newsList = JSON.parse(localStorage.getItem('bmicns_news') || '[]');
+  document.getElementById('statNews').innerHTML = '<span class="accent">' + newsList.length + '</span>';
+  var thisMonthNews = newsList.filter(function(n) {
+    return n.date && n.date.startsWith(today.substring(0, 7));
+  }).length;
+  document.getElementById('statNewsSub').textContent = '이번 달 ' + thisMonthNews + '건 등록';
 }
 
 /* ═══════════════════════════════════════════
@@ -632,6 +760,129 @@ function formatDate(str) {
     String(d.getDate()).padStart(2, '0') + ' ' +
     String(d.getHours()).padStart(2, '0') + ':' +
     String(d.getMinutes()).padStart(2, '0');
+}
+
+/* ═══════════════════════════════════════════
+   NEWS CRUD
+   ═══════════════════════════════════════════ */
+function getNewsList() {
+  return JSON.parse(localStorage.getItem('bmicns_news') || '[]');
+}
+function setNewsList(list) {
+  localStorage.setItem('bmicns_news', JSON.stringify(list));
+}
+
+function saveNews() {
+  var title = document.getElementById('newsTitle').value.trim();
+  var summary = document.getElementById('newsSummary').value.trim();
+  var content = document.getElementById('newsContent').value.trim();
+  var category = document.getElementById('newsCategory').value;
+  var thumbnail = document.getElementById('newsThumbnail').value.trim();
+  var editId = document.getElementById('newsEditId').value;
+
+  if (!title) { alert('제목을 입력하세요.'); return; }
+  if (!content && !summary) { alert('요약 또는 본문을 입력하세요.'); return; }
+
+  var list = getNewsList();
+
+  if (editId) {
+    // Update
+    var idx = list.findIndex(function(n) { return String(n.id) === editId; });
+    if (idx !== -1) {
+      list[idx].title = title;
+      list[idx].summary = summary;
+      list[idx].content = content;
+      list[idx].category = category;
+      list[idx].thumbnail = thumbnail;
+      list[idx].updatedAt = new Date().toISOString();
+    }
+  } else {
+    // Create
+    list.push({
+      id: Date.now(),
+      title: title,
+      summary: summary,
+      content: content,
+      category: category,
+      thumbnail: thumbnail,
+      date: new Date().toISOString()
+    });
+  }
+
+  setNewsList(list);
+  resetNewsForm();
+  loadNewsList();
+  loadStats();
+}
+
+function resetNewsForm() {
+  document.getElementById('newsTitle').value = '';
+  document.getElementById('newsSummary').value = '';
+  document.getElementById('newsContent').value = '';
+  document.getElementById('newsCategory').value = '회사소식';
+  document.getElementById('newsThumbnail').value = '';
+  document.getElementById('newsEditId').value = '';
+  document.getElementById('newsFormTitle').textContent = '새 소식 등록';
+  document.querySelector('.news-btn-submit').textContent = '등록';
+  document.getElementById('newsCancelBtn').style.display = 'none';
+}
+
+function editNews(id) {
+  var list = getNewsList();
+  var news = list.find(function(n) { return n.id === id; });
+  if (!news) return;
+
+  document.getElementById('newsEditId').value = String(id);
+  document.getElementById('newsTitle').value = news.title || '';
+  document.getElementById('newsSummary').value = news.summary || '';
+  document.getElementById('newsContent').value = news.content || '';
+  document.getElementById('newsCategory').value = news.category || '회사소식';
+  document.getElementById('newsThumbnail').value = news.thumbnail || '';
+  document.getElementById('newsFormTitle').textContent = '소식 수정';
+  document.querySelector('.news-btn-submit').textContent = '수정';
+  document.getElementById('newsCancelBtn').style.display = 'inline-block';
+
+  window.scrollTo({ top: document.getElementById('newsFormWrap').offsetTop - 80, behavior: 'smooth' });
+}
+
+function deleteNews(id) {
+  if (!confirm('이 소식을 삭제하시겠습니까?')) return;
+  var list = getNewsList().filter(function(n) { return n.id !== id; });
+  setNewsList(list);
+  loadNewsList();
+  loadStats();
+}
+
+function loadNewsList() {
+  var list = getNewsList();
+  list.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+  var container = document.getElementById('newsTableBody');
+  document.getElementById('newsCount').textContent = list.length + '건';
+
+  if (list.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📰</div><p>등록된 소식이 없습니다.</p></div>';
+    return;
+  }
+
+  var html = '<table class="dash-table"><thead><tr>';
+  html += '<th>카테고리</th><th>제목</th><th>요약</th><th>등록일</th><th>관리</th>';
+  html += '</tr></thead><tbody>';
+
+  list.forEach(function(news) {
+    html += '<tr>';
+    html += '<td><span class="td-solution">' + esc(news.category || '회사소식') + '</span></td>';
+    html += '<td class="td-name">' + esc(news.title) + '</td>';
+    html += '<td class="td-content">' + esc(news.summary || '-') + '</td>';
+    html += '<td class="td-date">' + formatDate(news.date) + '</td>';
+    html += '<td><div class="news-item-actions">';
+    html += '<button class="news-btn-edit" onclick="editNews(' + news.id + ')">수정</button>';
+    html += '<button class="news-btn-delete" onclick="deleteNews(' + news.id + ')">삭제</button>';
+    html += '</div></td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
 }
 </script>
 
