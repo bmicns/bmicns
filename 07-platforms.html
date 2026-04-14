@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플랫폼개발 - BMI C&amp;S</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ─────────────────────────────────────────
+       플랫폼 페이지 전용 스타일
+       shared-styles.css 미정의 클래스만 선언
+       ───────────────────────────────────────── */
+
+    /* 1. 앵커 서브 내비 */
+    .platform-subnav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .platform-subnav-link {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 980px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .platform-subnav-link:hover {
+      color: var(--color-white);
+      border-color: var(--color-accent);
+      background: rgba(41, 151, 255, 0.12);
+    }
+
+    /* 2. 플랫폼 섹션 레이블 + 라이브 배지 행 */
+    .platform-label-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    /* 3. 라이브 배지 */
+    .platform-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px 3px 8px;
+      border-radius: 980px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-green);
+      background: rgba(48, 209, 88, 0.10);
+      border: 1px solid rgba(48, 209, 88, 0.25);
+      letter-spacing: 0.02em;
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-green);
+      display: inline-block;
+      flex-shrink: 0;
+      animation: livePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    /* 4. 기능 목록 */
+    .platform-feature-list {
+      list-style: none;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .platform-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    .pf-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(41, 151, 255, 0.12);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pf-text { flex: 1; }
+
+    /* 5. 기술 스택 태그 */
+    .tag-stack {
+      background: rgba(41, 151, 255, 0.08);
+      color: var(--color-accent);
+      border: 1px solid rgba(41, 151, 255, 0.20);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .platform-stack-tags { margin-bottom: 4px; }
+
+    /* 6. CTA 버튼 행 */
+    .platform-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* 7. 플랫폼 체크박스 그룹 */
+    .platform-check-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .platform-check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .platform-check-item:has(input:checked) {
+      border-color: var(--color-accent);
+      background: rgba(41, 151, 255, 0.05);
+    }
+    .platform-check-item input[type="checkbox"] {
+      width: 16px !important;
+      height: 16px;
+      accent-color: var(--color-accent);
+      flex-shrink: 0;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .platform-check-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .platform-check-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+    }
+    .platform-check-desc {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+    .platform-check-hint {
+      font-size: 12px;
+      color: #ff3b30;
+      margin-top: 6px;
+    }
+
+    /* 8. 모달 제출 버튼 */
+    .modal-submit {
+      width: 100%;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 980px;
+      background: var(--color-accent);
+      color: var(--color-white);
+      font-size: 16px;
+      font-weight: 400;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 8px;
+      letter-spacing: -0.022em;
+    }
+    .modal-submit:hover { background: var(--color-link-hover); }
+
+    /* 반응형 — Tablet (≤ 834px) */
+    @media (max-width: 834px) {
+      .platform-subnav { gap: 6px; }
+      .platform-subnav-link { padding: 6px 14px; font-size: 13px; }
+      .platform-cta-row { gap: 12px; }
+    }
+
+    /* 반응형 — Mobile (≤ 480px) */
+    @media (max-width: 480px) {
+      .platform-subnav { gap: 4px; }
+      .platform-subnav-link { padding: 5px 12px; font-size: 12px; }
+      .platform-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .platform-cta-row .btn-primary,
+      .platform-cta-row .btn-secondary {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<section class="hero" style="min-height:55vh">
+  <div class="hero-content">
+    <div class="hero-badge">Platform Development</div>
+    <h1>
+      AI가 만든 플랫폼으로<br>
+      <span class="gradient-text">비즈니스를 혁신하세요</span>
+    </h1>
+    <p>
+      BMI C&amp;S가 자체 개발한 3개 AI 플랫폼<br>
+      실제 현장에서 검증된 기술력을 확인하세요
+    </p>
+    <nav class="platform-subnav" aria-label="플랫폼 바로가기">
+      <a href="#vestra" class="platform-subnav-link">VESTRA</a>
+      <a href="#clio"   class="platform-subnav-link">CLIO</a>
+      <a href="#nurse"  class="platform-subnav-link">NurseScheduler</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PLATFORM 01 — VESTRA
+     ═══════════════════════════════════════════ -->
+<section id="vestra" class="section">
+  <div class="section-inner">
+    <div class="solution-detail">
+
+      <!-- 텍스트 영역 -->
+      <div>
+        <div class="platform-label-row">
+          <span class="section-label">Platform 01</span>
+          <span class="platform-live-badge">
+            <span class="live-dot"></span>Live
+          </span>
+        </div>
+        <h3>AI 권리분석으로<br>부동산 리스크를 사전 차단</h3>
+        <p>
+          주소 하나만 입력하면 AI가 등기부·실거래가·권리관계를 종합 분석합니다.
+          복잡한 부동산 거래 리스크를 사전에 파악하고 안전한 의사결정을 도와드립니다.
+        </p>
+
+        <ul class="platform-feature-list">
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">주소 입력 → AI 권리분석 자동화</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">MOLIT 실거래가 조회 및 필터링</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">CODEF 등기부 연동 분석</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">분석 이력 관리</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">PDF 리포트 출력</span>
+          </li>
+        </ul>
+
+        <div class="solution-tags platform-stack-tags">
+          <span class="tag tag-stack">Next.js</span>
+          <span class="tag tag-stack">OpenAI GPT-4.1</span>
+          <span class="tag tag-stack">MOLIT API</span>
+          <span class="tag tag-stack">CODEF</span>
+        </div>
+        <div class="solution-tags" style="margin-top:8px">
+          <span class="tag">AI 권리분석</span>
+          <span class="tag">MOLIT 실거래가</span>
+          <span class="tag">CODEF 등기 연동</span>
+          <span class="tag">PDF 리포트</span>
+          <span class="tag">분석 이력 관리</span>
+        </div>
+
+        <div class="platform-cta-row">
+          <button
+            class="btn-primary platform-inquiry-btn"
+            data-platform="VESTRA"
+            aria-label="VESTRA 도입 문의하기"
+          >
+            도입 문의하기
+          </button>
+          <a
+            href="https://vestra-plum.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            데모 보기 →
+          </a>
+        </div>
+      </div>
+
+      <!-- 이미지 영역 -->
+      <div class="solution-visual">
+        <img
+          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80"
+          alt="VESTRA AI 부동산 권리분석 플랫폼"
+          loading="lazy"
+          width="800"
+          height="600"
+        >
+        <div class="sv-overlay"></div>
+        <div class="sv-text">
+          <div class="sv-title">VESTRA</div>
+          <div class="sv-subtitle">AI 부동산 권리분석</div>
+        </div>
+        <div class="sv-glow"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PLATFORM 02 — CLIO
+     ═══════════════════════════════════════════ -->
+<section id="clio" class="section section-light">
+  <div class="section-inner">
+    <div class="solution-detail reverse">
+
+      <!-- 텍스트 영역 -->
+      <div>
+        <div class="platform-label-row">
+          <span class="section-label">Platform 02</span>
+          <span class="platform-live-badge">
+            <span class="live-dot"></span>Live
+          </span>
+        </div>
+        <h3>AI로 문서를 생성하고<br>결재까지 자동화</h3>
+        <p>
+          RAG 기반 벡터 검색으로 사내 문서를 빠르게 찾고, GPT-4o가 회의록·보고서·계약서를
+          자동 생성합니다. DOCX·HWPX·PDF·XLSX·PPTX 5종 포맷을 지원합니다.
+        </p>
+
+        <ul class="platform-feature-list">
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">AI 문서 생성 (DOCX/HWPX/PDF/XLSX/PPTX 5종)</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">RAG 벡터 검색</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">음성→회의록 자동화 (STT)</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">계약서 AI 리스크 분석</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">전자서명 삽입</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">문서 버전 관리 &amp; diff 비교</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">결재 워크플로우</span>
+          </li>
+        </ul>
+
+        <div class="solution-tags platform-stack-tags">
+          <span class="tag tag-stack">Next.js</span>
+          <span class="tag tag-stack">Supabase</span>
+          <span class="tag tag-stack">OpenAI</span>
+          <span class="tag tag-stack">Vercel AI SDK</span>
+        </div>
+        <div class="solution-tags" style="margin-top:8px">
+          <span class="tag">AI 문서 생성</span>
+          <span class="tag">RAG 검색</span>
+          <span class="tag">음성→회의록</span>
+          <span class="tag">계약서 리스크 분석</span>
+          <span class="tag">전자서명</span>
+          <span class="tag">결재 워크플로우</span>
+        </div>
+
+        <div class="platform-cta-row">
+          <button
+            class="btn-primary platform-inquiry-btn"
+            data-platform="CLIO"
+            aria-label="CLIO 도입 문의하기"
+          >
+            도입 문의하기
+          </button>
+          <a
+            href="https://clioai.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            데모 보기 →
+          </a>
+        </div>
+      </div>
+
+      <!-- 이미지 영역 -->
+      <div class="solution-visual">
+        <img
+          src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
+          alt="CLIO AI 문서관리 시스템"
+          loading="lazy"
+          width="800"
+          height="600"
+        >
+        <div class="sv-overlay"></div>
+        <div class="sv-text">
+          <div class="sv-title">CLIO</div>
+          <div class="sv-subtitle">AI 문서관리 시스템</div>
+        </div>
+        <div class="sv-glow"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PLATFORM 03 — NurseScheduler
+     ═══════════════════════════════════════════ -->
+<section id="nurse" class="section">
+  <div class="section-inner">
+    <div class="solution-detail">
+
+      <!-- 텍스트 영역 -->
+      <div>
+        <div class="platform-label-row">
+          <span class="section-label">Platform 03</span>
+          <span class="platform-live-badge">
+            <span class="live-dot"></span>Live
+          </span>
+        </div>
+        <h3>3교대 근무표를 AI가<br>자동으로 편성합니다</h3>
+        <p>
+          수작업으로 작성하던 간호사 근무 스케줄을 AI가 자동 편성합니다.
+          교대 변경 요청부터 승인까지 워크플로우로 처리하고, PWA 푸시 알림으로 즉시 통보합니다.
+        </p>
+
+        <ul class="platform-feature-list">
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">월간 캘린더 (오전/오후/야간 색상 코딩)</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">AI 자동편성 알고리즘 (라운드로빈)</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">교대 변경 요청/승인 워크플로우</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">PWA 푸시 알림</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">관리자 대시보드 &amp; 인력 현황</span>
+          </li>
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">모바일 최적화</span>
+          </li>
+        </ul>
+
+        <div class="solution-tags platform-stack-tags">
+          <span class="tag tag-stack">Next.js</span>
+          <span class="tag tag-stack">Supabase</span>
+          <span class="tag tag-stack">PWA</span>
+        </div>
+        <div class="solution-tags" style="margin-top:8px">
+          <span class="tag">AI 자동편성</span>
+          <span class="tag">월간 캘린더</span>
+          <span class="tag">교대 변경 승인</span>
+          <span class="tag">PWA 푸시 알림</span>
+          <span class="tag">관리자 대시보드</span>
+        </div>
+
+        <div class="platform-cta-row">
+          <button
+            class="btn-primary platform-inquiry-btn"
+            data-platform="NurseScheduler"
+            aria-label="NurseScheduler 도입 문의하기"
+          >
+            도입 문의하기
+          </button>
+          <a
+            href="https://nurse-sch.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            데모 보기 →
+          </a>
+        </div>
+      </div>
+
+      <!-- 이미지 영역 -->
+      <div class="solution-visual">
+        <img
+          src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80"
+          alt="NurseScheduler 3교대 자동편성 시스템"
+          loading="lazy"
+          width="800"
+          height="600"
+        >
+        <div class="sv-overlay"></div>
+        <div class="sv-text">
+          <div class="sv-title">NurseScheduler</div>
+          <div class="sv-subtitle">3교대 자동편성 시스템</div>
+        </div>
+        <div class="sv-glow"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CTA 배너
+     ═══════════════════════════════════════════ -->
+<section class="section section-dark" style="text-align:center">
+  <div class="section-inner">
+    <div class="section-title" style="color:white; margin-bottom:16px">
+      도입을 검토 중이신가요?
+    </div>
+    <p class="section-desc" style="margin-bottom:40px">
+      담당자가 확인 후 1 영업일 내에 연락드립니다.<br>
+      관심 플랫폼을 선택해 빠르게 문의해 주세요.
+    </p>
+    <button
+      class="btn-primary platform-inquiry-btn"
+      data-platform=""
+      aria-label="플랫폼 도입 문의하기"
+    >
+      도입 문의하기
+    </button>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<!-- ═══════════════════════════════════════════
+     플랫폼 도입 문의 모달
+     ═══════════════════════════════════════════ -->
+<div
+  id="platformInquiryModal"
+  class="modal-backdrop"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="platformModalTitle"
+  onclick="if(event.target===this) closePlatformModal()"
+>
+  <div class="modal">
+
+    <!-- 닫기 버튼 -->
+    <button
+      class="modal-close"
+      onclick="closePlatformModal()"
+      aria-label="모달 닫기"
+    >&times;</button>
+
+    <!-- 모달 헤더 -->
+    <h2 id="platformModalTitle">플랫폼 도입 문의</h2>
+    <p class="modal-desc">담당자가 확인 후 1 영업일 내에 연락드립니다.</p>
+
+    <!-- 폼 -->
+    <form id="platformInquiryForm" onsubmit="submitPlatformInquiry(event)">
+
+      <!-- 행 1: 이름 + 연락처 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pi-name">담당자 이름 <span class="required">*</span></label>
+          <input
+            type="text"
+            id="pi-name"
+            name="name"
+            placeholder="홍길동"
+            required
+            autocomplete="name"
+          >
+        </div>
+        <div class="form-group">
+          <label for="pi-phone">연락처 <span class="required">*</span></label>
+          <input
+            type="tel"
+            id="pi-phone"
+            name="phone"
+            placeholder="010-0000-0000"
+            required
+            autocomplete="tel"
+          >
+        </div>
+      </div>
+
+      <!-- 행 2: 회사명 + 이메일 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pi-company">회사명 <span class="required">*</span></label>
+          <input
+            type="text"
+            id="pi-company"
+            name="company"
+            placeholder="회사명"
+            required
+            autocomplete="organization"
+          >
+        </div>
+        <div class="form-group">
+          <label for="pi-email">이메일</label>
+          <input
+            type="email"
+            id="pi-email"
+            name="email"
+            placeholder="example@company.com"
+            autocomplete="email"
+          >
+        </div>
+      </div>
+
+      <!-- 관심 플랫폼 체크박스 -->
+      <div class="form-group">
+        <label>관심 플랫폼 <span class="required">*</span></label>
+        <div class="platform-check-group" role="group" aria-label="관심 플랫폼 선택">
+          <label class="platform-check-item">
+            <input
+              type="checkbox"
+              id="chk-vestra"
+              name="platforms"
+              value="VESTRA"
+              class="platform-checkbox"
+            >
+            <span class="platform-check-label">
+              <span class="platform-check-name">VESTRA</span>
+              <span class="platform-check-desc">AI 부동산 권리분석</span>
+            </span>
+          </label>
+          <label class="platform-check-item">
+            <input
+              type="checkbox"
+              id="chk-clio"
+              name="platforms"
+              value="CLIO"
+              class="platform-checkbox"
+            >
+            <span class="platform-check-label">
+              <span class="platform-check-name">CLIO</span>
+              <span class="platform-check-desc">AI 기업 문서관리</span>
+            </span>
+          </label>
+          <label class="platform-check-item">
+            <input
+              type="checkbox"
+              id="chk-nurse"
+              name="platforms"
+              value="NurseScheduler"
+              class="platform-checkbox"
+            >
+            <span class="platform-check-label">
+              <span class="platform-check-name">NurseScheduler</span>
+              <span class="platform-check-desc">3교대 자동편성</span>
+            </span>
+          </label>
+        </div>
+        <p class="platform-check-hint" id="platformCheckError" style="display:none">
+          관심 플랫폼을 하나 이상 선택해 주세요.
+        </p>
+      </div>
+
+      <!-- 문의 내용 -->
+      <div class="form-group">
+        <label for="pi-content">문의 내용</label>
+        <textarea
+          id="pi-content"
+          name="content"
+          placeholder="도입 규모, 예산, 일정 등 문의 내용을 입력해 주세요."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- 개인정보 동의 -->
+      <div class="privacy-consent">
+        <input type="checkbox" id="pi-privacy" required>
+        <label for="pi-privacy">
+          <strong>[필수]</strong> 개인정보 수집·이용에 동의합니다.<br>
+          <span style="font-size:12px; color:var(--color-text-muted)">
+            수집 항목: 담당자명, 연락처, 회사명, 이메일 | 수집 목적: 도입 문의 접수 및 회신 | 보유 기간: 문의 처리 후 1년
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" class="modal-submit" id="platformSubmitBtn">
+        문의 보내기
+      </button>
+
+    </form>
+
+    <!-- 제출 성공 메시지 -->
+    <div id="platformSuccessMsg" style="display:none; text-align:center; padding:40px 0">
+      <div style="font-size:44px; margin-bottom:16px">✅</div>
+      <h3 style="font-size:20px; font-weight:700; margin-bottom:8px">
+        문의가 접수되었습니다
+      </h3>
+      <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6">
+        담당자가 확인 후 1 영업일 내에 연락드립니다.<br>감사합니다.
+      </p>
+      <button
+        onclick="closePlatformModal()"
+        style="margin-top:24px; padding:12px 28px; border:none; border-radius:980px;
+               background:var(--color-accent); color:white; font-size:15px;
+               font-family:inherit; cursor:pointer"
+      >
+        닫기
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script src="includes.js"></script>
+<script>
+  // ── 모달 열기 ───────────────────────────────────────────
+  function openPlatformModal(platformName) {
+    var modal = document.getElementById('platformInquiryModal');
+
+    // 폼/성공 메시지 초기화
+    document.getElementById('platformInquiryForm').style.display = '';
+    document.getElementById('platformSuccessMsg').style.display = 'none';
+    document.getElementById('platformCheckError').style.display = 'none';
+
+    // 모든 체크박스 해제 후 해당 플랫폼만 선택
+    var checkboxes = document.querySelectorAll('.platform-checkbox');
+    checkboxes.forEach(function(cb) {
+      cb.checked = (platformName && cb.value === platformName);
+    });
+
+    // 모달 표시
+    modal.classList.add('active');
+
+    // 포커스: 첫 번째 입력 필드
+    var firstInput = modal.querySelector('input[type="text"]');
+    if (firstInput) { setTimeout(function() { firstInput.focus(); }, 100); }
+  }
+
+  // ── 모달 닫기 ───────────────────────────────────────────
+  function closePlatformModal() {
+    document.getElementById('platformInquiryModal').classList.remove('active');
+  }
+
+  // ── CTA 버튼 이벤트 바인딩 ──────────────────────────────
+  document.querySelectorAll('.platform-inquiry-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      openPlatformModal(this.dataset.platform);
+    });
+  });
+
+  // ── 폼 제출 ─────────────────────────────────────────────
+  function submitPlatformInquiry(e) {
+    e.preventDefault();
+
+    // 플랫폼 체크박스 최소 1개 선택 검증
+    var selected = Array.from(document.querySelectorAll('.platform-checkbox:checked'))
+                         .map(function(cb) { return cb.value; });
+    if (selected.length === 0) {
+      document.getElementById('platformCheckError').style.display = 'block';
+      return;
+    }
+    document.getElementById('platformCheckError').style.display = 'none';
+
+    // localStorage 저장
+    var data = {
+      name:      document.getElementById('pi-name').value.trim(),
+      phone:     document.getElementById('pi-phone').value.trim(),
+      company:   document.getElementById('pi-company').value.trim(),
+      email:     document.getElementById('pi-email').value.trim(),
+      platforms: selected,
+      content:   document.getElementById('pi-content').value.trim(),
+      date:      new Date().toISOString()
+    };
+    var list = JSON.parse(localStorage.getItem('bmicns_platform_inquiries') || '[]');
+    list.push(data);
+    localStorage.setItem('bmicns_platform_inquiries', JSON.stringify(list));
+
+    // 성공 UI 전환
+    document.getElementById('platformInquiryForm').style.display = 'none';
+    document.getElementById('platformSuccessMsg').style.display = 'block';
+  }
+
+  // ── Escape 키 닫기 + 포커스 트랩 ───────────────────────
+  document.addEventListener('keydown', function(e) {
+    var modal = document.getElementById('platformInquiryModal');
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') { closePlatformModal(); return; }
+    if (e.key === 'Tab') {
+      var focusable = modal.querySelectorAll(
+        'button, input, textarea, a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      var first = focusable[0];
+      var last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
