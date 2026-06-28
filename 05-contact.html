@@ -62,30 +62,30 @@
           <div class="form-group">
             <label data-i18n="con.sol_l">관심 솔루션</label>
             <select id="inqSolution">
-              <option data-i18n="con.sol_ph">솔루션을 선택해 주세요</option>
-              <option>네트워크 인프라 구축</option>
-              <option>5G 특화망 (이음)</option>
-              <option>N2SF 보안체계</option>
-              <option>자산관리 플랫폼</option>
-              <option>AI 생활안전 솔루션</option>
-              <option>산업안전 모니터링</option>
-              <option>열화상 CCTV / 디지털트윈</option>
-              <option>스마트-X (시티/팩토리/빌딩)</option>
-              <option>홈페이지 기획/디자인/개발</option>
-              <option>제안서 GD / 컨설팅</option>
-              <option>기타</option>
+              <option value="" data-i18n="con.sol_ph">솔루션을 선택해 주세요</option>
+              <option value="network" data-i18n="con.opt.network">네트워크 인프라 구축</option>
+              <option value="5g" data-i18n="con.opt.5g">5G 특화망 (이음)</option>
+              <option value="n2sf" data-i18n="con.opt.n2sf">N2SF 보안체계</option>
+              <option value="asset" data-i18n="con.opt.asset">자산관리 플랫폼</option>
+              <option value="ai" data-i18n="con.opt.ai">AI 생활안전 솔루션</option>
+              <option value="industrial" data-i18n="con.opt.industrial">산업안전 모니터링</option>
+              <option value="thermal" data-i18n="con.opt.thermal">열화상 CCTV / 디지털트윈</option>
+              <option value="smart" data-i18n="con.opt.smart">스마트-X (시티/팩토리/빌딩)</option>
+              <option value="website" data-i18n="con.opt.website">홈페이지 기획/디자인/개발</option>
+              <option value="proposal" data-i18n="con.opt.proposal">제안서 GD / 컨설팅</option>
+              <option value="other" data-i18n="con.opt.other">기타</option>
             </select>
           </div>
           <div class="form-group">
             <label data-i18n="con.budget_l">예상 예산</label>
             <select id="inqBudget">
-              <option data-i18n="con.budget_ph">예산 범위를 선택해 주세요</option>
-              <option>1,000만원 미만</option>
-              <option>1,000만원 ~ 5,000만원</option>
-              <option>5,000만원 ~ 1억원</option>
-              <option>1억원 ~ 5억원</option>
-              <option>5억원 이상</option>
-              <option>미정</option>
+              <option value="" data-i18n="con.budget_ph">예산 범위를 선택해 주세요</option>
+              <option value="budget1" data-i18n="con.opt.budget1">1,000만원 미만</option>
+              <option value="budget2" data-i18n="con.opt.budget2">1,000만원 ~ 5,000만원</option>
+              <option value="budget3" data-i18n="con.opt.budget3">5,000만원 ~ 1억원</option>
+              <option value="budget4" data-i18n="con.opt.budget4">1억원 ~ 5억원</option>
+              <option value="budget5" data-i18n="con.opt.budget5">5억원 이상</option>
+              <option value="budget6" data-i18n="con.opt.budget6">미정</option>
             </select>
           </div>
           <div class="form-group">
@@ -161,8 +161,8 @@ async function submitInquiry(e) {
     company:  document.getElementById('inqCompany').value.trim(),
     email:    document.getElementById('inqEmail').value.trim(),
     phone:    document.getElementById('inqPhone').value.trim(),
-    platforms: [solution === '솔루션을 선택해 주세요' ? '' : solution].filter(Boolean),
-    message:  (budget !== '예산 범위를 선택해 주세요' ? '[예산: ' + budget + '] ' : '') +
+    platforms: [solution || ''].filter(Boolean),
+    message:  (budget ? '[예산: ' + budget + '] ' : '') +
               document.getElementById('inqContent').value.trim()
   };
   try {

@@ -91,6 +91,7 @@
             class="btn-primary platform-inquiry-btn"
             data-platform="VESTRA"
             aria-label="VESTRA 도입 문의하기"
+            data-i18n="plat.inquiry.btn"
           >
             도입 문의하기
           </button>
@@ -99,6 +100,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="btn-secondary"
+            data-i18n="plat.demo.btn"
           >
             데모 보기 →
           </a>
@@ -169,6 +171,7 @@
             class="btn-primary platform-inquiry-btn"
             data-platform="CLIO"
             aria-label="CLIO 도입 문의하기"
+            data-i18n="plat.inquiry.btn"
           >
             도입 문의하기
           </button>
@@ -177,6 +180,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="btn-secondary"
+            data-i18n="plat.demo.btn"
           >
             데모 보기 →
           </a>
@@ -257,6 +261,7 @@
             class="btn-primary platform-inquiry-btn"
             data-platform="M-MASTER"
             aria-label="M-MASTER 도입 문의하기"
+            data-i18n="plat.inquiry.btn"
           >
             도입 문의하기
           </button>
@@ -265,6 +270,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="btn-secondary"
+            data-i18n="plat.demo.btn"
           >
             데모 보기 →
           </a>
@@ -310,6 +316,7 @@
       class="btn-primary platform-inquiry-btn"
       data-platform=""
       aria-label="플랫폼 도입 문의하기"
+      data-i18n="plat.inquiry.btn"
     >
       도입 문의하기
     </button>
@@ -348,7 +355,7 @@
       <!-- 행 1: 이름 + 연락처 -->
       <div class="form-row">
         <div class="form-group">
-          <label for="pi-name">담당자 이름 <span class="required">*</span></label>
+          <label for="pi-name"><span data-i18n="plat.modal.name_l">담당자 이름</span> <span class="required">*</span></label>
           <input
             type="text"
             id="pi-name"
@@ -359,7 +366,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="pi-phone">연락처 <span class="required">*</span></label>
+          <label for="pi-phone"><span data-i18n="plat.modal.tel_l">연락처</span> <span class="required">*</span></label>
           <input
             type="tel"
             id="pi-phone"
@@ -374,7 +381,7 @@
       <!-- 행 2: 회사명 + 이메일 -->
       <div class="form-row">
         <div class="form-group">
-          <label for="pi-company">회사명 <span class="required">*</span></label>
+          <label for="pi-company"><span data-i18n="plat.modal.co_l">회사명</span> <span class="required">*</span></label>
           <input
             type="text"
             id="pi-company"
@@ -385,7 +392,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="pi-email">이메일</label>
+          <label for="pi-email" data-i18n="plat.modal.email_l">이메일</label>
           <input
             type="email"
             id="pi-email"
@@ -398,7 +405,7 @@
 
       <!-- 관심 플랫폼 체크박스 -->
       <div class="form-group">
-        <label>관심 플랫폼 <span class="required">*</span></label>
+        <label><span data-i18n="plat.modal.plat_l">관심 플랫폼</span> <span class="required">*</span></label>
         <div class="platform-check-group" role="group" aria-label="관심 플랫폼 선택">
           <label class="platform-check-item">
             <input
@@ -410,7 +417,7 @@
             >
             <span class="platform-check-label">
               <span class="platform-check-name">VESTRA</span>
-              <span class="platform-check-desc">AI 부동산 권리분석</span>
+              <span class="platform-check-desc" data-i18n="plat.check.vestra">AI 부동산 권리분석</span>
             </span>
           </label>
           <label class="platform-check-item">
@@ -423,7 +430,7 @@
             >
             <span class="platform-check-label">
               <span class="platform-check-name">CLIO</span>
-              <span class="platform-check-desc">AI 기업 문서관리</span>
+              <span class="platform-check-desc" data-i18n="plat.check.clio">AI 기업 문서관리</span>
             </span>
           </label>
           <label class="platform-check-item">
@@ -436,18 +443,18 @@
             >
             <span class="platform-check-label">
               <span class="platform-check-name">M-MASTER</span>
-              <span class="platform-check-desc">마케팅 자동화</span>
+              <span class="platform-check-desc" data-i18n="plat.check.mmaster">마케팅 자동화</span>
             </span>
           </label>
         </div>
-        <p class="platform-check-hint" id="platformCheckError" style="display:none">
+        <p class="platform-check-hint" id="platformCheckError" style="display:none" data-i18n="plat.modal.check_err">
           관심 플랫폼을 하나 이상 선택해 주세요.
         </p>
       </div>
 
       <!-- 문의 내용 -->
       <div class="form-group">
-        <label for="pi-content">문의 내용</label>
+        <label for="pi-content" data-i18n="plat.modal.msg_l">문의 내용</label>
         <textarea
           id="pi-content"
           name="content"
@@ -487,6 +494,7 @@
         style="margin-top:24px; padding:12px 28px; border:none; border-radius:980px;
                background:var(--color-accent); color:white; font-size:15px;
                font-family:inherit; cursor:pointer"
+        data-i18n="plat.modal.close"
       >
         닫기
       </button>
