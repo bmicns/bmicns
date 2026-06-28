@@ -63,19 +63,19 @@ var DEFAULT_PLATFORM_ITEMS = [
   }
 ];
 var DEFAULT_PORTFOLIO_ITEMS = [
-  { year: '2026', client: 'BMI C&S', title: '부동산 거래위험도 산출 장치 및 방법 특허출원', sector: '민간', status: '', detail: '부동산 거래위험도 산출 장치 및 방법에 대한 특허출원 (출원번호: 10-2026-0085160)', sortOrder: 10 },
-  { year: '2026', client: 'B2C 고객', title: '고객 요구 AI 개발', sector: 'B2C', status: '진행중', detail: '사업 협력 및 개발 진행 (전세사기 방지, 자산관리, 안전관리)', sortOrder: 20 },
-  { year: '2026', client: '일반 대학', title: '대학 정보보안 강화를 위한 망분리 ISP 사업', sector: '공공', status: '', detail: '사업 컨설팅 및 제안 참여', sortOrder: 30 },
-  { year: '2026', client: '통신사 협력', title: '국가망보안체계(N2SF) 사업 협력', sector: '민간', status: '', detail: '솔루션 제안 및 컨설팅 참여 (w/ 통신사)', sortOrder: 40 },
-  { year: '2025', client: 'IT 기업', title: '홈페이지 구축 / 유지보수 사업', sector: '민간', status: '진행중', detail: '기획 및 홈페이지 구축 / 유지보수 (2025~2026)', sortOrder: 10 },
-  { year: '2025', client: '방산기업', title: '스마트 팩토리 적용을 위한 특화망 5G 사업', sector: '민간', status: '진행중', detail: '제안 컨설팅 및 POC 진행 (2025~2026)', sortOrder: 20 },
-  { year: '2025', client: '행정안전부 / 국가정보자원관리원', title: '국가정보자원관리원 국가정보통신망 백본전송망 구축·운영사업', sector: '공공', status: '진행중', detail: '제안 컨설팅 및 추가 제안 · 사업 수행 중 (2025~2026)', sortOrder: 30 },
-  { year: '2025', client: '중소벤처기업부', title: '중소기업 기술유출방지시스템 구축사업', sector: '공공', status: '', detail: '사업 컨설팅 · 사업 수행 및 구축 완료 (화장품 협력 회사)', sortOrder: 40 },
-  { year: '2025', client: '주택도시보증공사', title: '정보통신회선 이원화 사업자 선정 사업', sector: '공공', status: '', detail: '추가 제안 참여', sortOrder: 50 },
-  { year: '2024', client: '원주시 · 정선군', title: '원정밸리 자원산업기반 디지털 전환 사업', sector: '공공', status: '', detail: '컨설팅 제안 참여 · 컨소시엄 제안컨설팅 (w/ KPMG, 에릭슨, CJ, 두산)', sortOrder: 10 },
-  { year: '2024', client: 'NIPA (정보통신산업진흥원)', title: '28GHz 특화망 5G 산업융합 확산 과제', sector: '공공', status: '', detail: '제안 · 수주 및 수행 (w/ 한라대, TTA)', sortOrder: 20 },
-  { year: '2024', client: '국토부', title: '국토부 강소형 스마트시티', sector: '공공', status: '', detail: '제안 참여 (w/ 원주시, KPMG)', sortOrder: 30 },
-  { year: '2023', client: 'NIA (한국지능정보사회진흥원)', title: '특화망 5G 융합서비스 테스트베드 실증과제 사업', sector: '공공', status: '', detail: '제안 (w/ SKNS, AI업체)', sortOrder: 10 }
+  { year: '2026', client: 'BMI C&S', title: '부동산 거래위험도 산출 장치 및 방법 특허출원', title_en: 'Real Estate Transaction Risk Scoring — Patent Filed', sector: '민간', status: '', detail: '부동산 거래위험도 산출 장치 및 방법에 대한 특허출원 (출원번호: 10-2026-0085160)', detail_en: 'Patent application for real estate transaction risk scoring device and method (App. No. 10-2026-0085160)', sortOrder: 10 },
+  { year: '2026', client: 'B2C 고객', title: '고객 요구 AI 개발', title_en: 'Custom AI Development for B2C', sector: 'B2C', status: '진행중', detail: '사업 협력 및 개발 진행 (전세사기 방지, 자산관리, 안전관리)', detail_en: 'Ongoing business collaboration & development (jeonse fraud prevention, asset management, safety)', sortOrder: 20 },
+  { year: '2026', client: '일반 대학', title: '대학 정보보안 강화를 위한 망분리 ISP 사업', title_en: 'University Network Segmentation (ISP) for Cybersecurity', sector: '공공', status: '', detail: '사업 컨설팅 및 제안 참여', detail_en: 'Business consulting & proposal participation', sortOrder: 30 },
+  { year: '2026', client: '통신사 협력', title: '국가망보안체계(N2SF) 사업 협력', title_en: 'National Network Security Framework (N2SF) Collaboration', sector: '민간', status: '', detail: '솔루션 제안 및 컨설팅 참여 (w/ 통신사)', detail_en: 'Solution proposal & consulting (w/ telecom carrier)', sortOrder: 40 },
+  { year: '2025', client: 'IT 기업', title: '홈페이지 구축 / 유지보수 사업', title_en: 'Website Development & Maintenance', sector: '민간', status: '진행중', detail: '기획 및 홈페이지 구축 / 유지보수 (2025~2026)', detail_en: 'Planning, website development & maintenance (2025–2026)', sortOrder: 10 },
+  { year: '2025', client: '방산기업', title: '스마트 팩토리 적용을 위한 특화망 5G 사업', title_en: 'Private 5G for Smart Factory (Defense)', sector: '민간', status: '진행중', detail: '제안 컨설팅 및 POC 진행 (2025~2026)', detail_en: 'Proposal consulting & POC in progress (2025–2026)', sortOrder: 20 },
+  { year: '2025', client: '행정안전부 / 국가정보자원관리원', title: '국가정보자원관리원 국가정보통신망 백본전송망 구축·운영사업', title_en: 'National ICT Backbone Network Build & Operation', sector: '공공', status: '진행중', detail: '제안 컨설팅 및 추가 제안 · 사업 수행 중 (2025~2026)', detail_en: 'Proposal consulting, follow-on proposal & project execution (2025–2026)', sortOrder: 30 },
+  { year: '2025', client: '중소벤처기업부', title: '중소기업 기술유출방지시스템 구축사업', title_en: 'SME Technology Leakage Prevention System', sector: '공공', status: '', detail: '사업 컨설팅 · 사업 수행 및 구축 완료 (화장품 협력 회사)', detail_en: 'Consulting, execution & deployment complete (cosmetics partner company)', sortOrder: 40 },
+  { year: '2025', client: '주택도시보증공사', title: '정보통신회선 이원화 사업자 선정 사업', title_en: 'Dual ICT Line Service Provider Selection', sector: '공공', status: '', detail: '추가 제안 참여', detail_en: 'Follow-on proposal participation', sortOrder: 50 },
+  { year: '2024', client: '원주시 · 정선군', title: '원정밸리 자원산업기반 디지털 전환 사업', title_en: 'Wonjeong Valley Resource Industry Digital Transformation', sector: '공공', status: '', detail: '컨설팅 제안 참여 · 컨소시엄 제안컨설팅 (w/ KPMG, 에릭슨, CJ, 두산)', detail_en: 'Consulting proposal & consortium consulting (w/ KPMG, Ericsson, CJ, Doosan)', sortOrder: 10 },
+  { year: '2024', client: 'NIPA (정보통신산업진흥원)', title: '28GHz 특화망 5G 산업융합 확산 과제', title_en: '28GHz Private 5G Industrial Convergence Expansion', sector: '공공', status: '', detail: '제안 · 수주 및 수행 (w/ 한라대, TTA)', detail_en: 'Proposal, award & execution (w/ Halla University, TTA)', sortOrder: 20 },
+  { year: '2024', client: '국토부', title: '국토부 강소형 스마트시티', title_en: 'Ministry of Land: Compact Smart City', sector: '공공', status: '', detail: '제안 참여 (w/ 원주시, KPMG)', detail_en: 'Proposal participation (w/ Wonju City, KPMG)', sortOrder: 30 },
+  { year: '2023', client: 'NIA (한국지능정보사회진흥원)', title: '특화망 5G 융합서비스 테스트베드 실증과제 사업', title_en: 'Private 5G Convergence Service Testbed Demonstration', sector: '공공', status: '', detail: '제안 (w/ SKNS, AI업체)', detail_en: 'Proposal (w/ SKNS, AI vendor)', sortOrder: 10 }
 ];
 
 function sbHeaders(extra) {
@@ -598,6 +598,8 @@ function buildPortfolioPayload() {
     sector: document.getElementById('portfolioSector').value,
     status: document.getElementById('portfolioStatus').value.trim(),
     detail: document.getElementById('portfolioDetail').value.trim(),
+    title_en: document.getElementById('portfolioTitleEn').value.trim() || null,
+    detail_en: document.getElementById('portfolioDetailEn').value.trim() || null,
     sortOrder: normalizeSortOrder(document.getElementById('portfolioSortOrder').value)
   };
 }
@@ -612,8 +614,11 @@ async function saveNews() {
   if (!title) { alert('제목을 입력하세요.'); return; }
   if (!content && !summary) { alert('요약 또는 본문을 입력하세요.'); return; }
 
+  var titleEn = document.getElementById('newsTitleEn').value.trim();
+  var summaryEn = document.getElementById('newsSummaryEn').value.trim();
+  var contentEn = document.getElementById('newsContentEn').value.trim();
   var savedBodyImages = bodyImages.map(function(img) { return { data: img.data, tag: img.tag }; });
-  var data = { category: category, title: title, summary: summary, content: content, thumbnail: newsImageData || null, body_images: savedBodyImages };
+  var data = { category: category, title: title, summary: summary, content: content, title_en: titleEn || null, summary_en: summaryEn || null, content_en: contentEn || null, thumbnail: newsImageData || null, body_images: savedBodyImages };
 
   try {
     if (editId) {
@@ -633,6 +638,9 @@ function resetNewsForm() {
   document.getElementById('newsTitle').value = '';
   document.getElementById('newsSummary').value = '';
   document.getElementById('newsContent').value = '';
+  document.getElementById('newsTitleEn').value = '';
+  document.getElementById('newsSummaryEn').value = '';
+  document.getElementById('newsContentEn').value = '';
   document.getElementById('newsCategory').value = '회사소식';
   document.getElementById('newsEditId').value = '';
   document.getElementById('newsFormTitle').textContent = '새 소식 등록';
@@ -651,6 +659,9 @@ function editNews(id) {
   document.getElementById('newsTitle').value = news.title || '';
   document.getElementById('newsSummary').value = news.summary || '';
   document.getElementById('newsContent').value = news.content || '';
+  document.getElementById('newsTitleEn').value = news.title_en || '';
+  document.getElementById('newsSummaryEn').value = news.summary_en || '';
+  document.getElementById('newsContentEn').value = news.content_en || '';
   document.getElementById('newsCategory').value = news.category || '회사소식';
   bodyImages = (news.body_images || []).map(function(img) { return { data: img.data, tag: img.tag }; });
   renderBodyImages();
@@ -885,6 +896,8 @@ function resetPortfolioForm() {
   document.getElementById('portfolioSector').value = '공공';
   document.getElementById('portfolioStatus').value = '';
   document.getElementById('portfolioDetail').value = '';
+  document.getElementById('portfolioTitleEn').value = '';
+  document.getElementById('portfolioDetailEn').value = '';
   document.getElementById('portfolioSortOrder').value = '';
   document.getElementById('portfolioFormTitle').textContent = '주요실적 추가';
   document.getElementById('portfolioSubmitBtn').textContent = '저장';
@@ -931,6 +944,8 @@ function editPortfolio(id) {
   document.getElementById('portfolioSector').value = payload.sector || '공공';
   document.getElementById('portfolioStatus').value = payload.status || '';
   document.getElementById('portfolioDetail').value = payload.detail || '';
+  document.getElementById('portfolioTitleEn').value = payload.title_en || '';
+  document.getElementById('portfolioDetailEn').value = payload.detail_en || '';
   document.getElementById('portfolioSortOrder').value = payload.sortOrder || 0;
   document.getElementById('portfolioFormTitle').textContent = '주요실적 수정';
   document.getElementById('portfolioSubmitBtn').textContent = '수정';

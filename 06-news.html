@@ -157,12 +157,15 @@ function esc(str) {
 
   if (_newsList.length === 0) return;
 
+  var lang = localStorage.getItem('bmicns_lang') || 'ko';
   var html = '<div class="news-list">';
   _newsList.forEach(function(news, idx) {
+    var title = (lang === 'en' && news.title_en) ? news.title_en : news.title;
+    var summary = (lang === 'en' && news.summary_en) ? news.summary_en : news.summary;
     html += '<div class="news-list-item" onclick="showDetail(' + idx + ')">';
     html += '<span class="news-list-category">' + esc(news.category || '회사소식') + '</span>';
-    html += '<span class="news-list-title">' + esc(news.title) + '</span>';
-    if (news.summary) html += '<span class="news-list-summary">' + esc(news.summary) + '</span>';
+    html += '<span class="news-list-title">' + esc(title) + '</span>';
+    if (summary) html += '<span class="news-list-summary">' + esc(summary) + '</span>';
     html += '<span class="news-list-date">' + formatDate(news.created_at) + '</span>';
     html += '</div>';
   });
@@ -174,7 +177,10 @@ function showDetail(idx) {
   var news = _newsList[idx];
   if (!news) return;
 
-  var bodyContent = esc(news.content || news.summary || '');
+  var lang = localStorage.getItem('bmicns_lang') || 'ko';
+  var title = (lang === 'en' && news.title_en) ? news.title_en : news.title;
+  var rawContent = (lang === 'en' && news.content_en) ? news.content_en : (news.content || news.summary || '');
+  var bodyContent = esc(rawContent);
   var bodyImgs = Array.isArray(news.body_images) ? news.body_images : [];
   bodyImgs.forEach(function(img) {
     bodyContent = bodyContent.split(esc(img.tag)).join(
@@ -183,7 +189,7 @@ function showDetail(idx) {
   });
 
   var html = '<span class="news-detail-category">' + esc(news.category || '회사소식') + '</span>';
-  html += '<div class="news-detail-title">' + esc(news.title) + '</div>';
+  html += '<div class="news-detail-title">' + esc(title) + '</div>';
   html += '<div class="news-detail-date">' + formatDate(news.created_at) + '</div>';
   html += '<hr class="news-detail-divider">';
   if (news.thumbnail) {

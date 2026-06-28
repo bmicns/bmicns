@@ -357,18 +357,28 @@ function renderPortfolioTimeline(items) {
   var timelineHtml = years.map(function(year) {
     var yearItems = items.filter(function(item) { return item.year === year; });
     return '<div class="timeline-year" data-year="' + escHtml(year) + '"><div class="timeline-year-label"><div class="timeline-year-dot">' + escHtml(String(year).slice(-2)) + '</div><div class="timeline-year-text">' + escHtml(year) + '</div></div><div class="timeline-items">' + yearItems.map(function(item) {
-      var badges = '<span class="timeline-badge ' + (item.sector === '민간' ? 'badge-private' : item.sector === 'B2C' ? 'badge-b2c' : 'badge-public') + '">' + escHtml(item.sector || '공공') + '</span>';
-      if (item.status) badges += '<span class="timeline-badge badge-ongoing">' + escHtml(item.status) + '</span>';
+      var lang = localStorage.getItem('bmicns_lang') || 'ko';
+      var dict = (typeof I18N !== 'undefined' && I18N[lang]) || {};
+      var displayTitle = (lang === 'en' && item.title_en) ? item.title_en : item.title;
+      var displayDetail = (lang === 'en' && item.detail_en) ? item.detail_en : item.detail;
+      var sectorLabel = (item.sector === '민간') ? (dict['port.badge.private'] || item.sector) : (item.sector === 'B2C') ? 'B2C' : (dict['port.badge.public'] || item.sector);
+      var statusLabel = item.status ? ((dict['port.badge.ongoing'] || item.status)) : '';
+      var badges = '<span class="timeline-badge ' + (item.sector === '민간' ? 'badge-private' : item.sector === 'B2C' ? 'badge-b2c' : 'badge-public') + '">' + escHtml(sectorLabel) + '</span>';
+      if (item.status) badges += '<span class="timeline-badge badge-ongoing">' + escHtml(statusLabel) + '</span>';
       if (Array.isArray(item.tags)) {
         item.tags.forEach(function(tag) {
           badges += '<span class="timeline-badge">' + escHtml(tag) + '</span>';
         });
       }
-      return '<div class="timeline-card" data-year="' + escHtml(year) + '"><div class="timeline-card-header"><span class="timeline-client">' + escHtml(item.client) + '</span>' + badges + '</div><div class="timeline-project">' + formatInlineMarkup(item.title) + '</div><div class="timeline-detail"><svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + escHtml(item.detail) + '</p></div></div>';
+      return '<div class="timeline-card" data-year="' + escHtml(year) + '"><div class="timeline-card-header"><span class="timeline-client">' + escHtml(item.client) + '</span>' + badges + '</div><div class="timeline-project">' + formatInlineMarkup(displayTitle) + '</div><div class="timeline-detail"><svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + escHtml(displayDetail) + '</p></div></div>';
     }).join('') + '</div></div>';
   }).join('');
 
-  container.innerHTML = '<section class="section"><div class="section-inner" style="max-width:1000px"><div class="section-header"><div class="section-label">Track Record</div><div class="section-title">프로젝트 실적</div><div class="section-desc">관리자에서 등록한 최신 주요실적입니다.</div></div>' + filterHtml + '<div class="timeline">' + timelineHtml + '</div></div></section>';
+  var lang2 = localStorage.getItem('bmicns_lang') || 'ko';
+  var dict2 = (typeof I18N !== 'undefined' && I18N[lang2]) || {};
+  var trackTitle = dict2['port.track.title'] || '프로젝트 실적';
+  var trackDesc = dict2['port.track.desc'] || '2023년부터 현재까지 수행한 주요 프로젝트입니다.';
+  container.innerHTML = '<section class="section"><div class="section-inner" style="max-width:1000px"><div class="section-header"><div class="section-label">Track Record</div><div class="section-title">' + escHtml(trackTitle) + '</div><div class="section-desc">' + escHtml(trackDesc) + '</div></div>' + filterHtml + '<div class="timeline">' + timelineHtml + '</div></div></section>';
 }
 
 async function loadPortfolioCms() {
@@ -381,10 +391,12 @@ async function loadPortfolioCms() {
         year: payload.year || '',
         client: payload.client || row.summary || '',
         title: row.title || '',
+        title_en: payload.title_en || '',
         tags: Array.isArray(payload.tags) ? payload.tags : [],
         sector: payload.sector || '공공',
         status: payload.status || '',
         detail: payload.detail || '',
+        detail_en: payload.detail_en || '',
         sortOrder: Number(payload.sortOrder || 0)
       };
     }).filter(function(item) {
