@@ -56,6 +56,9 @@
   }
 
   if (footerEl) {
-    load('footer.html', footerEl);
+    load('footer.html', footerEl, function() {
+      var lang = localStorage.getItem('bmicns_lang') || 'ko';
+      if (typeof applyLang === 'function') applyLang(lang);
+    });
   }
 })();

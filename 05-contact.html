@@ -42,11 +42,11 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
             <div class="form-group">
               <label data-i18n="con.name_l">이름 *</label>
-              <input type="text" id="inqName" placeholder="홍길동" required>
+              <input type="text" id="inqName" placeholder="홍길동" data-i18n-placeholder="con.name_ph" required>
             </div>
             <div class="form-group">
               <label data-i18n="con.co_l">회사/기관명</label>
-              <input type="text" id="inqCompany" placeholder="OO기업">
+              <input type="text" id="inqCompany" placeholder="OO기업" data-i18n-placeholder="con.co_ph">
             </div>
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
@@ -90,7 +90,7 @@
           </div>
           <div class="form-group">
             <label data-i18n="con.msg_l">문의 내용 *</label>
-            <textarea id="inqContent" placeholder="프로젝트에 대해 자유롭게 작성해 주세요.&#10;&#10;• 현재 상황 및 해결하고자 하는 문제&#10;• 원하시는 솔루션 또는 서비스&#10;• 희망 일정 등" required></textarea>
+            <textarea id="inqContent" placeholder="프로젝트에 대해 자유롭게 작성해 주세요.&#10;&#10;• 현재 상황 및 해결하고자 하는 문제&#10;• 원하시는 솔루션 또는 서비스&#10;• 희망 일정 등" data-i18n-placeholder="con.msg_ph" required></textarea>
           </div>
           <button type="submit" class="form-submit" id="submitBtn" data-i18n="con.submit">상담 신청하기</button>
         </form>
@@ -123,12 +123,12 @@
 
         <div class="contact-info-card">
           <h4 data-i18n="con.map.title">📍 오시는 길</h4>
-          <p style="font-weight:600; color:var(--text-primary); margin:8px 0">
+          <p style="font-weight:600; color:var(--text-primary); margin:8px 0" data-i18n="con.map.addr">
             서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)
           </p>
           <p data-i18n="con.map.sub">삼성역 4번 출구 도보 3분</p>
           <div style="margin-top:16px; background:#e8e8f0; border-radius:12px; height:200px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:14px">
-            🗺️ 지도 영역 (카카오맵 연동)
+            <span data-i18n="con.map.area">🗺️ 지도 영역 (카카오맵 연동)</span>
           </div>
         </div>
 

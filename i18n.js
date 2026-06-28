@@ -267,7 +267,41 @@ var I18N = {
     'con.opt.budget3':   '5,000만원 ~ 1억원',
     'con.opt.budget4':   '1억원 ~ 5억원',
     'con.opt.budget5':   '5억원 이상',
-    'con.opt.budget6':   '미정'
+    'con.opt.budget6':   '미정',
+
+    /* ── PLATFORMS: FEATURES ── */
+    'plat.vestra.subtitle': 'AI 전세사기 예방 플랫폼',
+    'plat.vestra.feat1': '부동산 거래위험도 산출 장치 및 방법 특허출원 (10-2026-0085160)',
+    'plat.vestra.feat2': '전세사기 위험 징후 자동 탐지',
+    'plat.vestra.feat3': '깡통전세 위험도 산출 (시세 대비 보증금 비율)',
+    'plat.vestra.feat4': '등기부 권리관계 AI 분석 (근저당·가압류·선순위 채권)',
+    'plat.vestra.feat5': '주소 입력만으로 즉시 분석 결과 확인',
+    'plat.vestra.feat6': '분석 리포트 출력 및 이력 관리',
+    'plat.clio.subtitle': 'AI 문서관리 시스템',
+    'plat.clio.feat1': 'AI 문서 생성 (DOCX/HWPX/PDF/XLSX/PPTX 5종)',
+    'plat.clio.feat2': 'RAG 벡터 검색',
+    'plat.clio.feat3': '음성→회의록 자동화 (STT)',
+    'plat.clio.feat4': '계약서 AI 리스크 분석',
+    'plat.mmaster.subtitle': '마케팅 자동화 플랫폼',
+    'plat.mmaster.feat1': 'AI 콘텐츠 초안 생성 (네이버 블로그·카페·인스타그램)',
+    'plat.mmaster.feat2': '브랜드 컨텍스트 기반 채널별 문체 최적화',
+    'plat.mmaster.feat3': '예약 발행 &amp; 발행 일정 통합 관리',
+    'plat.mmaster.feat4': 'GA4 연동 성과 분석 대시보드',
+    'plat.mmaster.feat5': '시즌·검색 흐름 기반 토픽 자동 추천',
+    'plat.mmaster.feat6': 'A/B 테스트로 콘텐츠 성과 비교',
+    'plat.modal.privacy': '<strong>[필수]</strong> 개인정보 수집·이용에 동의합니다.',
+    'plat.modal.privacy_detail': '수집 항목: 담당자명, 연락처, 회사명, 이메일 | 수집 목적: 도입 문의 접수 및 회신 | 보유 기간: 문의 처리 후 1년',
+
+    /* ── CONTACT PLACEHOLDERS / STATIC ── */
+    'con.name_ph':   '홍길동',
+    'con.co_ph':     'OO기업',
+    'con.msg_ph':    '프로젝트에 대해 자유롭게 작성해 주세요.\n\n• 현재 상황 및 해결하고자 하는 문제\n• 원하시는 솔루션 또는 서비스\n• 희망 일정 등',
+    'con.map.addr':  '서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)',
+    'con.map.area':  '🗺️ 지도 영역 (카카오맵 연동)',
+
+    /* ── ABOUT INFO VALUES ── */
+    'about.info.name_v': '주식회사 비엠아이씨엔에스 (BMI C&S Co., Ltd.)',
+    'about.info.est_v':  '2024년'
   },
 
   en: {
@@ -535,7 +569,41 @@ var I18N = {
     'con.opt.budget3':   '₩50M – ₩100M',
     'con.opt.budget4':   '₩100M – ₩500M',
     'con.opt.budget5':   'Over ₩500M',
-    'con.opt.budget6':   'TBD'
+    'con.opt.budget6':   'TBD',
+
+    /* ── PLATFORMS: FEATURES ── */
+    'plat.vestra.subtitle': 'AI Real Estate Safety Platform',
+    'plat.vestra.feat1': 'Real estate transaction risk scoring — Patent filed (App. No. 10-2026-0085160)',
+    'plat.vestra.feat2': 'Automatic detection of jeonse fraud risk signals',
+    'plat.vestra.feat3': 'Hollow jeonse risk scoring (deposit-to-market ratio)',
+    'plat.vestra.feat4': 'AI analysis of registry encumbrances (mortgages, attachments, senior liens)',
+    'plat.vestra.feat5': 'Instant results with just an address',
+    'plat.vestra.feat6': 'Printable analysis reports &amp; history tracking',
+    'plat.clio.subtitle': 'AI Document Management System',
+    'plat.clio.feat1': 'AI document generation (DOCX/HWPX/PDF/XLSX/PPTX — 5 formats)',
+    'plat.clio.feat2': 'RAG vector search',
+    'plat.clio.feat3': 'Voice-to-minutes automation (STT)',
+    'plat.clio.feat4': 'AI contract risk analysis',
+    'plat.mmaster.subtitle': 'Marketing Automation Platform',
+    'plat.mmaster.feat1': 'AI content drafting (Naver Blog, Café &amp; Instagram)',
+    'plat.mmaster.feat2': 'Channel-specific tone optimization based on brand context',
+    'plat.mmaster.feat3': 'Scheduled publishing &amp; integrated content calendar',
+    'plat.mmaster.feat4': 'GA4-connected performance analytics dashboard',
+    'plat.mmaster.feat5': 'Trend &amp; seasonal topic auto-suggestions',
+    'plat.mmaster.feat6': 'A/B testing for content performance comparison',
+    'plat.modal.privacy': '<strong>[Required]</strong> I agree to the collection and use of personal information.',
+    'plat.modal.privacy_detail': 'Items collected: Name, phone, company, email | Purpose: Inquiry processing &amp; follow-up | Retention: 1 year after resolution',
+
+    /* ── CONTACT PLACEHOLDERS / STATIC ── */
+    'con.name_ph':   'Full Name',
+    'con.co_ph':     'Company / Organization',
+    'con.msg_ph':    'Please describe your project.\n\n• Current situation & challenges\n• Desired solution or service\n• Preferred timeline',
+    'con.map.addr':  '354 Gangnam-daero, Gangnam-gu, Seoul (Hyecheon Bldg. #1126-5)',
+    'con.map.area':  '🗺️ Map Area (Kakao Maps)',
+
+    /* ── ABOUT INFO VALUES ── */
+    'about.info.name_v': 'BMI C&S Co., Ltd.',
+    'about.info.est_v':  '2024'
   }
 };
 
