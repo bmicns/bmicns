@@ -100,8 +100,8 @@
 <section class="hero" style="min-height:calc(60vh + 50px)">
   <div class="hero-content">
     <div class="hero-badge">News</div>
-    <h1>BMI C&S <span class="gradient-text">소식</span></h1>
-    <p>회사의 최신 소식과 주요 활동을 전해드립니다.</p>
+    <h1 data-i18n="news.hero.h1">BMI C&S <span class="gradient-text">소식</span></h1>
+    <p data-i18n="news.hero.desc">회사의 최신 소식과 주요 활동을 전해드립니다.</p>
   </div>
 </section>
 
@@ -118,7 +118,7 @@
 
     <!-- 상세 -->
     <div class="news-detail" id="newsDetail">
-      <button class="news-back-btn" onclick="showList()">← 목록으로</button>
+      <button class="news-back-btn" onclick="showList()" data-i18n="news.back">← 목록으로</button>
       <div id="newsDetailContent"></div>
     </div>
   </div>
@@ -126,6 +126,7 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>

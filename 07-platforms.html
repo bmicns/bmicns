@@ -17,11 +17,11 @@
 <section class="hero" style="min-height:calc(60vh + 50px)">
   <div class="hero-content">
     <div class="hero-badge">Platform Development</div>
-    <h1>
+    <h1 data-i18n="plat.hero.h1">
       BMIC&S의 플랫폼으로<br>
       <span class="gradient-text">비즈니스를 혁신하세요</span>
     </h1>
-    <p>
+    <p data-i18n="plat.hero.desc">
       BMI C&amp;S가 자체 개발한 3개 AI 플랫폼<br>
       실제 현장에서 검증된 기술력을 확인하세요
     </p>
@@ -52,8 +52,8 @@
             <span class="live-dot"></span>Live
           </span>
         </div>
-        <h3>계약 전 사기 탐지,<br>계약 후 등기 이상 알림까지</h3>
-        <p>
+        <h3 data-i18n="plat.vestra.h3">계약 전 사기 탐지,<br>계약 후 등기 이상 알림까지</h3>
+        <p data-i18n="plat.vestra.desc">
           계약 전엔 AI가 등기부·권리관계를 분석해 전세사기 위험 징후를 미리 잡아냅니다.
           계약 후엔 등기부등본에 이상 변동이 생기면 계약자에게 즉시 알림을 보냅니다.
           전세 계약의 처음부터 끝까지 AI가 지켜드립니다.
@@ -139,8 +139,8 @@
             <span class="live-dot"></span>Live
           </span>
         </div>
-        <h3>AI로 문서를 생성하고<br>결재까지 자동화</h3>
-        <p>
+        <h3 data-i18n="plat.clio.h3">AI로 문서를 생성하고<br>결재까지 자동화</h3>
+        <p data-i18n="plat.clio.desc">
           RAG 기반 벡터 검색으로 사내 문서를 빠르게 찾고, AI가 회의록·보고서·계약서를
           자동 생성합니다. DOCX·HWPX·PDF·XLSX·PPTX 5종 포맷을 지원합니다.
         </p>
@@ -219,8 +219,8 @@
             <span class="live-dot"></span>Live
           </span>
         </div>
-        <h3>마케팅 콘텐츠 기획부터<br>발행·성과까지 자동화</h3>
-        <p>
+        <h3 data-i18n="plat.mmaster.h3">마케팅 콘텐츠 기획부터<br>발행·성과까지 자동화</h3>
+        <p data-i18n="plat.mmaster.desc">
           브랜드 문서·최근 성과·채널별 문체를 반영해 AI가 블로그·SNS 초안을 생성합니다.
           네이버 블로그·카페·인스타그램 예약 발행과 GA4 성과 분석까지 하나의 흐름으로 연결합니다.
         </p>
@@ -299,10 +299,10 @@
      ═══════════════════════════════════════════ -->
 <section class="section section-dark" style="text-align:center">
   <div class="section-inner">
-    <div class="section-title" style="color:white; margin-bottom:16px">
+    <div class="section-title" style="color:white; margin-bottom:16px" data-i18n="plat.cta.title">
       도입을 검토 중이신가요?
     </div>
-    <p class="section-desc" style="margin-bottom:40px">
+    <p class="section-desc" style="margin-bottom:40px" data-i18n="plat.cta.desc">
       담당자가 확인 후 1 영업일 내에 연락드립니다.<br>
       관심 플랫폼을 선택해 빠르게 문의해 주세요.
     </p>
@@ -339,8 +339,8 @@
     >&times;</button>
 
     <!-- 모달 헤더 -->
-    <h2 id="platformModalTitle">플랫폼 도입 문의</h2>
-    <p class="modal-desc">담당자가 확인 후 1 영업일 내에 연락드립니다.</p>
+    <h2 id="platformModalTitle" data-i18n="plat.modal.title">플랫폼 도입 문의</h2>
+    <p class="modal-desc" data-i18n="plat.modal.desc">담당자가 확인 후 1 영업일 내에 연락드립니다.</p>
 
     <!-- 폼 -->
     <form id="platformInquiryForm" onsubmit="submitPlatformInquiry(event)">
@@ -467,7 +467,7 @@
         </label>
       </div>
 
-      <button type="submit" class="modal-submit" id="platformSubmitBtn">
+      <button type="submit" class="modal-submit" id="platformSubmitBtn" data-i18n="plat.modal.submit">
         문의 보내기
       </button>
 
@@ -476,10 +476,10 @@
     <!-- 제출 성공 메시지 -->
     <div id="platformSuccessMsg" style="display:none; text-align:center; padding:40px 0">
       <div style="font-size:44px; margin-bottom:16px">✅</div>
-      <h3 style="font-size:20px; font-weight:700; margin-bottom:8px">
+      <h3 style="font-size:20px; font-weight:700; margin-bottom:8px" data-i18n="plat.modal.success.title">
         문의가 접수되었습니다
       </h3>
-      <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6">
+      <p style="font-size:14px; color:var(--color-text-secondary); line-height:1.6" data-i18n="plat.modal.success.desc">
         담당자가 확인 후 1 영업일 내에 연락드립니다.<br>감사합니다.
       </p>
       <button
@@ -495,6 +495,7 @@
   </div>
 </div>
 
+<script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>

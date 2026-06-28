@@ -14,10 +14,10 @@
 <section class="hero" style="min-height:calc(60vh + 50px)">
   <div class="hero-content">
     <div class="hero-badge">Contact Us</div>
-    <h1>
+    <h1 data-i18n="con.hero.h1">
       프로젝트 <span class="gradient-text">상담 신청</span>
     </h1>
-    <p>
+    <p data-i18n="con.hero.desc">
       비즈니스에 필요한 IT 솔루션에 대해<br>
       전문가가 빠르게 답변 드리겠습니다.
     </p>
@@ -33,36 +33,36 @@
 
       <!-- Left: Form -->
       <div>
-        <h2 style="font-size:28px; font-weight:800; margin-bottom:8px">문의 양식</h2>
-        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:32px">
+        <h2 style="font-size:28px; font-weight:800; margin-bottom:8px" data-i18n="con.form.title">문의 양식</h2>
+        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:32px" data-i18n="con.form.desc">
           아래 양식을 작성해 주시면 담당자가 확인 후 연락드리겠습니다.
         </p>
 
         <form class="contact-form" id="contactForm" onsubmit="submitInquiry(event)">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
             <div class="form-group">
-              <label>이름 *</label>
+              <label data-i18n="con.name_l">이름 *</label>
               <input type="text" id="inqName" placeholder="홍길동" required>
             </div>
             <div class="form-group">
-              <label>회사/기관명</label>
+              <label data-i18n="con.co_l">회사/기관명</label>
               <input type="text" id="inqCompany" placeholder="OO기업">
             </div>
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
             <div class="form-group">
-              <label>이메일 *</label>
+              <label data-i18n="con.email_l">이메일 *</label>
               <input type="email" id="inqEmail" placeholder="example@company.com" required>
             </div>
             <div class="form-group">
-              <label>연락처 *</label>
+              <label data-i18n="con.tel_l">연락처 *</label>
               <input type="tel" id="inqPhone" placeholder="010-0000-0000" required>
             </div>
           </div>
           <div class="form-group">
-            <label>관심 솔루션</label>
+            <label data-i18n="con.sol_l">관심 솔루션</label>
             <select id="inqSolution">
-              <option>솔루션을 선택해 주세요</option>
+              <option data-i18n="con.sol_ph">솔루션을 선택해 주세요</option>
               <option>네트워크 인프라 구축</option>
               <option>5G 특화망 (이음)</option>
               <option>N2SF 보안체계</option>
@@ -77,9 +77,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label>예상 예산</label>
+            <label data-i18n="con.budget_l">예상 예산</label>
             <select id="inqBudget">
-              <option>예산 범위를 선택해 주세요</option>
+              <option data-i18n="con.budget_ph">예산 범위를 선택해 주세요</option>
               <option>1,000만원 미만</option>
               <option>1,000만원 ~ 5,000만원</option>
               <option>5,000만원 ~ 1억원</option>
@@ -89,52 +89,52 @@
             </select>
           </div>
           <div class="form-group">
-            <label>문의 내용 *</label>
+            <label data-i18n="con.msg_l">문의 내용 *</label>
             <textarea id="inqContent" placeholder="프로젝트에 대해 자유롭게 작성해 주세요.&#10;&#10;• 현재 상황 및 해결하고자 하는 문제&#10;• 원하시는 솔루션 또는 서비스&#10;• 희망 일정 등" required></textarea>
           </div>
-          <button type="submit" class="form-submit" id="submitBtn">상담 신청하기</button>
+          <button type="submit" class="form-submit" id="submitBtn" data-i18n="con.submit">상담 신청하기</button>
         </form>
 
         <!-- 성공 메시지 -->
         <div id="successMsg" style="display:none; text-align:center; padding:60px 20px">
           <div style="font-size:48px; margin-bottom:16px">✅</div>
-          <h3 style="font-size:22px; font-weight:700; margin-bottom:8px">문의가 접수되었습니다</h3>
-          <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.6">
+          <h3 style="font-size:22px; font-weight:700; margin-bottom:8px" data-i18n="con.success.title">문의가 접수되었습니다</h3>
+          <p style="font-size:15px; color:var(--color-text-secondary); line-height:1.6" data-i18n="con.success.desc">
             담당자가 확인 후 빠르게 연락드리겠습니다.<br>
             감사합니다.
           </p>
-          <button onclick="resetForm()" style="margin-top:24px; padding:12px 28px; border:none; border-radius:980px; background:var(--color-accent); color:white; font-size:15px; font-family:inherit; cursor:pointer">추가 문의하기</button>
+          <button onclick="resetForm()" style="margin-top:24px; padding:12px 28px; border:none; border-radius:980px; background:var(--color-accent); color:white; font-size:15px; font-family:inherit; cursor:pointer" data-i18n="con.success.btn">추가 문의하기</button>
         </div>
       </div>
 
       <!-- Right: Contact Info -->
       <div>
         <div class="contact-info-card">
-          <h4>📞 전화 상담</h4>
+          <h4 data-i18n="con.phone.title">📞 전화 상담</h4>
           <p style="font-size:24px; font-weight:800; color:var(--primary); margin:8px 0">010-8490-9271</p>
-          <p>평일 09:00 ~ 18:00 (주말·공휴일 휴무)</p>
+          <p data-i18n="con.phone.hours">평일 09:00 ~ 18:00 (주말·공휴일 휴무)</p>
         </div>
 
         <div class="contact-info-card">
-          <h4>📧 이메일</h4>
+          <h4 data-i18n="con.email.title">📧 이메일</h4>
           <p style="font-size:16px; font-weight:600; color:var(--primary); margin:8px 0">bmicns@gmail.com</p>
-          <p>이메일 문의는 24시간 접수 가능합니다.</p>
+          <p data-i18n="con.email.note">이메일 문의는 24시간 접수 가능합니다.</p>
         </div>
 
         <div class="contact-info-card">
-          <h4>📍 오시는 길</h4>
+          <h4 data-i18n="con.map.title">📍 오시는 길</h4>
           <p style="font-weight:600; color:var(--text-primary); margin:8px 0">
             서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)
           </p>
-          <p>삼성역 4번 출구 도보 3분</p>
+          <p data-i18n="con.map.sub">삼성역 4번 출구 도보 3분</p>
           <div style="margin-top:16px; background:#e8e8f0; border-radius:12px; height:200px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:14px">
             🗺️ 지도 영역 (카카오맵 연동)
           </div>
         </div>
 
         <div class="contact-info-card" style="background:linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color:white">
-          <h4 style="color:rgba(255,255,255,0.8)">💡 빠른 상담이 필요하신가요?</h4>
-          <p style="color:rgba(255,255,255,0.7); margin-top:8px; line-height:1.8">
+          <h4 style="color:rgba(255,255,255,0.8)" data-i18n="con.quick.title">💡 빠른 상담이 필요하신가요?</h4>
+          <p style="color:rgba(255,255,255,0.7); margin-top:8px; line-height:1.8" data-i18n="con.quick.desc">
             전화 상담을 통해 프로젝트에 대한<br>
             즉각적인 피드백을 받으실 수 있습니다.<br>
             담당 전문가가 직접 상담해 드립니다.
@@ -148,6 +148,7 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>

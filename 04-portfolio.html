@@ -15,11 +15,11 @@
 <section class="hero" style="min-height:calc(60vh + 50px)">
   <div class="hero-content">
     <div class="hero-badge">Portfolio</div>
-    <h1>
+    <h1 data-i18n="port.hero.h1">
       <span class="gradient-text">검증된 실력</span>,<br>
       신뢰할 수 있는 실적
     </h1>
-    <p>
+    <p data-i18n="port.hero.desc">
       공공기관부터 대기업, 지자체까지<br>
       다양한 프로젝트를 성공적으로 수행했습니다.
     </p>
@@ -36,13 +36,13 @@
   <div class="section-inner" style="max-width:1000px">
     <div class="section-header">
       <div class="section-label">Track Record</div>
-      <div class="section-title">프로젝트 실적</div>
-      <div class="section-desc">2023년부터 현재까지 수행한 주요 프로젝트입니다.</div>
+      <div class="section-title" data-i18n="port.track.title">프로젝트 실적</div>
+      <div class="section-desc" data-i18n="port.track.desc">2023년부터 현재까지 수행한 주요 프로젝트입니다.</div>
     </div>
 
     <!-- Year Filter -->
     <div class="year-filter">
-      <button class="year-btn active" onclick="filterYear('all')">전체</button>
+      <button class="year-btn active" onclick="filterYear('all')" data-i18n="port.filter.all">전체</button>
       <button class="year-btn" onclick="filterYear('2026')">2026</button>
       <button class="year-btn" onclick="filterYear('2025')">2025</button>
       <button class="year-btn" onclick="filterYear('2024')">2024</button>
@@ -319,6 +319,7 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="i18n.js"></script>
 <script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>

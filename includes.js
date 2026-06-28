@@ -50,6 +50,8 @@
           }
         });
       }
+      // i18n 초기화
+      if (typeof initI18n === 'function') initI18n();
     });
   }
 
