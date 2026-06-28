@@ -5,226 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>주요실적 - BMI C&S</title>
   <link rel="stylesheet" href="shared-styles.css">
-  <style>
-    /* ─── Year Filter ─── */
-    .year-filter {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-    .year-btn {
-      padding: 8px 20px;
-      border-radius: 980px;
-      border: 1px solid var(--color-border);
-      background: transparent;
-      color: var(--color-text-secondary);
-      font-size: 14px;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.3s;
-      letter-spacing: -0.01em;
-    }
-    .year-btn:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
-    }
-    .year-btn.active {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
-      color: #fff;
-    }
-
-    /* ─── Timeline ─── */
-    .timeline {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 28px;
-      top: 0; bottom: 0;
-      width: 1.5px;
-      background: linear-gradient(to bottom, var(--color-accent), var(--color-border-light));
-    }
-
-    .timeline-year {
-      position: relative;
-      margin-bottom: 8px;
-    }
-    .timeline-year-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      position: relative;
-      z-index: 2;
-    }
-    .timeline-year-dot {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--color-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 20px rgba(41,151,255,0.25);
-    }
-    .timeline-year-text {
-      font-size: clamp(20px, 2.5vw, 26px);
-      font-weight: 700;
-      color: var(--color-text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .timeline-items {
-      padding-left: 80px;
-      padding-bottom: 32px;
-    }
-
-    .timeline-card {
-      background: var(--color-white);
-      border-radius: 16px;
-      padding: 24px 28px;
-      margin-bottom: 12px;
-      border: 0.5px solid var(--color-border-light);
-      transition: all 0.3s cubic-bezier(.25,.1,.25,1);
-      position: relative;
-    }
-    .timeline-card:hover {
-      transform: translateX(4px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-      border-color: var(--color-accent);
-    }
-    .timeline-card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .timeline-client {
-      font-size: clamp(15px, 1.6vw, 17px);
-      font-weight: 700;
-      color: var(--color-text-primary);
-      letter-spacing: -0.01em;
-    }
-    .timeline-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 980px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-    .badge-public {
-      background: #e8f4fd;
-      color: #0071e3;
-    }
-    .badge-private {
-      background: #f0faf0;
-      color: #1d8a3e;
-    }
-    .badge-b2c {
-      background: #fef3e8;
-      color: #c25e00;
-    }
-    .badge-ongoing {
-      background: #fff3e0;
-      color: #e65100;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    .timeline-project {
-      font-size: 14px;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-    }
-    .timeline-detail {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 0.5px solid var(--color-border-light);
-    }
-    .timeline-detail-icon {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      margin-top: 1px;
-      color: var(--color-text-muted);
-    }
-    .timeline-detail p {
-      font-size: 13px;
-      color: var(--color-text-muted);
-      line-height: 1.5;
-    }
-
-    /* ─── Client Section ─── */
-    .client-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .client-chip {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 0.5px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      transition: all 0.3s;
-    }
-    .client-chip:hover {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-    .client-chip svg {
-      width: 16px; height: 16px;
-      opacity: 0.5;
-    }
-
-    /* ─── CTA Bottom ─── */
-    .cta-bottom {
-      text-align: center;
-      padding: 80px 24px;
-      background: linear-gradient(180deg, var(--color-fill) 0%, var(--color-white) 100%);
-    }
-
-    /* ─── Responsive ─── */
-    @media (max-width: 834px) {
-      .timeline::before { left: 20px; }
-      .timeline-year-dot { width: 40px; height: 40px; font-size: 13px; }
-      .timeline-items { padding-left: 60px; }
-    }
-    @media (max-width: 480px) {
-      .timeline::before { left: 16px; }
-      .timeline-year-dot { width: 32px; height: 32px; font-size: 11px; }
-      .timeline-items { padding-left: 48px; }
-      .timeline-card { padding: 20px; }
-      .timeline-card-header { flex-direction: column; align-items: flex-start; gap: 6px; }
-      .client-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+  <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
 
@@ -245,6 +26,10 @@
 
   </div>
 </section>
+
+<div id="portfolioDynamicTimeline"></div>
+
+<div id="portfolioStaticTimeline">
 
 <!-- Timeline Section -->
 <section class="section">
@@ -274,6 +59,18 @@
           <div class="timeline-year-text">2026</div>
         </div>
         <div class="timeline-items">
+
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <span class="timeline-client">BMI C&S</span>
+              <span class="timeline-badge badge-private">민간</span>
+            </div>
+            <div class="timeline-project">부동산 거래위험도 산출 장치 및 방법 특허출원</div>
+            <div class="timeline-detail">
+              <svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+              <p>부동산 거래위험도 산출 장치 및 방법에 대한 특허출원 (출원번호: 10-2026-0085160)</p>
+            </div>
+          </div>
 
           <div class="timeline-card">
             <div class="timeline-card-header">
@@ -463,6 +260,8 @@
   </div>
 </section>
 
+</div>
+
 <!-- Client Partners Section -->
 <section class="section section-dark">
   <div class="section-inner">
@@ -520,8 +319,85 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatInlineMarkup(str) {
+  return escHtml(str)
+    .replace(/&lt;br\s*\/?&gt;/gi, '<br>')
+    .replace(/&lt;(\/?)(b|strong|i|em)&gt;/gi, '<$1$2>');
+}
+
+function renderPortfolioTimeline(items) {
+  var container = document.getElementById('portfolioDynamicTimeline');
+  var fallback = document.getElementById('portfolioStaticTimeline');
+  if (!container || !items.length) return;
+  fallback.style.display = 'none';
+
+  var years = Array.from(new Set(items.map(function(item) { return item.year; }))).sort(function(a, b) {
+    return String(b).localeCompare(String(a));
+  });
+
+  var filterHtml = '<div class="year-filter"><button class="year-btn active" onclick="filterYear(\'all\')">전체</button>' + years.map(function(year) {
+    return '<button class="year-btn" onclick="filterYear(\'' + escHtml(year) + '\')">' + escHtml(year) + '</button>';
+  }).join('') + '</div>';
+
+  var timelineHtml = years.map(function(year) {
+    var yearItems = items.filter(function(item) { return item.year === year; });
+    return '<div class="timeline-year" data-year="' + escHtml(year) + '"><div class="timeline-year-label"><div class="timeline-year-dot">' + escHtml(String(year).slice(-2)) + '</div><div class="timeline-year-text">' + escHtml(year) + '</div></div><div class="timeline-items">' + yearItems.map(function(item) {
+      var badges = '<span class="timeline-badge ' + (item.sector === '민간' ? 'badge-private' : item.sector === 'B2C' ? 'badge-b2c' : 'badge-public') + '">' + escHtml(item.sector || '공공') + '</span>';
+      if (item.status) badges += '<span class="timeline-badge badge-ongoing">' + escHtml(item.status) + '</span>';
+      if (Array.isArray(item.tags)) {
+        item.tags.forEach(function(tag) {
+          badges += '<span class="timeline-badge">' + escHtml(tag) + '</span>';
+        });
+      }
+      return '<div class="timeline-card" data-year="' + escHtml(year) + '"><div class="timeline-card-header"><span class="timeline-client">' + escHtml(item.client) + '</span>' + badges + '</div><div class="timeline-project">' + formatInlineMarkup(item.title) + '</div><div class="timeline-detail"><svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + escHtml(item.detail) + '</p></div></div>';
+    }).join('') + '</div></div>';
+  }).join('');
+
+  container.innerHTML = '<section class="section"><div class="section-inner" style="max-width:1000px"><div class="section-header"><div class="section-label">Track Record</div><div class="section-title">프로젝트 실적</div><div class="section-desc">관리자에서 등록한 최신 주요실적입니다.</div></div>' + filterHtml + '<div class="timeline">' + timelineHtml + '</div></div></section>';
+}
+
+async function loadPortfolioCms() {
+  try {
+    var rows = await sbSelect('news', 'select=title,summary,content&category=eq.' + encodeURIComponent('주요실적') + '&order=created_at.asc');
+    var items = rows.map(function(row) {
+      var payload = {};
+      try { payload = JSON.parse(row.content || '{}'); } catch (e) {}
+      return {
+        year: payload.year || '',
+        client: payload.client || row.summary || '',
+        title: row.title || '',
+        tags: Array.isArray(payload.tags) ? payload.tags : [],
+        sector: payload.sector || '공공',
+        status: payload.status || '',
+        detail: payload.detail || '',
+        sortOrder: Number(payload.sortOrder || 0)
+      };
+    }).filter(function(item) {
+      return item.year && item.client && item.title && item.detail;
+    }).sort(function(a, b) {
+      if (String(b.year) !== String(a.year)) return String(b.year).localeCompare(String(a.year));
+      return a.sortOrder - b.sortOrder;
+    });
+    if (!items.length) return;
+    renderPortfolioTimeline(items);
+  } catch (e) {
+    console.error('portfolio cms load failed', e);
+  }
+}
+
 function filterYear(year) {
   document.querySelectorAll('.year-btn').forEach(btn => {
     btn.classList.toggle('active', btn.textContent.trim() === (year === 'all' ? '전체' : year));
@@ -534,6 +410,8 @@ function filterYear(year) {
     }
   });
 }
+
+loadPortfolioCms();
 </script>
 </body>
 </html>

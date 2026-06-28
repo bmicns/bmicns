@@ -6,93 +6,79 @@
   <title>소식 - BMI C&S</title>
   <link rel="stylesheet" href="shared-styles.css">
   <style>
-    .news-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-      margin-top: 40px;
+    /* 목록 */
+    .news-list { margin-top: 32px; }
+    .news-list-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 0; border-bottom: 1px solid var(--color-border-light);
+      cursor: pointer; transition: background 0.15s;
     }
-    .news-card {
-      background: var(--color-white); border-radius: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .news-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-    .news-card-thumb {
-      width: 100%; height: 200px; object-fit: cover;
-      background: var(--color-fill);
-    }
-    .news-card-thumb-placeholder {
-      width: 100%; height: 200px; background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px;
-    }
-    .news-card-body { padding: 24px; }
-    .news-card-category {
-      display: inline-block; padding: 4px 12px; border-radius: 980px;
+    .news-list-item:first-child { border-top: 1px solid var(--color-border-light); }
+    .news-list-item:hover .news-list-title { color: var(--color-accent); }
+    .news-list-category {
+      flex-shrink: 0; display: inline-block;
+      padding: 3px 10px; border-radius: 980px;
       font-size: 11px; font-weight: 600;
       background: rgba(41,151,255,0.1); color: var(--color-accent);
-      margin-bottom: 12px;
+      white-space: nowrap;
     }
-    .news-card-title {
-      font-size: 18px; font-weight: 700; line-height: 1.4;
-      color: var(--color-text-primary); margin-bottom: 8px;
-      letter-spacing: -0.02em;
-      display: -webkit-box; -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical; overflow: hidden;
+    .news-list-title {
+      flex: 1; font-size: 16px; font-weight: 600;
+      color: var(--color-text-primary); line-height: 1.4;
+      transition: color 0.2s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .news-card-summary {
-      font-size: 14px; color: var(--color-text-secondary); line-height: 1.6;
-      display: -webkit-box; -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical; overflow: hidden;
+    .news-list-summary {
+      flex: 2; font-size: 13px; color: var(--color-text-secondary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .news-card-date {
-      font-size: 12px; color: var(--color-text-muted); margin-top: 16px;
+    .news-list-date {
+      flex-shrink: 0; font-size: 12px; color: var(--color-text-muted);
+      white-space: nowrap;
     }
 
-    /* Detail modal */
-    .news-modal {
-      display: none; position: fixed; inset: 0; z-index: 10000;
-      background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
-      align-items: center; justify-content: center; padding: 24px;
+    /* 상세 */
+    .news-detail { display: none; max-width: 720px; margin: 0 auto; padding: 40px 0; }
+    .news-detail.active { display: block; }
+    .news-back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--color-text-secondary);
+      cursor: pointer; margin-bottom: 32px;
+      background: none; border: none; font-family: inherit;
+      transition: color 0.2s; padding: 0;
     }
-    .news-modal.active { display: flex; }
-    .news-modal-box {
-      background: var(--color-white); border-radius: 20px;
-      width: 100%; max-width: 680px; padding: 40px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.2);
-      max-height: 85vh; overflow-y: auto;
-    }
-    .news-modal-category {
+    .news-back-btn:hover { color: var(--color-accent); }
+    .news-detail-category {
       display: inline-block; padding: 4px 12px; border-radius: 980px;
       font-size: 12px; font-weight: 600;
       background: rgba(41,151,255,0.1); color: var(--color-accent);
       margin-bottom: 16px;
     }
-    .news-modal-title {
-      font-size: 24px; font-weight: 700; line-height: 1.35;
-      letter-spacing: -0.03em; margin-bottom: 8px;
+    .news-detail-title {
+      font-size: 28px; font-weight: 800; line-height: 1.35;
+      letter-spacing: -0.03em; color: var(--color-text-primary);
+      margin-bottom: 10px;
     }
-    .news-modal-date {
-      font-size: 13px; color: var(--color-text-muted); margin-bottom: 24px;
+    .news-detail-date {
+      font-size: 13px; color: var(--color-text-muted); margin-bottom: 28px;
     }
-    .news-modal-content {
-      font-size: 15px; line-height: 1.8; color: var(--color-text-primary);
+    .news-detail-divider {
+      border: none; border-top: 1px solid var(--color-border-light);
+      margin-bottom: 28px;
+    }
+    .news-detail-thumb {
+      width: 100%; border-radius: 14px; margin-bottom: 28px;
+      max-height: 420px; object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .news-detail-content {
+      font-size: 16px; line-height: 1.9; color: var(--color-text-primary);
       white-space: pre-wrap;
     }
-    .news-modal-content .news-body-img {
+    .news-detail-content .news-body-img {
       display: block; max-width: 100%; border-radius: 12px;
-      margin: 16px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin: 20px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
-    .news-modal-close {
-      margin-top: 28px; width: 100%; padding: 13px;
-      border: none; border-radius: 12px; background: var(--color-fill);
-      font-size: 14px; font-weight: 600; cursor: pointer;
-      font-family: inherit; transition: background 0.2s;
-    }
-    .news-modal-close:hover { background: var(--color-border-light); }
 
     .news-empty {
       text-align: center; padding: 80px 24px;
@@ -100,12 +86,9 @@
     .news-empty-icon { font-size: 56px; margin-bottom: 16px; }
     .news-empty p { font-size: 16px; color: var(--color-text-muted); }
 
-    @media (max-width: 834px) {
-      .news-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 480px) {
-      .news-grid { grid-template-columns: 1fr; }
-      .news-modal-box { padding: 28px 20px; }
+      .news-list-summary { display: none; }
+      .news-detail-title { font-size: 22px; }
     }
   </style>
 </head>
@@ -122,95 +105,38 @@
   </div>
 </section>
 
-<!-- NEWS LIST -->
+<!-- NEWS -->
 <section class="section">
   <div class="section-inner">
-    <div id="newsContainer">
+    <!-- 목록 -->
+    <div id="newsList">
       <div class="news-empty">
         <div class="news-empty-icon">📰</div>
         <p>등록된 소식이 없습니다.</p>
       </div>
     </div>
+
+    <!-- 상세 -->
+    <div class="news-detail" id="newsDetail">
+      <button class="news-back-btn" onclick="showList()">← 목록으로</button>
+      <div id="newsDetailContent"></div>
+    </div>
   </div>
 </section>
 
-<!-- News Detail Modal -->
-<div class="news-modal" id="newsModal">
-  <div class="news-modal-box" id="newsModalContent"></div>
-</div>
-
 <div id="footer-placeholder"></div>
 
+<script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>
-(function() {
-  var newsList = JSON.parse(localStorage.getItem('bmicns_news') || '[]');
-  var container = document.getElementById('newsContainer');
+var _newsList = [];
+var categoryIcons = { '회사소식': '🏢', '수주': '🤝', '파트너십': '🔗', '공지': '📢', '기술': '💡' };
 
-  // Sort by date desc
-  newsList.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
-
-  if (newsList.length === 0) return;
-
-  var categoryIcons = {
-    '회사소식': '🏢', '수주': '🤝', '파트너십': '🔗', '공지': '📢', '기술': '💡'
-  };
-
-  var html = '<div class="news-grid">';
-  newsList.forEach(function(news, idx) {
-    var icon = categoryIcons[news.category] || '📰';
-    html += '<div class="news-card" onclick="showNewsDetail(' + idx + ')">';
-    if (news.thumbnail) {
-      html += '<img class="news-card-thumb" src="' + esc(news.thumbnail) + '" alt="">';
-    } else {
-      html += '<div class="news-card-thumb-placeholder">' + icon + '</div>';
-    }
-    html += '<div class="news-card-body">';
-    html += '<span class="news-card-category">' + esc(news.category || '회사소식') + '</span>';
-    html += '<div class="news-card-title">' + esc(news.title) + '</div>';
-    html += '<div class="news-card-summary">' + esc(news.summary || '') + '</div>';
-    html += '<div class="news-card-date">' + formatDate(news.date) + '</div>';
-    html += '</div></div>';
-  });
-  html += '</div>';
-  container.innerHTML = html;
-})();
-
-function showNewsDetail(idx) {
-  var newsList = JSON.parse(localStorage.getItem('bmicns_news') || '[]');
-  newsList.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
-  var news = newsList[idx];
-  if (!news) return;
-
-  var bodyContent = esc(news.content || news.summary || '');
-  // Replace [이미지N] tags with actual images
-  if (news.bodyImages && news.bodyImages.length > 0) {
-    news.bodyImages.forEach(function(img) {
-      var escaped = esc(img.tag);
-      bodyContent = bodyContent.split(escaped).join('</span><img class="news-body-img" src="' + img.data + '" alt=""><span>');
-    });
-  }
-
-  var html = '<span class="news-modal-category">' + esc(news.category || '회사소식') + '</span>';
-  html += '<div class="news-modal-title">' + esc(news.title) + '</div>';
-  html += '<div class="news-modal-date">' + formatDate(news.date) + '</div>';
-  if (news.thumbnail) {
-    html += '<img style="width:100%; border-radius:12px; margin-bottom:20px; max-height:400px; object-fit:cover" src="' + esc(news.thumbnail) + '" alt="">';
-  }
-  html += '<div class="news-modal-content"><span>' + bodyContent + '</span></div>';
-  html += '<button class="news-modal-close" onclick="closeNewsModal()">닫기</button>';
-
-  document.getElementById('newsModalContent').innerHTML = html;
-  document.getElementById('newsModal').classList.add('active');
+function formatDate(str) {
+  if (!str) return '-';
+  var d = new Date(str);
+  return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
 }
-
-function closeNewsModal() {
-  document.getElementById('newsModal').classList.remove('active');
-}
-
-document.getElementById('newsModal').addEventListener('click', function(e) {
-  if (e.target === this) closeNewsModal();
-});
 
 function esc(str) {
   if (!str) return '';
@@ -219,10 +145,60 @@ function esc(str) {
   return div.innerHTML;
 }
 
-function formatDate(str) {
-  if (!str) return '-';
-  var d = new Date(str);
-  return d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+(async function() {
+  var listEl = document.getElementById('newsList');
+  try {
+    _newsList = await sbSelect('news', 'select=*&order=created_at.desc');
+  } catch(e) {
+    listEl.innerHTML = '<p style="text-align:center;color:var(--color-text-muted)">소식을 불러오는 중 오류가 발생했습니다.</p>';
+    return;
+  }
+
+  if (_newsList.length === 0) return;
+
+  var html = '<div class="news-list">';
+  _newsList.forEach(function(news, idx) {
+    html += '<div class="news-list-item" onclick="showDetail(' + idx + ')">';
+    html += '<span class="news-list-category">' + esc(news.category || '회사소식') + '</span>';
+    html += '<span class="news-list-title">' + esc(news.title) + '</span>';
+    if (news.summary) html += '<span class="news-list-summary">' + esc(news.summary) + '</span>';
+    html += '<span class="news-list-date">' + formatDate(news.created_at) + '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+  listEl.innerHTML = html;
+})();
+
+function showDetail(idx) {
+  var news = _newsList[idx];
+  if (!news) return;
+
+  var bodyContent = esc(news.content || news.summary || '');
+  var bodyImgs = Array.isArray(news.body_images) ? news.body_images : [];
+  bodyImgs.forEach(function(img) {
+    bodyContent = bodyContent.split(esc(img.tag)).join(
+      '</span><img class="news-body-img" src="' + img.data + '" alt=""><span>'
+    );
+  });
+
+  var html = '<span class="news-detail-category">' + esc(news.category || '회사소식') + '</span>';
+  html += '<div class="news-detail-title">' + esc(news.title) + '</div>';
+  html += '<div class="news-detail-date">' + formatDate(news.created_at) + '</div>';
+  html += '<hr class="news-detail-divider">';
+  if (news.thumbnail) {
+    html += '<img class="news-detail-thumb" src="' + esc(news.thumbnail) + '" alt="">';
+  }
+  html += '<div class="news-detail-content"><span>' + bodyContent + '</span></div>';
+
+  document.getElementById('newsDetailContent').innerHTML = html;
+  document.getElementById('newsList').style.display = 'none';
+  document.getElementById('newsDetail').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showList() {
+  document.getElementById('newsDetail').classList.remove('active');
+  document.getElementById('newsList').style.display = '';
 }
 </script>
 

@@ -124,8 +124,7 @@
         <div class="contact-info-card">
           <h4>📍 오시는 길</h4>
           <p style="font-weight:600; color:var(--text-primary); margin:8px 0">
-            서울특별시 강남구 영동대로85길 34, 901호<br>
-            (스파크플러스 삼성2호점)
+            서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)
           </p>
           <p>삼성역 4번 출구 도보 3분</p>
           <div style="margin-top:16px; background:#e8e8f0; border-radius:12px; height:200px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:14px">
@@ -149,27 +148,30 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>
-function submitInquiry(e) {
+async function submitInquiry(e) {
   e.preventDefault();
   var solution = document.getElementById('inqSolution').value;
   var budget = document.getElementById('inqBudget').value;
-  var inquiry = {
-    name: document.getElementById('inqName').value.trim(),
-    company: document.getElementById('inqCompany').value.trim(),
-    email: document.getElementById('inqEmail').value.trim(),
-    phone: document.getElementById('inqPhone').value.trim(),
-    solution: solution === '솔루션을 선택해 주세요' ? '' : solution,
-    budget: budget === '예산 범위를 선택해 주세요' ? '' : budget,
-    content: document.getElementById('inqContent').value.trim(),
-    date: new Date().toISOString()
+  var data = {
+    name:     document.getElementById('inqName').value.trim(),
+    company:  document.getElementById('inqCompany').value.trim(),
+    email:    document.getElementById('inqEmail').value.trim(),
+    phone:    document.getElementById('inqPhone').value.trim(),
+    platforms: [solution === '솔루션을 선택해 주세요' ? '' : solution].filter(Boolean),
+    message:  (budget !== '예산 범위를 선택해 주세요' ? '[예산: ' + budget + '] ' : '') +
+              document.getElementById('inqContent').value.trim()
   };
-  var inquiries = JSON.parse(localStorage.getItem('bmicns_inquiries') || '[]');
-  inquiries.push(inquiry);
-  localStorage.setItem('bmicns_inquiries', JSON.stringify(inquiries));
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
+  try {
+    var res = await sbPost('inquiries', data);
+    if (!res.ok) throw new Error('서버 오류');
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  } catch(e) {
+    alert('문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+  }
 }
 function resetForm() {
   document.getElementById('contactForm').reset();
