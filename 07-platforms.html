@@ -5,215 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>플랫폼개발 - BMI C&amp;S</title>
   <link rel="stylesheet" href="shared-styles.css">
-  <style>
-    /* ─────────────────────────────────────────
-       플랫폼 페이지 전용 스타일
-       shared-styles.css 미정의 클래스만 선언
-       ───────────────────────────────────────── */
-
-    /* 1. 앵커 서브 내비 */
-    .platform-subnav {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-    .platform-subnav-link {
-      display: inline-block;
-      padding: 8px 20px;
-      border-radius: 980px;
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-decoration: none;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-      letter-spacing: -0.01em;
-    }
-    .platform-subnav-link:hover {
-      color: var(--color-white);
-      border-color: var(--color-accent);
-      background: rgba(41, 151, 255, 0.12);
-    }
-
-    /* 2. 플랫폼 섹션 레이블 + 라이브 배지 행 */
-    .platform-label-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    /* 3. 라이브 배지 */
-    .platform-live-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 3px 10px 3px 8px;
-      border-radius: 980px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-green);
-      background: rgba(48, 209, 88, 0.10);
-      border: 1px solid rgba(48, 209, 88, 0.25);
-      letter-spacing: 0.02em;
-    }
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--color-green);
-      display: inline-block;
-      flex-shrink: 0;
-      animation: livePulse 1.8s ease-in-out infinite;
-    }
-    @keyframes livePulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.75); }
-    }
-
-    /* 4. 기능 목록 */
-    .platform-feature-list {
-      list-style: none;
-      margin: 16px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .platform-feature-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-    }
-    .pf-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(41, 151, 255, 0.12);
-      color: var(--color-accent);
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .pf-text { flex: 1; }
-
-    /* 5. 기술 스택 태그 */
-    .tag-stack {
-      background: rgba(41, 151, 255, 0.08);
-      color: var(--color-accent);
-      border: 1px solid rgba(41, 151, 255, 0.20);
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .platform-stack-tags { margin-bottom: 4px; }
-
-    /* 6. CTA 버튼 행 */
-    .platform-cta-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-
-    /* 7. 플랫폼 체크박스 그룹 */
-    .platform-check-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .platform-check-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--color-border);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .platform-check-item:has(input:checked) {
-      border-color: var(--color-accent);
-      background: rgba(41, 151, 255, 0.05);
-    }
-    .platform-check-item input[type="checkbox"] {
-      width: 16px !important;
-      height: 16px;
-      accent-color: var(--color-accent);
-      flex-shrink: 0;
-      padding: 0 !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-    .platform-check-label {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .platform-check-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      letter-spacing: -0.01em;
-    }
-    .platform-check-desc {
-      font-size: 12px;
-      color: var(--color-text-muted);
-    }
-    .platform-check-hint {
-      font-size: 12px;
-      color: #ff3b30;
-      margin-top: 6px;
-    }
-
-    /* 8. 모달 제출 버튼 */
-    .modal-submit {
-      width: 100%;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 980px;
-      background: var(--color-accent);
-      color: var(--color-white);
-      font-size: 16px;
-      font-weight: 400;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 8px;
-      letter-spacing: -0.022em;
-    }
-    .modal-submit:hover { background: var(--color-link-hover); }
-
-    /* 반응형 — Tablet (≤ 834px) */
-    @media (max-width: 834px) {
-      .platform-subnav { gap: 6px; }
-      .platform-subnav-link { padding: 6px 14px; font-size: 13px; }
-      .platform-cta-row { gap: 12px; }
-    }
-
-    /* 반응형 — Mobile (≤ 480px) */
-    @media (max-width: 480px) {
-      .platform-subnav { gap: 4px; }
-      .platform-subnav-link { padding: 5px 12px; font-size: 12px; }
-      .platform-cta-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .platform-cta-row .btn-primary,
-      .platform-cta-row .btn-secondary {
-        text-align: center;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="platforms.css">
 </head>
 <body>
 
@@ -226,20 +18,24 @@
   <div class="hero-content">
     <div class="hero-badge">Platform Development</div>
     <h1>
-      AI가 만든 플랫폼으로<br>
+      BMIC&S의 플랫폼으로<br>
       <span class="gradient-text">비즈니스를 혁신하세요</span>
     </h1>
     <p>
       BMI C&amp;S가 자체 개발한 3개 AI 플랫폼<br>
       실제 현장에서 검증된 기술력을 확인하세요
     </p>
-    <nav class="platform-subnav" aria-label="플랫폼 바로가기">
+    <nav class="platform-subnav" aria-label="플랫폼 바로가기" id="platformSubnav">
       <a href="#vestra" class="platform-subnav-link">VESTRA</a>
       <a href="#clio"   class="platform-subnav-link">CLIO</a>
-      <a href="#nurse"  class="platform-subnav-link">NurseScheduler</a>
+      <a href="#mmaster" class="platform-subnav-link">M-MASTER</a>
     </nav>
   </div>
 </section>
+
+<div id="platformDynamicSections"></div>
+
+<div id="platformStaticSections">
 
 <!-- ═══════════════════════════════════════════
      PLATFORM 01 — VESTRA
@@ -264,6 +60,10 @@
         </p>
 
         <ul class="platform-feature-list">
+          <li class="platform-feature-item">
+            <span class="pf-icon">✓</span>
+            <span class="pf-text">부동산 거래위험도 산출 장치 및 방법 특허출원 (10-2026-0085160)</span>
+          </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
             <span class="pf-text">전세사기 위험 징후 자동 탐지</span>
@@ -324,8 +124,6 @@
 
     </div>
   </div>
-</section>
-
 <!-- ═══════════════════════════════════════════
      PLATFORM 02 — CLIO
      ═══════════════════════════════════════════ -->
@@ -407,9 +205,9 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
-     PLATFORM 03 — NurseScheduler
+     PLATFORM 03 — M-MASTER
      ═══════════════════════════════════════════ -->
-<section id="nurse" class="section">
+<section id="mmaster" class="section">
   <div class="section-inner">
     <div class="solution-detail">
 
@@ -421,49 +219,49 @@
             <span class="live-dot"></span>Live
           </span>
         </div>
-        <h3>3교대 근무표를 AI가<br>자동으로 편성합니다</h3>
+        <h3>마케팅 콘텐츠 기획부터<br>발행·성과까지 자동화</h3>
         <p>
-          수작업으로 작성하던 교대 근무 스케줄을 AI가 자동 편성합니다.
-          교대 변경 요청부터 승인까지 워크플로우로 처리하고, PWA 푸시 알림으로 즉시 통보합니다.
+          브랜드 문서·최근 성과·채널별 문체를 반영해 AI가 블로그·SNS 초안을 생성합니다.
+          네이버 블로그·카페·인스타그램 예약 발행과 GA4 성과 분석까지 하나의 흐름으로 연결합니다.
         </p>
 
         <ul class="platform-feature-list">
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">월간 캘린더 (오전/오후/야간 색상 코딩)</span>
+            <span class="pf-text">AI 콘텐츠 초안 생성 (네이버 블로그·카페·인스타그램)</span>
           </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">AI 자동편성 알고리즘</span>
+            <span class="pf-text">브랜드 컨텍스트 기반 채널별 문체 최적화</span>
           </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">교대 변경 요청/승인 워크플로우</span>
+            <span class="pf-text">예약 발행 &amp; 발행 일정 통합 관리</span>
           </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">PWA 푸시 알림</span>
+            <span class="pf-text">GA4 연동 성과 분석 대시보드</span>
           </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">관리자 대시보드 &amp; 인력 현황</span>
+            <span class="pf-text">시즌·검색 흐름 기반 토픽 자동 추천</span>
           </li>
           <li class="platform-feature-item">
             <span class="pf-icon">✓</span>
-            <span class="pf-text">모바일 최적화</span>
+            <span class="pf-text">A/B 테스트로 콘텐츠 성과 비교</span>
           </li>
         </ul>
 
         <div class="platform-cta-row">
           <button
             class="btn-primary platform-inquiry-btn"
-            data-platform="NurseScheduler"
-            aria-label="NurseScheduler 도입 문의하기"
+            data-platform="M-MASTER"
+            aria-label="M-MASTER 도입 문의하기"
           >
             도입 문의하기
           </button>
           <a
-            href="https://nurse-sch.vercel.app"
+            href="https://m-master.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-secondary"
@@ -476,16 +274,16 @@
       <!-- 이미지 영역 -->
       <div class="solution-visual">
         <img
-          src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80"
-          alt="NurseScheduler 3교대 자동편성 시스템"
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+          alt="M-MASTER 마케팅 자동화 플랫폼"
           loading="lazy"
           width="800"
           height="600"
         >
         <div class="sv-overlay"></div>
         <div class="sv-text">
-          <div class="sv-title">NurseScheduler</div>
-          <div class="sv-subtitle">3교대 자동편성 시스템</div>
+          <div class="sv-title">M-MASTER</div>
+          <div class="sv-subtitle">마케팅 자동화 플랫폼</div>
         </div>
         <div class="sv-glow"></div>
       </div>
@@ -493,6 +291,8 @@
     </div>
   </div>
 </section>
+
+</div>
 
 <!-- ═══════════════════════════════════════════
      CTA 배너
@@ -629,14 +429,14 @@
           <label class="platform-check-item">
             <input
               type="checkbox"
-              id="chk-nurse"
+              id="chk-mmaster"
               name="platforms"
-              value="NurseScheduler"
+              value="M-MASTER"
               class="platform-checkbox"
             >
             <span class="platform-check-label">
-              <span class="platform-check-name">NurseScheduler</span>
-              <span class="platform-check-desc">3교대 자동편성</span>
+              <span class="platform-check-name">M-MASTER</span>
+              <span class="platform-check-desc">마케팅 자동화</span>
             </span>
           </label>
         </div>
@@ -695,8 +495,90 @@
   </div>
 </div>
 
+<script src="supabase-config.js"></script>
 <script src="includes.js"></script>
 <script>
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function bindPlatformButtons() {
+    document.querySelectorAll('.platform-inquiry-btn').forEach(function(btn) {
+      if (btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', function() {
+        openPlatformModal(this.dataset.platform);
+      });
+    });
+  }
+
+  function renderPlatformNav(items) {
+    var nav = document.getElementById('platformSubnav');
+    if (!nav || !items.length) return;
+    nav.innerHTML = items.map(function(item) {
+      return '<a href="#' + escHtml(item.slug) + '" class="platform-subnav-link">' + escHtml(item.title) + '</a>';
+    }).join('');
+  }
+
+  function renderPlatformSections(items) {
+    var container = document.getElementById('platformDynamicSections');
+    var fallback = document.getElementById('platformStaticSections');
+    if (!container || !items.length) return;
+    fallback.style.display = 'none';
+    container.innerHTML = items.map(function(item, index) {
+      var toneClass = item.theme === 'light' || index % 2 === 1 ? ' section-light' : '';
+      var reverseClass = index % 2 === 1 ? ' reverse' : '';
+      var features = (item.features || []).map(function(feature) {
+        return '<li class="platform-feature-item"><span class="pf-icon">✓</span><span class="pf-text">' + escHtml(feature) + '</span></li>';
+      }).join('');
+      var cta = '<div class="platform-cta-row"><button class="btn-primary platform-inquiry-btn" data-platform="' + escHtml(item.title) + '" aria-label="' + escHtml(item.title) + ' 도입 문의하기">도입 문의하기</button>';
+      if (item.demoUrl) {
+        cta += '<a href="' + escHtml(item.demoUrl) + '" target="_blank" rel="noopener noreferrer" class="btn-secondary">데모 보기 →</a>';
+      }
+      cta += '</div>';
+      return '<section id="' + escHtml(item.slug) + '" class="section' + toneClass + '"><div class="section-inner"><div class="solution-detail' + reverseClass + '"><div><div class="platform-label-row"><span class="section-label">Platform ' + String(index + 1).padStart(2, '0') + '</span><span class="platform-live-badge"><span class="live-dot"></span>Live</span></div><h3>' + escHtml(item.headline).replace(/\n/g, '<br>') + '</h3><p>' + escHtml(item.description).replace(/\n/g, '<br>') + '</p><ul class="platform-feature-list">' + features + '</ul>' + cta + '</div><div class="solution-visual"><img src="' + escHtml(item.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80') + '" alt="' + escHtml(item.imageAlt || item.title) + '" loading="lazy" width="800" height="600"><div class="sv-overlay"></div><div class="sv-text"><div class="sv-title">' + escHtml(item.title) + '</div><div class="sv-subtitle">' + escHtml(item.subtitle || '') + '</div></div><div class="sv-glow"></div></div></div></div></section>';
+    }).join('');
+    bindPlatformButtons();
+  }
+
+  async function loadPlatformCms() {
+    try {
+      var rows = await sbSelect('news', 'select=title,content,summary,thumbnail&category=eq.' + encodeURIComponent('플랫폼개발') + '&order=created_at.asc');
+      var items = rows.map(function(row) {
+        var payload = {};
+        try { payload = JSON.parse(row.content || '{}'); } catch (e) {}
+        return {
+          title: row.title || '',
+          slug: payload.slug || '',
+          subtitle: payload.subtitle || row.summary || '',
+          headline: payload.headline || '',
+          description: payload.description || '',
+          features: Array.isArray(payload.features) ? payload.features : [],
+          demoUrl: payload.demoUrl || '',
+          imageUrl: payload.imageUrl || row.thumbnail || '',
+          imageAlt: payload.imageAlt || row.title || '',
+          theme: payload.theme || 'default',
+          sortOrder: Number(payload.sortOrder || 0)
+        };
+      }).filter(function(item) {
+        return item.title && item.slug && item.headline && item.description;
+      }).sort(function(a, b) {
+        return a.sortOrder - b.sortOrder;
+      });
+      if (!items.length) return;
+      renderPlatformNav(items);
+      renderPlatformSections(items);
+    } catch (e) {
+      console.error('platform cms load failed', e);
+    }
+  }
+
   // ── 모달 열기 ───────────────────────────────────────────
   function openPlatformModal(platformName) {
     var modal = document.getElementById('platformInquiryModal');
@@ -726,14 +608,11 @@
   }
 
   // ── CTA 버튼 이벤트 바인딩 ──────────────────────────────
-  document.querySelectorAll('.platform-inquiry-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      openPlatformModal(this.dataset.platform);
-    });
-  });
+  bindPlatformButtons();
+  loadPlatformCms();
 
   // ── 폼 제출 ─────────────────────────────────────────────
-  function submitPlatformInquiry(e) {
+  async function submitPlatformInquiry(e) {
     e.preventDefault();
 
     // 플랫폼 체크박스 최소 1개 선택 검증
@@ -745,19 +624,22 @@
     }
     document.getElementById('platformCheckError').style.display = 'none';
 
-    // localStorage 저장
+    // Supabase 저장
     var data = {
       name:      document.getElementById('pi-name').value.trim(),
       phone:     document.getElementById('pi-phone').value.trim(),
       company:   document.getElementById('pi-company').value.trim(),
       email:     document.getElementById('pi-email').value.trim(),
       platforms: selected,
-      content:   document.getElementById('pi-content').value.trim(),
-      date:      new Date().toISOString()
+      message:   document.getElementById('pi-content').value.trim()
     };
-    var list = JSON.parse(localStorage.getItem('bmicns_platform_inquiries') || '[]');
-    list.push(data);
-    localStorage.setItem('bmicns_platform_inquiries', JSON.stringify(list));
+    try {
+      var res = await sbPost('inquiries', data);
+      if (!res.ok) throw new Error('서버 오류');
+    } catch(err) {
+      alert('문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
 
     // 성공 UI 전환
     document.getElementById('platformInquiryForm').style.display = 'none';
