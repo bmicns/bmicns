@@ -29,6 +29,10 @@ var I18N = {
     'footer.ceo':      '대표이사 김동의',
     'footer.address':  '서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)',
     'footer.admin':    '관리자 접속',
+    'footer.biz_reg':  '사업자등록번호',
+    'footer.ecom_reg': '통신판매신고번호',
+    'plat.cta.inquiry': '도입 문의하기',
+    'plat.cta.demo':    '데모 보기 →',
 
     /* ── HOME ── */
     'home.hero.h1':   '더 나은 성과를 위한<br><span class="gradient-text">통합 IT 솔루션</span>의 시작',
@@ -331,6 +335,10 @@ var I18N = {
     'footer.ceo':      'CEO Kim Dong-ui',
     'footer.address':  '354 Gangnam-daero, Gangnam-gu, Seoul (Hyecheon Bldg. #1126-5)',
     'footer.admin':    'Admin',
+    'footer.biz_reg':  'Business Registration No.',
+    'footer.ecom_reg': 'E-Commerce Registration No.',
+    'plat.cta.inquiry': 'Inquire Now',
+    'plat.cta.demo':    'View Demo →',
 
     /* ── HOME ── */
     'home.hero.h1':   'Integrated IT Solutions<br>for <span class="gradient-text">Better Business Performance</span>',

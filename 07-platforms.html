@@ -540,18 +540,26 @@
     var fallback = document.getElementById('platformStaticSections');
     if (!container || !items.length) return;
     fallback.style.display = 'none';
+    var lang = localStorage.getItem('bmicns_lang') || 'ko';
+    var dict = (typeof I18N !== 'undefined' && I18N[lang]) || {};
+    var inquiryLabel = dict['plat.cta.inquiry'] || '도입 문의하기';
+    var demoLabel = dict['plat.cta.demo'] || '데모 보기 →';
     container.innerHTML = items.map(function(item, index) {
       var toneClass = item.theme === 'light' || index % 2 === 1 ? ' section-light' : '';
       var reverseClass = index % 2 === 1 ? ' reverse' : '';
-      var features = (item.features || []).map(function(feature) {
+      var displayHeadline = (lang === 'en' && item.headline_en) ? item.headline_en : item.headline;
+      var displayDescription = (lang === 'en' && item.description_en) ? item.description_en : item.description;
+      var displaySubtitle = (lang === 'en' && item.subtitle_en) ? item.subtitle_en : item.subtitle;
+      var featureList = (lang === 'en' && item.features_en && item.features_en.length) ? item.features_en : item.features;
+      var features = (featureList || []).map(function(feature) {
         return '<li class="platform-feature-item"><span class="pf-icon">✓</span><span class="pf-text">' + escHtml(feature) + '</span></li>';
       }).join('');
-      var cta = '<div class="platform-cta-row"><button class="btn-primary platform-inquiry-btn" data-platform="' + escHtml(item.title) + '" aria-label="' + escHtml(item.title) + ' 도입 문의하기">도입 문의하기</button>';
+      var cta = '<div class="platform-cta-row"><button class="btn-primary platform-inquiry-btn" data-platform="' + escHtml(item.title) + '" aria-label="' + escHtml(item.title) + ' ' + inquiryLabel + '">' + inquiryLabel + '</button>';
       if (item.demoUrl) {
-        cta += '<a href="' + escHtml(item.demoUrl) + '" target="_blank" rel="noopener noreferrer" class="btn-secondary">데모 보기 →</a>';
+        cta += '<a href="' + escHtml(item.demoUrl) + '" target="_blank" rel="noopener noreferrer" class="btn-secondary">' + demoLabel + '</a>';
       }
       cta += '</div>';
-      return '<section id="' + escHtml(item.slug) + '" class="section' + toneClass + '"><div class="section-inner"><div class="solution-detail' + reverseClass + '"><div><div class="platform-label-row"><span class="section-label">Platform ' + String(index + 1).padStart(2, '0') + '</span><span class="platform-live-badge"><span class="live-dot"></span>Live</span></div><h3>' + escHtml(item.headline).replace(/\n/g, '<br>') + '</h3><p>' + escHtml(item.description).replace(/\n/g, '<br>') + '</p><ul class="platform-feature-list">' + features + '</ul>' + cta + '</div><div class="solution-visual"><img src="' + escHtml(item.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80') + '" alt="' + escHtml(item.imageAlt || item.title) + '" loading="lazy" width="800" height="600"><div class="sv-overlay"></div><div class="sv-text"><div class="sv-title">' + escHtml(item.title) + '</div><div class="sv-subtitle">' + escHtml(item.subtitle || '') + '</div></div><div class="sv-glow"></div></div></div></div></section>';
+      return '<section id="' + escHtml(item.slug) + '" class="section' + toneClass + '"><div class="section-inner"><div class="solution-detail' + reverseClass + '"><div><div class="platform-label-row"><span class="section-label">Platform ' + String(index + 1).padStart(2, '0') + '</span><span class="platform-live-badge"><span class="live-dot"></span>Live</span></div><h3>' + escHtml(displayHeadline).replace(/\n/g, '<br>') + '</h3><p>' + escHtml(displayDescription).replace(/\n/g, '<br>') + '</p><ul class="platform-feature-list">' + features + '</ul>' + cta + '</div><div class="solution-visual"><img src="' + escHtml(item.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80') + '" alt="' + escHtml(item.imageAlt || item.title) + '" loading="lazy" width="800" height="600"><div class="sv-overlay"></div><div class="sv-text"><div class="sv-title">' + escHtml(item.title) + '</div><div class="sv-subtitle">' + escHtml(displaySubtitle || '') + '</div></div><div class="sv-glow"></div></div></div></div></section>';
     }).join('');
     bindPlatformButtons();
   }
@@ -566,9 +574,13 @@
           title: row.title || '',
           slug: payload.slug || '',
           subtitle: payload.subtitle || row.summary || '',
+          subtitle_en: payload.subtitle_en || '',
           headline: payload.headline || '',
+          headline_en: payload.headline_en || '',
           description: payload.description || '',
+          description_en: payload.description_en || '',
           features: Array.isArray(payload.features) ? payload.features : [],
+          features_en: Array.isArray(payload.features_en) ? payload.features_en : [],
           demoUrl: payload.demoUrl || '',
           imageUrl: payload.imageUrl || row.thumbnail || '',
           imageAlt: payload.imageAlt || row.title || '',

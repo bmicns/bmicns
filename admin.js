@@ -576,7 +576,11 @@ async function ensureCategorySeed(category, records) {
 }
 
 function buildPlatformPayload() {
-  return {
+  var subtitleEn = document.getElementById('platformSubtitleEn').value.trim();
+  var headlineEn = document.getElementById('platformHeadlineEn').value.trim();
+  var descriptionEn = document.getElementById('platformDescriptionEn').value.trim();
+  var featuresEn = linesToArray(document.getElementById('platformFeaturesEn').value);
+  var payload = {
     slug: document.getElementById('platformSlug').value.trim(),
     subtitle: document.getElementById('platformSubtitle').value.trim(),
     headline: document.getElementById('platformHeadline').value.trim(),
@@ -588,6 +592,11 @@ function buildPlatformPayload() {
     theme: document.getElementById('platformTheme').value,
     sortOrder: normalizeSortOrder(document.getElementById('platformSortOrder').value)
   };
+  if (subtitleEn) payload.subtitle_en = subtitleEn;
+  if (headlineEn) payload.headline_en = headlineEn;
+  if (descriptionEn) payload.description_en = descriptionEn;
+  if (featuresEn.length) payload.features_en = featuresEn;
+  return payload;
 }
 
 function buildPortfolioPayload() {
@@ -783,6 +792,10 @@ function resetPlatformForm() {
   document.getElementById('platformImageAlt').value = '';
   document.getElementById('platformTheme').value = 'default';
   document.getElementById('platformSortOrder').value = '';
+  document.getElementById('platformSubtitleEn').value = '';
+  document.getElementById('platformHeadlineEn').value = '';
+  document.getElementById('platformDescriptionEn').value = '';
+  document.getElementById('platformFeaturesEn').value = '';
   document.getElementById('platformFormTitle').textContent = '플랫폼 추가';
   document.getElementById('platformSubmitBtn').textContent = '저장';
 }
@@ -832,6 +845,10 @@ function editPlatform(id) {
   document.getElementById('platformImageAlt').value = payload.imageAlt || '';
   document.getElementById('platformTheme').value = payload.theme || 'default';
   document.getElementById('platformSortOrder').value = payload.sortOrder || 0;
+  document.getElementById('platformSubtitleEn').value = payload.subtitle_en || '';
+  document.getElementById('platformHeadlineEn').value = payload.headline_en || '';
+  document.getElementById('platformDescriptionEn').value = payload.description_en || '';
+  document.getElementById('platformFeaturesEn').value = (payload.features_en || []).join('\n');
   document.getElementById('platformFormTitle').textContent = '플랫폼 수정';
   document.getElementById('platformSubmitBtn').textContent = '수정';
   openPlatformModal();
