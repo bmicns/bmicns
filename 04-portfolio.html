@@ -361,6 +361,7 @@ function renderPortfolioTimeline(items) {
       var dict = (typeof I18N !== 'undefined' && I18N[lang]) || {};
       var displayTitle = (lang === 'en' && item.title_en) ? item.title_en : item.title;
       var displayDetail = (lang === 'en' && item.detail_en) ? item.detail_en : item.detail;
+      var displayClient = (lang === 'en' && item.client_en) ? item.client_en : item.client;
       var sectorLabel = (item.sector === '민간') ? (dict['port.badge.private'] || item.sector) : (item.sector === 'B2C') ? 'B2C' : (dict['port.badge.public'] || item.sector);
       var statusLabel = item.status ? ((dict['port.badge.ongoing'] || item.status)) : '';
       var badges = '<span class="timeline-badge ' + (item.sector === '민간' ? 'badge-private' : item.sector === 'B2C' ? 'badge-b2c' : 'badge-public') + '">' + escHtml(sectorLabel) + '</span>';
@@ -370,7 +371,7 @@ function renderPortfolioTimeline(items) {
           badges += '<span class="timeline-badge">' + escHtml(tag) + '</span>';
         });
       }
-      return '<div class="timeline-card" data-year="' + escHtml(year) + '"><div class="timeline-card-header"><span class="timeline-client">' + escHtml(item.client) + '</span>' + badges + '</div><div class="timeline-project">' + formatInlineMarkup(displayTitle) + '</div><div class="timeline-detail"><svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + escHtml(displayDetail) + '</p></div></div>';
+      return '<div class="timeline-card" data-year="' + escHtml(year) + '"><div class="timeline-card-header"><span class="timeline-client">' + escHtml(displayClient) + '</span>' + badges + '</div><div class="timeline-project">' + formatInlineMarkup(displayTitle) + '</div><div class="timeline-detail"><svg class="timeline-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + escHtml(displayDetail) + '</p></div></div>';
     }).join('') + '</div></div>';
   }).join('');
 
@@ -390,6 +391,7 @@ async function loadPortfolioCms() {
       return {
         year: payload.year || '',
         client: payload.client || row.summary || '',
+        client_en: payload.client_en || '',
         title: row.title || '',
         title_en: payload.title_en || '',
         tags: Array.isArray(payload.tags) ? payload.tags : [],
