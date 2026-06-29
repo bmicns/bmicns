@@ -644,8 +644,25 @@ function applyLang(lang) {
    initI18n: nav 로드 완료 후 호출
 ───────────────────────────────────────── */
 function initI18n() {
-  var saved = localStorage.getItem('bmicns_lang') || 'ko';
-  applyLang(saved);
+  var saved = localStorage.getItem('bmicns_lang');
+
+  // 첫 방문(lang 미설정)이면 IP 기반 국가 감지
+  if (!saved) {
+    applyLang('ko'); // 로딩 중 기본값
+    fetch('https://api.country.is/')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var lang = (data && data.country === 'KR') ? 'ko' : 'en';
+        localStorage.setItem('bmicns_lang', lang);
+        applyLang(lang);
+      })
+      .catch(function() {
+        localStorage.setItem('bmicns_lang', 'ko');
+      });
+  } else {
+    applyLang(saved);
+  }
+
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       applyLang(this.dataset.lang);
