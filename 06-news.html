@@ -149,7 +149,7 @@ function esc(str) {
 (async function() {
   var listEl = document.getElementById('newsList');
   try {
-    _newsList = await sbSelect('news', 'select=*&order=created_at.desc');
+    _newsList = await sbSelect('news', 'select=*&category=neq.주요실적&category=neq.플랫폼개발&order=created_at.desc');
   } catch(e) {
     listEl.innerHTML = '<p style="text-align:center;color:var(--color-text-muted)">소식을 불러오는 중 오류가 발생했습니다.</p>';
     return;
