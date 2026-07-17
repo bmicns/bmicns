@@ -934,8 +934,8 @@ body {
 
 <header class="rpt-header">
 <div id="lang-toggle">
-  <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
-  <button id="btn-en" onclick="setLang('en')">EN</button>
+  <button id="btn-ko" onclick="setLang('ko')">KO</button>
+  <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
 </div>
 
   <div class="rpt-header__bar"></div>
@@ -2096,7 +2096,7 @@ en: {
 }
 };
 
-let currentLang = 'ko';
+let currentLang = 'en';
 const radarLabelsKo = ['글로벌 데이터 인프라','글로벌 시장 커버리지','글로벌 AVM 고도화','임차인 관리','계약·서명','플랫폼 UX'];
 const radarLabelsEn = ['Global Data Infra','Global Market Coverage','Global AVM','Tenant Mgmt.','Contracts & Signing','Platform UX'];
 
@@ -2156,5 +2156,5 @@ function drawRadar(labels) {
   ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fillStyle = '#9CA3AF'; ctx.fill();
 }
 // 초기 렌더
-document.addEventListener('DOMContentLoaded', function() { drawRadar(radarLabelsKo); });
+document.addEventListener('DOMContentLoaded', function() { setLang('en'); });
 </script>
