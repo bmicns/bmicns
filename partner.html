@@ -130,8 +130,9 @@ body {
 .section__title {
   font-family: var(--ff-serif); font-size: 31.2px; font-weight: normal;
   color: var(--dark); padding-bottom: 16px; border-bottom: 1px solid var(--border);
-  margin-bottom: 32px; text-wrap: balance;
+  margin-bottom: 16px; text-wrap: balance;
 }
+.section__sub { font-size: 15px; color: var(--mid); line-height: 1.65; margin-bottom: 24px; }
 
 .co-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .co-card { background: var(--surface); border: 1px solid var(--border); padding: 26px; }
@@ -545,10 +546,53 @@ body {
 .comp-co { font-weight: 700; color: var(--dark); }
 .comp-co--highlight { color: var(--syn); }
 
+/* ── EU5 COUNTRY ANALYSIS ───────────────────────────── */
+.eu5-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+.eu5-card { background: var(--surface); border: 1px solid var(--border); padding: 18px 16px; }
+.eu5-card__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.eu5-flag-name { font-size: 14.4px; font-weight: 700; color: var(--dark); }
+.eu5-wave-badge { font-size: 10px; font-weight: 700; letter-spacing: .07em; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; }
+.eu5-wave--1 { background: rgba(37,99,235,.1); color: #2563EB; }
+.eu5-wave--2 { background: rgba(217,119,6,.1); color: #D97706; }
+.eu5-wave--3 { background: rgba(220,38,38,.08); color: #DC2626; }
+.eu5-comp-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.eu5-comp-name { font-size: 13px; font-weight: 600; }
+.eu5-comp-score { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.eu5-vr-row { display: flex; align-items: center; gap: 6px; margin-bottom: 9px; }
+.eu5-vr-name { font-size: 12.5px; font-weight: 700; color: var(--vr); }
+.eu5-vr-score { font-size: 12.5px; font-weight: 700; color: var(--vr); flex: 1; font-variant-numeric: tabular-nums; }
+.eu5-gap { font-size: 11px; font-weight: 700; color: #059669; background: rgba(5,150,105,.08); padding: 1px 6px; border-radius: 3px; }
+.eu5-bar-wrap { margin-bottom: 13px; display: flex; flex-direction: column; gap: 4px; }
+.eu5-bar { height: 4px; border-radius: 2px; }
+.eu5-bar--comp { background: var(--border); }
+.eu5-bar--vr { background: var(--vr); }
+.eu5-strength-row, .eu5-risk-row { margin-bottom: 7px; }
+.eu5-s-label, .eu5-r-label { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 2px; }
+.eu5-s-label { color: var(--vr); }
+.eu5-r-label { color: var(--ph); }
+.eu5-strength-row span:last-child, .eu5-risk-row span:last-child { font-size: 12px; color: var(--mid); line-height: 1.45; }
+.eu5-position { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--dark); font-style: italic; line-height: 1.5; }
+.eu5-roadmap { margin-top: 4px; }
+.eu5-roadmap__label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.eu5-waves { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.eu5-wave-block { padding: 16px 18px; }
+.eu5-wave-block--1 { background: rgba(37,99,235,.04); border: 1px solid rgba(37,99,235,.18); }
+.eu5-wave-block--2 { background: rgba(217,119,6,.04); border: 1px solid rgba(217,119,6,.18); }
+.eu5-wave-block--3 { background: rgba(220,38,38,.04); border: 1px solid rgba(220,38,38,.14); }
+.eu5-wave-block__title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.eu5-wave-block__sub { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.eu5-wave-block--1 .eu5-wave-block__sub { color: #2563EB; }
+.eu5-wave-block--2 .eu5-wave-block__sub { color: #D97706; }
+.eu5-wave-block--3 .eu5-wave-block__sub { color: #DC2626; }
+.eu5-wave-block__desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+.eu5-score-caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
 @media (max-width: 700px) {
   .metrics { grid-template-columns: 1fr 1fr; }
   .pos-grid { grid-template-columns: 1fr; }
   .co-grid, .nl-grid, .gain-grid, .collab-grid, .cta-steps, .conclusion__points, .verify-source-grid { grid-template-columns: 1fr; }
+  .eu5-grid { grid-template-columns: repeat(2, 1fr); }
+  .eu5-waves { grid-template-columns: 1fr; }
   .gap-row { grid-template-columns: 1fr; }
   .gap-arrow { display: none; }
   .radar-wrap { flex-direction: column; }
@@ -1434,52 +1478,187 @@ body {
     </div>
   </section>
 
-  <!-- 06. 네덜란드 시장 -->
+  <!-- 06. EU5 경쟁 분석 -->
   <section class="section">
     <p class="section__label" data-i18n="s06-lbl">Section 06</p>
-    <h2 class="section__title" data-i18n="s06-ttl">네덜란드 시장 기회 — 규제 복잡성이 진입 장벽이자 해자</h2>
-    <div class="nl-grid">
-      <div class="nl-card">
-        <p class="nl-card__label" data-i18n="nl-lbl1">시장 압박 지표 (2026)</p>
-        <div class="mkt-stat-grid">
-          <div class="mkt-stat" style="--c:var(--ph)">
-            <div class="mkt-stat__val" data-i18n="hb1-val">41만 채</div>
-            <div class="mkt-stat__lbl" data-i18n="hb1">주택 부족 규모</div>
-            <div class="mkt-stat__bar"><div style="width:92%"></div></div>
-          </div>
-          <div class="mkt-stat" style="--c:#E85D7C">
-            <div class="mkt-stat__val" data-i18n="hb2-val">−3.8만 채</div>
-            <div class="mkt-stat__lbl" data-i18n="hb2">임대 시장 순감소 (2025)</div>
-            <div class="mkt-stat__bar"><div style="width:55%"></div></div>
-          </div>
-          <div class="mkt-stat" style="--c:var(--vr)">
-            <div class="mkt-stat__val" data-i18n="hb3-val">+30%</div>
-            <div class="mkt-stat__lbl" data-i18n="hb3">WWS 규제 확대 (포인트 기준 상승)</div>
-            <div class="mkt-stat__bar"><div style="width:65%"></div></div>
-          </div>
-          <div class="mkt-stat" style="--c:var(--syn)">
-            <div class="mkt-stat__val" data-i18n="hb4-val">+42%</div>
-            <div class="mkt-stat__lbl" data-i18n="hb4">임대 분쟁 접수 증가 (전년비)</div>
-            <div class="mkt-stat__bar"><div style="width:74%"></div></div>
-          </div>
+    <h2 class="section__title" data-i18n="s06-ttl">유럽 5개국 진입 전략 — VESTRA의 경쟁 우위</h2>
+    <p class="section__sub" data-i18n="s06-sub">국가별 1위 경쟁사 대비 VESTRA Rent(풀빌드) 역량 점수 비교. Wave 1(NL·UK) → Wave 2(CH) → Wave 3(FR·DE) 순으로 진입한다.</p>
+
+    <div class="eu5-grid">
+
+      <!-- Netherlands -->
+      <div class="eu5-card">
+        <div class="eu5-card__top">
+          <div class="eu5-flag-name">🇳🇱 <span data-i18n="eu5-nl">네덜란드</span></div>
+          <div class="eu5-wave-badge eu5-wave--1" data-i18n="eu5-w1">Wave 1</div>
         </div>
-        <div class="mkt-stat mkt-stat--full" style="--c:#7C3AED">
-          <div class="mkt-stat__val" data-i18n="hb5-val">−58%</div>
-          <div class="mkt-stat__lbl" data-i18n="hb5">신규 임대 공급 감소 (2025)</div>
-          <div class="mkt-stat__bar"><div style="width:82%"></div></div>
+        <div class="eu5-comp-row">
+          <span class="eu5-comp-name" style="color:#F97316">HousingAnywhere</span>
+          <span class="eu5-comp-score">3.30 / 5.0</span>
         </div>
-        <div class="mkt-insight">
-          <span class="mkt-insight__icon">💡</span>
-          <p data-i18n="mkt-insight">규제 강화·공급 감소·분쟁 급증이 동시에 진행 중입니다. 네덜란드 임대 시장은 지금 <strong>데이터 기반 운영 플랫폼</strong>을 가장 절실히 필요로 하는 구조입니다. 이것이 PriceHubble × Lease in Vestra(LI:V) 협력의 출발점입니다.</p>
+        <div class="eu5-vr-row">
+          <span class="eu5-vr-name" data-i18n="eu5-vr-lbl">VESTRA</span>
+          <span class="eu5-vr-score">4.62 / 5.0</span>
+          <span class="eu5-gap">+1.32</span>
+        </div>
+        <div class="eu5-bar-wrap">
+          <div class="eu5-bar eu5-bar--comp" style="width:66%"></div>
+          <div class="eu5-bar eu5-bar--vr" style="width:92.4%"></div>
+        </div>
+        <div class="eu5-strength-row">
+          <span class="eu5-s-label" data-i18n="eu5-vr-str">VESTRA 강점</span>
+          <span data-i18n="eu5-nl-vstr">운영 통합, 유지보수·이슈, AI, 리포팅</span>
+        </div>
+        <div class="eu5-risk-row">
+          <span class="eu5-r-label" data-i18n="eu5-comp-risk">경쟁사 강점</span>
+          <span data-i18n="eu5-nl-crisk">미드텀 임대 채널, 결제 보호, 국제 임차인 네트워크</span>
+        </div>
+        <div class="eu5-position" data-i18n="eu5-nl-pos">취득 채널 위의 운영 자동화 레이어로 포지셔닝</div>
+      </div>
+
+      <!-- United Kingdom -->
+      <div class="eu5-card">
+        <div class="eu5-card__top">
+          <div class="eu5-flag-name">🇬🇧 <span data-i18n="eu5-uk">영국</span></div>
+          <div class="eu5-wave-badge eu5-wave--1" data-i18n="eu5-w1">Wave 1</div>
+        </div>
+        <div class="eu5-comp-row">
+          <span class="eu5-comp-name" style="color:#10B981">Goodlord</span>
+          <span class="eu5-comp-score">3.92 / 5.0</span>
+        </div>
+        <div class="eu5-vr-row">
+          <span class="eu5-vr-name" data-i18n="eu5-vr-lbl">VESTRA</span>
+          <span class="eu5-vr-score">4.62 / 5.0</span>
+          <span class="eu5-gap">+0.70</span>
+        </div>
+        <div class="eu5-bar-wrap">
+          <div class="eu5-bar eu5-bar--comp" style="width:78.4%"></div>
+          <div class="eu5-bar eu5-bar--vr" style="width:92.4%"></div>
+        </div>
+        <div class="eu5-strength-row">
+          <span class="eu5-s-label" data-i18n="eu5-vr-str">VESTRA 강점</span>
+          <span data-i18n="eu5-uk-vstr">운영 통합, 공실 전략, 유지보수·포털, AI 확장성</span>
+        </div>
+        <div class="eu5-risk-row">
+          <span class="eu5-r-label" data-i18n="eu5-comp-risk">경쟁사 강점</span>
+          <span data-i18n="eu5-uk-crisk">임차인 심사, 계약·컴플라이언스 워크플로우</span>
+        </div>
+        <div class="eu5-position" data-i18n="eu5-uk-pos">Goodlord 범위를 초월하는 AI 기반 운영 플랫폼</div>
+      </div>
+
+      <!-- Switzerland -->
+      <div class="eu5-card">
+        <div class="eu5-card__top">
+          <div class="eu5-flag-name">🇨🇭 <span data-i18n="eu5-ch">스위스</span></div>
+          <div class="eu5-wave-badge eu5-wave--2" data-i18n="eu5-w2">Wave 2</div>
+        </div>
+        <div class="eu5-comp-row">
+          <span class="eu5-comp-name" style="color:#EF4444">Wincasa</span>
+          <span class="eu5-comp-score">4.08 / 5.0</span>
+        </div>
+        <div class="eu5-vr-row">
+          <span class="eu5-vr-name" data-i18n="eu5-vr-lbl">VESTRA</span>
+          <span class="eu5-vr-score">4.62 / 5.0</span>
+          <span class="eu5-gap">+0.54</span>
+        </div>
+        <div class="eu5-bar-wrap">
+          <div class="eu5-bar eu5-bar--comp" style="width:81.6%"></div>
+          <div class="eu5-bar eu5-bar--vr" style="width:92.4%"></div>
+        </div>
+        <div class="eu5-strength-row">
+          <span class="eu5-s-label" data-i18n="eu5-vr-str">VESTRA 강점</span>
+          <span data-i18n="eu5-ch-vstr">AI, 공실 전략, SaaS 접근성</span>
+        </div>
+        <div class="eu5-risk-row">
+          <span class="eu5-r-label" data-i18n="eu5-comp-risk">경쟁사 강점</span>
+          <span data-i18n="eu5-ch-crisk">현장 운영, 엔터프라이즈 신뢰도, 시설 관리</span>
+        </div>
+        <div class="eu5-position" data-i18n="eu5-ch-pos">대형 관리사 대체가 아닌 SME 임대인 운영 자동화</div>
+      </div>
+
+      <!-- France -->
+      <div class="eu5-card">
+        <div class="eu5-card__top">
+          <div class="eu5-flag-name">🇫🇷 <span data-i18n="eu5-fr">프랑스</span></div>
+          <div class="eu5-wave-badge eu5-wave--3" data-i18n="eu5-w3">Wave 3</div>
+        </div>
+        <div class="eu5-comp-row">
+          <span class="eu5-comp-name" style="color:#8B5CF6">Matera</span>
+          <span class="eu5-comp-score">3.67 / 5.0</span>
+        </div>
+        <div class="eu5-vr-row">
+          <span class="eu5-vr-name" data-i18n="eu5-vr-lbl">VESTRA</span>
+          <span class="eu5-vr-score">4.62 / 5.0</span>
+          <span class="eu5-gap">+0.95</span>
+        </div>
+        <div class="eu5-bar-wrap">
+          <div class="eu5-bar eu5-bar--comp" style="width:73.4%"></div>
+          <div class="eu5-bar eu5-bar--vr" style="width:92.4%"></div>
+        </div>
+        <div class="eu5-strength-row">
+          <span class="eu5-s-label" data-i18n="eu5-vr-str">VESTRA 강점</span>
+          <span data-i18n="eu5-fr-vstr">공실·취득 자동화, 계약·문서 자동화, AI</span>
+        </div>
+        <div class="eu5-risk-row">
+          <span class="eu5-r-label" data-i18n="eu5-comp-risk">경쟁사 강점</span>
+          <span data-i18n="eu5-fr-crisk">코프로프리에테 관리 워크플로우, 현지 신뢰</span>
+        </div>
+        <div class="eu5-position" data-i18n="eu5-fr-pos">Matera식 디지털 관리 + 임대 운영·공실 전략 결합</div>
+      </div>
+
+      <!-- Germany -->
+      <div class="eu5-card">
+        <div class="eu5-card__top">
+          <div class="eu5-flag-name">🇩🇪 <span data-i18n="eu5-de">독일</span></div>
+          <div class="eu5-wave-badge eu5-wave--3" data-i18n="eu5-w3">Wave 3</div>
+        </div>
+        <div class="eu5-comp-row">
+          <span class="eu5-comp-name" style="color:#6366F1">Aareon</span>
+          <span class="eu5-comp-score">4.17 / 5.0</span>
+        </div>
+        <div class="eu5-vr-row">
+          <span class="eu5-vr-name" data-i18n="eu5-vr-lbl">VESTRA</span>
+          <span class="eu5-vr-score">4.62 / 5.0</span>
+          <span class="eu5-gap">+0.45</span>
+        </div>
+        <div class="eu5-bar-wrap">
+          <div class="eu5-bar eu5-bar--comp" style="width:83.4%"></div>
+          <div class="eu5-bar eu5-bar--vr" style="width:92.4%"></div>
+        </div>
+        <div class="eu5-strength-row">
+          <span class="eu5-s-label" data-i18n="eu5-vr-str">VESTRA 강점</span>
+          <span data-i18n="eu5-de-vstr">공실·취득 자동화, AI, SME 임대인 접근성</span>
+        </div>
+        <div class="eu5-risk-row">
+          <span class="eu5-r-label" data-i18n="eu5-comp-risk">경쟁사 강점</span>
+          <span data-i18n="eu5-de-crisk">PMS 심도, 회계·엔터프라이즈 통합</span>
+        </div>
+        <div class="eu5-position" data-i18n="eu5-de-pos">Aareon 대비 SME 특화 경량·고속 임대 운영 SaaS</div>
+      </div>
+
+    </div>
+
+    <!-- Wave Roadmap -->
+    <div class="eu5-roadmap">
+      <p class="eu5-roadmap__label" data-i18n="eu5-roadmap-lbl">진입 로드맵</p>
+      <div class="eu5-waves">
+        <div class="eu5-wave-block eu5-wave-block--1">
+          <div class="eu5-wave-block__title" data-i18n="eu5-wave1-ttl">Wave 1 — 검증 단계</div>
+          <div class="eu5-wave-block__sub" data-i18n="eu5-wave1-sub">NL · UK | 0–6개월</div>
+          <div class="eu5-wave-block__desc" data-i18n="eu5-wave1-desc">영어권 규제 환경 + 디지털 임대인 세그먼트. 최저 진입 장벽, 제품-시장 검증.</div>
+        </div>
+        <div class="eu5-wave-block eu5-wave-block--2">
+          <div class="eu5-wave-block__title" data-i18n="eu5-wave2-ttl">Wave 2 — 확장 단계</div>
+          <div class="eu5-wave-block__sub" data-i18n="eu5-wave2-sub">CH | 6–18개월</div>
+          <div class="eu5-wave-block__desc" data-i18n="eu5-wave2-desc">고마진 다국어 시장. SaaS 도입 성숙. 기존 엔터프라이즈 도구가 충족 못 하는 SME 임대인 세그먼트.</div>
+        </div>
+        <div class="eu5-wave-block eu5-wave-block--3">
+          <div class="eu5-wave-block__title" data-i18n="eu5-wave3-ttl">Wave 3 — 심화 단계</div>
+          <div class="eu5-wave-block__sub" data-i18n="eu5-wave3-sub">FR · DE | 18–36개월</div>
+          <div class="eu5-wave-block__desc" data-i18n="eu5-wave3-desc">최대 규모 시장. 높은 규제 복잡성. Wave 1–2 검증 기반 및 레퍼런스 고객 확보 후 진입.</div>
         </div>
       </div>
-      <div class="nl-card">
-        <p class="nl-card__label" data-i18n="nl-lbl2">파트너십이 포착하는 기회</p>
-        <div class="opp-item"><span class="opp-icon">⚖️</span><div class="opp-text"><strong data-i18n="opp1-t">WWS 자동화 도구 수요 폭증</strong><span data-i18n="opp1-d">적정임대법(Wet Betaalbare Huur) 시행으로 임대인이 포인트 계산을 의무화. 프라이스허블 데이터 + VR 계산 UI가 즉시 필요한 도구가 된다.</span></div></div>
-        <div class="opp-item"><span class="opp-icon">📉</span><div class="opp-text"><strong data-i18n="opp2-t">남은 임대인의 운영 효율화 수요</strong><span data-i18n="opp2-d">규제에 못 이겨 시장 이탈하는 임대인이 증가. 남은 임대인은 수익 극대화를 위한 자동화 플랫폼이 절실하다.</span></div></div>
-        <div class="opp-item"><span class="opp-icon">🌐</span><div class="opp-text"><strong data-i18n="opp3-t">Expat 임차인 급증</strong><span data-i18n="opp3-d">암스테르담 등 대도시 외국인 임차인 비중 상승. 영어 UI + 글로벌 결제(iDEAL/Stripe)를 갖춘 플랫폼의 차별화 기회.</span></div></div>
-        <div class="opp-item"><span class="opp-icon">🔗</span><div class="opp-text"><strong data-i18n="opp4-t">분쟁 예방 자동화</strong><span data-i18n="opp4-d">Huurcommissie 분쟁 접수 42% 급증. 사전 계약 조건 명문화·임차인 알림 자동화로 분쟁을 예방하는 VR의 계약 관리 시스템이 직접적 솔루션.</span></div></div>
-      </div>
+      <div class="eu5-score-caption" data-i18n="eu5-score-note">* VESTRA Rent 풀빌드 평균 4.62점 / 경쟁사 평균 3.30–4.17점 (5점 만점 기준)</div>
     </div>
   </section>
 
@@ -1796,21 +1975,34 @@ ko: {
   'f-out2-t':'임차인 신뢰 플로우','f-out2-s':'포털 + 전자계약 + 자동 알림',
   'f-out3-t':'글로벌 확장 인프라','f-out3-s':'유럽 데이터 × 아시아 SaaS',
   's06-lbl':     'Section 06',
-  's06-ttl':     '네덜란드 시장 기회 — 규제 복잡성이 진입 장벽이자 해자',
-  'nl-lbl1':     '시장 압박 지표 (2026)',
-  'hb1':'주택 부족 규모','hb2':'임대 시장 순감소 (2025)',
-  'hb3':'WWS 규제 확대 (포인트 기준 상승)','hb4':'임대 분쟁 접수 증가 (전년비)','hb5':'신규 임대 공급 감소 (2025)',
-  'hb1-val':'41만 채','hb2-val':'−3.8만 채','hb3-val':'+30%','hb4-val':'+42%','hb5-val':'−58%',
-  'mkt-insight':'규제 강화·공급 감소·분쟁 급증이 동시에 진행 중입니다. 네덜란드 임대 시장은 지금 <strong>데이터 기반 운영 플랫폼</strong>을 가장 절실히 필요로 하는 구조입니다. 이것이 PriceHubble × Lease in Vestra(LI:V) 협력의 출발점입니다.',
-  'nl-lbl2':     '파트너십이 포착하는 기회',
-  'opp1-t':'WWS 자동화 도구 수요 폭증',
-  'opp1-d':'적정임대법(Wet Betaalbare Huur) 시행으로 임대인이 포인트 계산을 의무화. 프라이스허블 데이터 + VR 계산 UI가 즉시 필요한 도구가 된다.',
-  'opp2-t':'남은 임대인의 운영 효율화 수요',
-  'opp2-d':'규제에 못 이겨 시장 이탈하는 임대인이 증가. 남은 임대인은 수익 극대화를 위한 자동화 플랫폼이 절실하다.',
-  'opp3-t':'Expat 임차인 급증',
-  'opp3-d':'암스테르담 등 대도시 외국인 임차인 비중 상승. 영어 UI + 글로벌 결제(iDEAL/Stripe)를 갖춘 플랫폼의 차별화 기회.',
-  'opp4-t':'분쟁 예방 자동화',
-  'opp4-d':'Huurcommissie 분쟁 접수 42% 급증. 사전 계약 조건 명문화·임차인 알림 자동화로 분쟁을 예방하는 VR의 계약 관리 시스템이 직접적 솔루션.',
+  's06-ttl':     '유럽 5개국 진입 전략 — VESTRA의 경쟁 우위',
+  's06-sub':     '국가별 1위 경쟁사 대비 VESTRA Rent(풀빌드) 역량 점수 비교. Wave 1(NL·UK) → Wave 2(CH) → Wave 3(FR·DE) 순으로 진입한다.',
+  'eu5-nl':'네덜란드','eu5-uk':'영국','eu5-ch':'스위스','eu5-fr':'프랑스','eu5-de':'독일',
+  'eu5-w1':'Wave 1','eu5-w2':'Wave 2','eu5-w3':'Wave 3',
+  'eu5-vr-lbl':'VESTRA','eu5-vr-str':'VESTRA 강점','eu5-comp-risk':'경쟁사 강점',
+  'eu5-nl-vstr':'운영 통합, 유지보수·이슈, AI, 리포팅',
+  'eu5-nl-crisk':'미드텀 임대 채널, 결제 보호, 국제 임차인 네트워크',
+  'eu5-nl-pos':'취득 채널 위의 운영 자동화 레이어로 포지셔닝',
+  'eu5-uk-vstr':'운영 통합, 공실 전략, 유지보수·포털, AI 확장성',
+  'eu5-uk-crisk':'임차인 심사, 계약·컴플라이언스 워크플로우',
+  'eu5-uk-pos':'Goodlord 범위를 초월하는 AI 기반 운영 플랫폼',
+  'eu5-ch-vstr':'AI, 공실 전략, SaaS 접근성',
+  'eu5-ch-crisk':'현장 운영, 엔터프라이즈 신뢰도, 시설 관리',
+  'eu5-ch-pos':'대형 관리사 대체가 아닌 SME 임대인 운영 자동화',
+  'eu5-fr-vstr':'공실·취득 자동화, 계약·문서 자동화, AI',
+  'eu5-fr-crisk':'코프로프리에테 관리 워크플로우, 현지 신뢰',
+  'eu5-fr-pos':'Matera식 디지털 관리 + 임대 운영·공실 전략 결합',
+  'eu5-de-vstr':'공실·취득 자동화, AI, SME 임대인 접근성',
+  'eu5-de-crisk':'PMS 심도, 회계·엔터프라이즈 통합',
+  'eu5-de-pos':'Aareon 대비 SME 특화 경량·고속 임대 운영 SaaS',
+  'eu5-roadmap-lbl':'진입 로드맵',
+  'eu5-wave1-ttl':'Wave 1 — 검증 단계','eu5-wave1-sub':'NL · UK | 0–6개월',
+  'eu5-wave1-desc':'영어권 규제 환경 + 디지털 임대인 세그먼트. 최저 진입 장벽, 제품-시장 검증.',
+  'eu5-wave2-ttl':'Wave 2 — 확장 단계','eu5-wave2-sub':'CH | 6–18개월',
+  'eu5-wave2-desc':'고마진 다국어 시장. SaaS 도입 성숙. 기존 엔터프라이즈 도구가 충족 못 하는 SME 임대인 세그먼트.',
+  'eu5-wave3-ttl':'Wave 3 — 심화 단계','eu5-wave3-sub':'FR · DE | 18–36개월',
+  'eu5-wave3-desc':'최대 규모 시장. 높은 규제 복잡성. Wave 1–2 검증 기반 및 레퍼런스 고객 확보 후 진입.',
+  'eu5-score-note':'* VESTRA Rent 풀빌드 평균 4.62점 / 경쟁사 평균 3.30–4.17점 (5점 만점 기준)',
   's07-lbl':     'Section 07 — 시장 포지셔닝',
   's07-ttl':     'PriceHubble의 데이터 × BMIC&amp;S의 플랫폼 — 유럽 최고 PropTech의 시작',
   'pos-b-lbl':   'Before — PriceHubble 단독',
@@ -2043,21 +2235,34 @@ en: {
   'f-out2-t':'Tenant Trust Flow','f-out2-s':'Portal + E-Contract + Auto Alerts',
   'f-out3-t':'Global Expansion Infrastructure','f-out3-s':'Europe Data × Asia SaaS',
   's06-lbl':     'Section 06',
-  's06-ttl':     'Netherlands Market Opportunity — Regulatory Complexity as Moat',
-  'nl-lbl1':     'Market Pressure Indicators (2026)',
-  'hb1':'Housing shortage','hb2':'Net rental supply decline (2025)',
-  'hb3':'WWS regulation expansion (point threshold +30%)','hb4':'Rental dispute filings increase (YoY)','hb5':'New rental supply decline (2025)',
-  'hb1-val':'410K units','hb2-val':'−38K units','hb3-val':'+30%','hb4-val':'+42%','hb5-val':'−58%',
-  'mkt-insight':'Tightening regulation, shrinking supply, and surging disputes are converging simultaneously. The Dutch rental market is in urgent need of a <strong>data-driven operations platform</strong> — and this is exactly where PriceHubble × Lease in Vestra(LI:V) begins.',
-  'nl-lbl2':     'Opportunities the Partnership Captures',
-  'opp1-t':'Surging Demand for WWS Automation Tools',
-  'opp1-d':'The Wet Betaalbare Huur makes WWS point scoring mandatory for all landlords. PriceHubble data + VR\'s calculation UI immediately become the required tool.',
-  'opp2-t':'Remaining Landlords Need Operational Efficiency',
-  'opp2-d':'Landlords are exiting the market due to regulation. Those who remain urgently need an automation platform to maximize yield.',
-  'opp3-t':'Surge in Expat Tenants',
-  'opp3-d':'The share of foreign tenants in cities like Amsterdam is rising. English UI + global payments (iDEAL/Stripe) create a clear differentiation opportunity.',
-  'opp4-t':'Dispute Prevention Automation',
-  'opp4-d':'Huurcommissie dispute filings up 42%. VR\'s contract management system — pre-documenting lease terms and automating tenant notifications — is the direct solution.',
+  's06-ttl':     'EU5 Market Entry Strategy — VESTRA\'s Competitive Edge',
+  's06-sub':     'VESTRA Rent (full build) capability score vs. the top-tier local competitor in each target market. Entry sequencing: Wave 1 (NL·UK) → Wave 2 (CH) → Wave 3 (FR·DE).',
+  'eu5-nl':'Netherlands','eu5-uk':'United Kingdom','eu5-ch':'Switzerland','eu5-fr':'France','eu5-de':'Germany',
+  'eu5-w1':'Wave 1','eu5-w2':'Wave 2','eu5-w3':'Wave 3',
+  'eu5-vr-lbl':'VESTRA','eu5-vr-str':'VESTRA Strengths','eu5-comp-risk':'Competitor Strengths',
+  'eu5-nl-vstr':'Operations integration, maintenance & issues, AI, reporting',
+  'eu5-nl-crisk':'Mid-term rental acquisition, payment protection, international tenant network',
+  'eu5-nl-pos':'Positioned as the operational automation layer above the acquisition funnel',
+  'eu5-uk-vstr':'Operations integration, vacancy strategy, maintenance & portal, AI scalability',
+  'eu5-uk-crisk':'Referencing, contracts & compliance workflow',
+  'eu5-uk-pos':'An AI-powered operations platform that extends well beyond Goodlord\'s lettings scope',
+  'eu5-ch-vstr':'AI, vacancy strategy, SaaS accessibility',
+  'eu5-ch-crisk':'On-site operations, enterprise client trust, facilities management',
+  'eu5-ch-pos':'Operational automation for SME landlords — not a large managing agent replacement',
+  'eu5-fr-vstr':'Vacancy & acquisition automation, contract & document automation, AI',
+  'eu5-fr-crisk':'Copropriété management workflow and local market trust',
+  'eu5-fr-pos':'Pairs Matera-style digital management with rental operations and vacancy strategy',
+  'eu5-de-vstr':'Vacancy & acquisition automation, AI, SME landlord accessibility',
+  'eu5-de-crisk':'PMS depth, accounting & enterprise integration',
+  'eu5-de-pos':'A leaner, faster rental operations SaaS for the SME segment vs. Aareon',
+  'eu5-roadmap-lbl':'Entry Roadmap',
+  'eu5-wave1-ttl':'Wave 1 — Validation Phase','eu5-wave1-sub':'NL · UK | Months 0–6',
+  'eu5-wave1-desc':'English-friendly regulatory environment + digital-native landlord segment. Lowest compliance barrier. Product–market fit validation.',
+  'eu5-wave2-ttl':'Wave 2 — Expansion Phase','eu5-wave2-sub':'CH | Months 6–18',
+  'eu5-wave2-desc':'High-margin multilingual market. Established SaaS adoption. SME landlord segment underserved by existing enterprise tools.',
+  'eu5-wave3-ttl':'Wave 3 — Deepening Phase','eu5-wave3-sub':'FR · DE | Months 18–36',
+  'eu5-wave3-desc':'Largest addressable markets. Higher regulatory complexity. Builds on validated product and reference customers from Waves 1–2.',
+  'eu5-score-note':'* VESTRA Rent (full build) avg. 4.62 / Competitor avg. 3.30–4.17 (scale: 5.0)',
   's07-lbl':     'Section 07 — Market Positioning',
   's07-ttl':     'PriceHubble Data × BMIC&amp;S Platform — The Beginning of Europe\'s Premier PropTech',
   'pos-b-lbl':   'Before — PriceHubble Standalone',
