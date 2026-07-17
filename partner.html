@@ -604,6 +604,114 @@ body {
   * { transition: none !important; animation: none !important; }
 }
 
+/* ── PRINT — A4 LANDSCAPE ──────────────────────────── */
+@media print {
+  @page { size: A4 landscape; margin: 10mm 14mm; }
+
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* hide UI chrome */
+  #lang-toggle, #print-btn { display: none !important; }
+
+  /* container */
+  body { font-size: 12px; }
+  .rpt-body { max-width: none; padding: 0; }
+  .rpt-header__inner { max-width: none; }
+
+  /* cover page */
+  .rpt-header { break-after: page; padding: 26px 36px 22px; }
+  .metrics { max-width: none; }
+  .rpt-header .rpt-title { font-size: 38px; margin-bottom: 10px; }
+  .rpt-header .rpt-sub { font-size: 16px; margin-bottom: 20px; white-space: normal; }
+  .metric-val { font-size: 32px !important; }
+  .metric-lbl { font-size: 12px !important; }
+
+  /* section page breaks */
+  .section {
+    break-before: page;
+    break-inside: avoid;
+    padding-top: 22px;
+    padding-bottom: 12px;
+    margin-bottom: 0;
+  }
+  .ar-section {
+    break-before: page;
+    break-inside: avoid;
+    padding: 22px 36px 16px;
+    margin-top: 0;
+  }
+
+  /* section header */
+  .section__label { font-size: 10px; margin-bottom: 5px; }
+  .section__title {
+    font-size: 19px;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .section__sub { font-size: 11.5px; margin-bottom: 12px; }
+
+  /* section 01 */
+  .co-grid { gap: 14px; }
+  .co-card { padding: 16px 18px; }
+
+  /* section 02 */
+  .gain-grid { gap: 12px; }
+  .gain-card { padding: 14px 16px; }
+  .gain-card__stat { font-size: 18px; }
+
+  /* section 03 */
+  .radar-wrap { gap: 20px; }
+  .collab-grid { gap: 10px; }
+  .collab-card { padding: 12px 14px; gap: 10px; }
+
+  /* section 04 */
+  .syn-grid { gap: 10px; }
+  .syn-card { padding: 14px 16px; }
+
+  /* section 05 AR */
+  .ar-section .section__title { font-size: 22px; }
+  .ar-steps { gap: 16px; }
+
+  /* section 06 EU5 */
+  .eu5-grid { gap: 8px; margin-bottom: 10px; }
+  .eu5-card { padding: 8px 10px; }
+  .eu5-card__top { margin-bottom: 7px; }
+  .eu5-flag-name { font-size: 12px; }
+  .eu5-wave-badge { font-size: 9px; padding: 2px 6px; }
+  .eu5-comp-name { font-size: 11px; }
+  .eu5-comp-score { font-size: 10px; }
+  .eu5-vr-row { margin-bottom: 4px; }
+  .eu5-vr-name, .eu5-vr-score { font-size: 11px; }
+  .eu5-gap { font-size: 10px; padding: 1px 5px; }
+  .eu5-bar-wrap { margin-bottom: 4px; }
+  .eu5-radar { margin: 2px auto 4px; width: 70% !important; }
+  .eu5-s-label, .eu5-r-label { font-size: 8px; }
+  .eu5-strength-row span:last-child,
+  .eu5-risk-row span:last-child { font-size: 10.5px; }
+  .eu5-strength-row { margin-bottom: 3px; }
+  .eu5-risk-row { margin-bottom: 3px; }
+  .eu5-position { margin-top: 5px; padding-top: 5px; font-size: 10px; }
+  .eu5-roadmap { margin-top: 0; }
+  .eu5-roadmap__label { margin-bottom: 7px; font-size: 10px; }
+  .eu5-waves { gap: 8px; }
+  .eu5-wave-block { padding: 9px 12px; }
+  .eu5-wave-block__title { font-size: 12px; margin-bottom: 2px; }
+  .eu5-wave-block__sub { font-size: 10.5px; margin-bottom: 3px; }
+  .eu5-wave-block__desc { font-size: 10.5px; line-height: 1.5; }
+  .eu5-score-caption { font-size: 9.5px; margin-top: 5px; }
+
+  /* section 07 */
+  .pos-grid { gap: 12px; }
+  .pos-card { padding: 14px 16px; }
+  .pos-card__title { font-size: 16px; margin-bottom: 10px; }
+  .pos-card__rows { gap: 0; }
+  .pos-card__row { padding: 5px 0; }
+  .pos-card__row-key { font-size: 11.5px; }
+  .pos-card__row-val { font-size: 11.5px; }
+  .comp-table-wrap { margin-top: 14px; }
+  .comp-table th, .comp-table td { padding: 6px 10px; font-size: 11px; }
+}
+
 
 /* ── AR SECTION ─── */
 .ar-section {
@@ -974,6 +1082,13 @@ body {
   background: var(--syn); color: #fff;
 }
 #lang-toggle button:hover:not(.active) { color: #fff; }
+#print-btn {
+  border-left: 1px solid rgba(255,255,255,.12) !important;
+  margin-left: 2px; padding: 6px 10px !important;
+  font-size: 16px !important; letter-spacing: 0 !important;
+  opacity: .55;
+}
+#print-btn:hover { opacity: 1 !important; }
 
 </style>
 
@@ -981,6 +1096,7 @@ body {
 <div id="lang-toggle">
   <button id="btn-ko" onclick="setLang('ko')">KO</button>
   <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+  <button id="print-btn" onclick="window.print()" title="Print / Save PDF">⎙</button>
 </div>
 
   <div class="rpt-header__bar"></div>
