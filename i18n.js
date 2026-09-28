@@ -186,7 +186,7 @@ var I18N = {
     'con.email.title':  '📧 이메일',
     'con.email.note':   '이메일 문의는 24시간 접수 가능합니다.',
     'con.map.title':    '📍 오시는 길',
-    'con.map.sub':      '삼성역 4번 출구 도보 3분',
+    'con.map.sub':      '가산디지털단지역 인근',
     'con.quick.title':  '💡 빠른 상담이 필요하신가요?',
     'con.quick.desc':   '전화 상담을 통해 프로젝트에 대한<br>즉각적인 피드백을 받으실 수 있습니다.<br>담당 전문가가 직접 상담해 드립니다.',
 
@@ -493,7 +493,7 @@ var I18N = {
     'con.email.title':  '📧 Email',
     'con.email.note':   'Email inquiries are accepted 24/7.',
     'con.map.title':    '📍 Directions',
-    'con.map.sub':      '3-min walk from Exit 4, Samseong Station',
+    'con.map.sub':      'Near Gasan Digital Complex Station',
     'con.quick.title':  '💡 Need a Quick Consultation?',
     'con.quick.desc':   'Get immediate feedback on your project<br>through a phone consultation.<br>Our dedicated expert will assist you directly.',
 
