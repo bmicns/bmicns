@@ -127,9 +127,7 @@
             서울시 금천구 디지털로10길 78. 813호
           </p>
           <p data-i18n="con.map.sub">가산디지털단지역 인근</p>
-          <div style="margin-top:16px; background:#e8e8f0; border-radius:12px; height:200px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:14px">
-            <span data-i18n="con.map.area">🗺️ 지도 영역 (카카오맵 연동)</span>
-          </div>
+          <div id="kakaoMap" style="margin-top:16px; background:#e8e8f0; border-radius:12px; height:200px; overflow:hidden"></div>
         </div>
 
         <div class="contact-info-card" style="background:linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color:white">
@@ -179,6 +177,30 @@ function resetForm() {
   document.getElementById('contactForm').style.display = 'flex';
   document.getElementById('successMsg').style.display = 'none';
 }
+</script>
+<!-- 카카오맵: 회사 주소(금천구 디지털로10길 78) 지오코딩 후 지도+마커, 클릭 시 카카오맵 길찾기 -->
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=0dd6a8c99d37cd4aa2d24f538a44b02c&autoload=false&libraries=services"></script>
+<script>
+(function () {
+  function initKakaoMap() {
+    kakao.maps.load(function () {
+      var container = document.getElementById('kakaoMap');
+      if (!container) return;
+      var geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch('서울 금천구 디지털로10길 78', function (result, status) {
+        if (status !== kakao.maps.services.Status.OK || !result[0]) return;
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        var map = new kakao.maps.Map(container, { center: coords, level: 3 });
+        new kakao.maps.Marker({ map: map, position: coords });
+        kakao.maps.event.addListener(map, 'click', function () {
+          window.open('https://map.kakao.com/link/map/BMI C%26S,' + result[0].y + ',' + result[0].x, '_blank');
+        });
+      });
+    });
+  }
+  if (window.kakao && window.kakao.maps) initKakaoMap();
+  else window.addEventListener('load', function () { if (window.kakao && window.kakao.maps) initKakaoMap(); });
+})();
 </script>
 </body>
 </html>
