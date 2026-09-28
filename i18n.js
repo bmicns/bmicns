@@ -27,7 +27,7 @@ var I18N = {
     'footer.hours':    '평일 09:00 ~ 18:00',
     'footer.email_note':'이메일 문의는 24시간 접수 가능합니다.',
     'footer.ceo':      '대표이사 김동의',
-    'footer.address':  '서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)',
+    'footer.address':  '서울시 금천구 디지털로10길 78. 813호',
     'footer.admin':    '관리자 접속',
     'footer.partner':  '해외파트너십',
     'footer.biz_reg':  '사업자등록번호',
@@ -116,7 +116,7 @@ var I18N = {
     'about.info.reg_k':  '사업자번호',
     'about.info.addr_k': '소재지',
     'about.info.biz_v':  'IT 인프라 구축, AI/IoT 솔루션, 컨설팅, 자산관리 플랫폼',
-    'about.info.addr_v': '서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)',
+    'about.info.addr_v': '서울시 금천구 디지털로10길 78. 813호',
 
     /* ── SOLUTIONS ── */
     'sol.hero.h1':   '비즈니스 성장을 위한<br><span class="gradient-text">6대 핵심 솔루션</span>',
@@ -301,7 +301,7 @@ var I18N = {
     'con.name_ph':   '홍길동',
     'con.co_ph':     'OO기업',
     'con.msg_ph':    '프로젝트에 대해 자유롭게 작성해 주세요.\n\n• 현재 상황 및 해결하고자 하는 문제\n• 원하시는 솔루션 또는 서비스\n• 희망 일정 등',
-    'con.map.addr':  '서울시 강남구 강남대로 354(역삼동, 혜천빌딩 1126-5호)',
+    'con.map.addr':  '서울시 금천구 디지털로10길 78. 813호',
     'con.map.area':  '🗺️ 지도 영역 (카카오맵 연동)',
 
     /* ── ABOUT INFO VALUES ── */
@@ -334,7 +334,7 @@ var I18N = {
     'footer.hours':    'Mon–Fri 09:00–18:00',
     'footer.email_note':'Email inquiries accepted 24/7.',
     'footer.ceo':      'CEO Kim Dong-ui',
-    'footer.address':  '354 Gangnam-daero, Gangnam-gu, Seoul (Hyecheon Bldg. #1126-5)',
+    'footer.address':  '78 Digital-ro 10-gil, Geumcheon-gu, Seoul (#813)',
     'footer.admin':    'Admin',
     'footer.partner':  'Global Partnership',
     'footer.biz_reg':  'Business Registration No.',
@@ -423,7 +423,7 @@ var I18N = {
     'about.info.reg_k':  'Reg. No.',
     'about.info.addr_k': 'Address',
     'about.info.biz_v':  'IT Infrastructure, AI/IoT Solutions, Consulting, Asset Management Platform',
-    'about.info.addr_v': '354 Gangnam-daero, Gangnam-gu, Seoul (Hyecheon Bldg. #1126-5)',
+    'about.info.addr_v': '78 Digital-ro 10-gil, Geumcheon-gu, Seoul (#813)',
 
     /* ── SOLUTIONS ── */
     'sol.hero.h1':   '6 Core Solutions<br>for <span class="gradient-text">Business Growth</span>',
@@ -608,7 +608,7 @@ var I18N = {
     'con.name_ph':   'Full Name',
     'con.co_ph':     'Company / Organization',
     'con.msg_ph':    'Please describe your project.\n\n• Current situation & challenges\n• Desired solution or service\n• Preferred timeline',
-    'con.map.addr':  '354 Gangnam-daero, Gangnam-gu, Seoul (Hyecheon Bldg. #1126-5)',
+    'con.map.addr':  '78 Digital-ro 10-gil, Geumcheon-gu, Seoul (#813)',
     'con.map.area':  '🗺️ Map Area (Kakao Maps)',
 
     /* ── ABOUT INFO VALUES ── */
